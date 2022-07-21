@@ -10,11 +10,13 @@ using System.Windows.Forms;
 
 namespace MSSSDataProcessing
 {
-    public partial class Form1 : Form
+    public partial class ProcessingForm : Form
     {
-        public Form1()
+        public ProcessingForm()
         {
             InitializeComponent();
         }
+
+
     }
 }
