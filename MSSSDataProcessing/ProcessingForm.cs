@@ -101,10 +101,14 @@ namespace MSSSDataProcessing
             }
             return index;
         }
-        private bool CheckInput(string TbInput)
+        private bool CheckInput(string TbInput, TextBox TbTarget)
         {
             if (string.IsNullOrEmpty(TbInput))
+            {
+                TbTarget.Focus();
+                toolTip.Show("Please enter appropriate decimal value", TbTarget, 60, 15, 3000);
                 return false;
+            }
             else
                 return true;
         }
@@ -162,7 +166,6 @@ namespace MSSSDataProcessing
         {
             int min = 0;
             int max = NumberOfNodes(sensor);
-
             for (int i = 0; i < max; i++)
             {
                 min = i;
@@ -245,36 +248,42 @@ namespace MSSSDataProcessing
             PopulateListBox(sensorB, listBoxB);
         }
 
+        bool sortedA = false;
         private void buttonSortA_Click(object sender, EventArgs e)
         {
             int sortNum = RadioButtonIndex("SortA");
             if (sortNum == 1)
             {
-                SelectionSort(sensorA);
+                sortedA = SelectionSort(sensorA);
+                ShowAllSensorData();
                 PopulateListBox(sensorA, listBoxA);
                 statusLabel.Text = "Sensor A has been sorted using Selection Sort.";
             }
             else if (sortNum == 0)
             {
-                InsertionSort(sensorA);
+                sortedA = InsertionSort(sensorA);
+                ShowAllSensorData();
                 PopulateListBox(sensorA, listBoxA);
                 statusLabel.Text = "Sensor A has been sorted using Insertion Sort.";
             }
             else
                 MessageBox.Show("Something is wrong with the radio box!!", "What's happening???", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+        bool sortedB = false;
         private void buttonSortB_Click(object sender, EventArgs e)
         {
             int sortNum = RadioButtonIndex("SortB");
             if (sortNum == 1)
             {
-                SelectionSort(sensorB);
+                sortedB = SelectionSort(sensorB);
+                ShowAllSensorData();
                 PopulateListBox(sensorB, listBoxB);
                 statusLabel.Text = "Sensor B has been sorted using Selection Sort.";
             }
             else if (sortNum == 0)
             {
-                InsertionSort(sensorB);
+                sortedB = InsertionSort(sensorB);
+                ShowAllSensorData();
                 PopulateListBox(sensorB, listBoxB);
                 statusLabel.Text = "Sensor B has been sorted using Insertion Sort.";
             }
@@ -283,7 +292,7 @@ namespace MSSSDataProcessing
         }
         private void buttonSearchA_Click(object sender, EventArgs e)
         {
-            if (CheckInput(TbTargetA.Text))
+            if (CheckInput(TbTargetA.Text, TbTargetA) && sortedA)
             {
                 double searchValue = IntOrDouble(TbTargetA.Text);
                 int searchNum = RadioButtonIndex("SearchA");
@@ -304,15 +313,14 @@ namespace MSSSDataProcessing
             }
             else
             {
-                TbTargetA.Focus();
-                toolTip.Show("Please enter appropriate decimal value", TbTargetA, 60, 15, 3000);
-
+                toolTip.Show("Ensure ListBox is Sorted!", buttonSortA, 45, 15, 3000);
+                statusLabel.Text = "Sensor A values not sorted. Cannot search";
             }
 
         }
         private void buttonSearchB_Click(object sender, EventArgs e)
         {
-            if (CheckInput(TbTargetB.Text))
+            if (CheckInput(TbTargetB.Text, TbTargetB) && sortedB)
             {
                 double searchValue = IntOrDouble(TbTargetB.Text);
                 int searchNum = RadioButtonIndex("SearchB");
@@ -331,9 +339,8 @@ namespace MSSSDataProcessing
             }
             else
             {
-                TbTargetB.Focus();
-                toolTip.Show("Please enter appropriate decimal value", TbTargetB, 60, 15, 3000);
-
+                toolTip.Show("Ensure ListBox is Sorted!", buttonSortB, 45, 15, 3000);
+                statusLabel.Text = "Sensor B values not sorted. Cannot search";
             }
         }
 
