@@ -109,6 +109,46 @@ namespace MSSSDataProcessing
                 return true;
         }
 
+        // First int is mid index, second int is the range of values to be checked.
+        // Third int is the value range difference.
+        private void ListBoxSetSelected(ListBox listBox, int index, int range, double valueRange)
+        {
+            try
+            {
+                int rangeIndex = index - (range / 2);
+                double low, high, current;
+                low = double.Parse(listBox.Items[index - 1].ToString()) - valueRange;
+                high = double.Parse(listBox.Items[index - 1].ToString()) + valueRange;
+                listBox.SelectionMode = SelectionMode.MultiSimple;
+                Trace.TraceInformation("Selecting multiple values - Index range value: " + range + " Deviation: " + valueRange);
+                for (int i = 0; i < range && rangeIndex < 400; i++)
+                {
+                    current = double.Parse(listBox.Items[rangeIndex].ToString());
+                    Trace.WriteLine("Comparing " + current + " to " + low + " && " + current + " to " + high);
+                    if (current > low && current < high)
+                    {
+                        listBox.SetSelected(rangeIndex, true);
+                        Trace.TraceInformation(current + " SELECTED in listBox");
+                    }
+                    rangeIndex++;
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Trace.TraceError("Index is out of array.");
+            }
+        }
+
+        private double IntOrDouble(string TbInput)
+        {
+            bool isInt = int.TryParse(TbTargetA.Text, out int result);
+            double searchValue;
+            if (!isInt)
+                searchValue = double.Parse(TbTargetA.Text);
+            else
+                searchValue = result;
+            return searchValue;
+        }
         #endregion
 
         #region Sort & Search Methods
@@ -207,11 +247,13 @@ namespace MSSSDataProcessing
             {
                 SelectionSort(sensorA);
                 PopulateListBox(sensorA, listBoxA);
+                statusLabel.Text = "Sensor A has been sorted using Selection Sort.";
             }
             else if (sortNum == 0)
             {
                 InsertionSort(sensorA);
                 PopulateListBox(sensorA, listBoxA);
+                statusLabel.Text = "Sensor A has been sorted using Insertion Sort.";
             }
             else
                 MessageBox.Show("Something is wrong with the radio box!!", "What's happening???", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -223,11 +265,13 @@ namespace MSSSDataProcessing
             {
                 SelectionSort(sensorB);
                 PopulateListBox(sensorB, listBoxB);
+                statusLabel.Text = "Sensor B has been sorted using Selection Sort.";
             }
             else if (sortNum == 0)
             {
                 InsertionSort(sensorB);
                 PopulateListBox(sensorB, listBoxB);
+                statusLabel.Text = "Sensor B has been sorted using Insertion Sort.";
             }
             else
                 MessageBox.Show("Something is wrong with the radio box!!", "What's happening???", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -236,19 +280,19 @@ namespace MSSSDataProcessing
         {
             if (CheckDoubleInput(TbTargetA.Text))
             {
-                double searchValue = double.Parse(TbTargetA.Text);
+                double searchValue = IntOrDouble(TbTargetA.Text);
                 int searchNum = RadioButtonIndex("SearchA");
                 if (searchNum == 1)
                 {
                     int foundIndex = IterativeBinarySearch(sensorA, searchValue);
-                    //if (radioInsertionA.Checked)
-                        
-                    listBoxA.SelectedIndex = foundIndex;
+                    // First int is mid index, second int is the range of values to be checked.
+                    // Third int is the value range difference.
+                    ListBoxSetSelected(listBoxA, foundIndex, 5, 1);
                 }
                 else if (searchNum == 0)
                 {
                     int foundIndex = RecursiveBinarySearch(sensorA, searchValue, 0, NumberOfNodes(sensorA));
-                    listBoxA.SelectedIndex = foundIndex;
+                    ListBoxSetSelected(listBoxA, foundIndex, 5, 1);
                 }
                 else
                     toolTip.Show("Select a search algorithm", radioIterativeA, 65, 20, 3000);
@@ -265,17 +309,17 @@ namespace MSSSDataProcessing
         {
             if (CheckDoubleInput(TbTargetB.Text))
             {
-                double searchValue = double.Parse(TbTargetB.Text);
+                double searchValue = IntOrDouble(TbTargetA.Text);
                 int searchNum = RadioButtonIndex("SearchB");
                 if (searchNum == 1)
                 {
                     int foundIndex = IterativeBinarySearch(sensorB, searchValue);
-                    listBoxB.SelectedIndex = foundIndex;
+                    ListBoxSetSelected(listBoxB, foundIndex, 5, 1);
                 }
                 else if (searchNum == 0)
                 {
                     int foundIndex = RecursiveBinarySearch(sensorB, searchValue, 0, NumberOfNodes(sensorB));
-                    listBoxB.SelectedIndex = foundIndex;
+                    ListBoxSetSelected(listBoxB, foundIndex, 5, 1);
                 }
                 else
                     toolTip.Show("Select a search algorithm", radioIterativeB, 65, 20, 3000);
