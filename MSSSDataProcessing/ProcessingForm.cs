@@ -101,7 +101,7 @@ namespace MSSSDataProcessing
             }
             return index;
         }
-        private bool CheckDoubleInput(string TbInput)
+        private bool CheckInput(string TbInput)
         {
             if (string.IsNullOrEmpty(TbInput))
                 return false;
@@ -115,8 +115,13 @@ namespace MSSSDataProcessing
         {
             try
             {
+                
                 int rangeIndex = index - (range / 2);
                 double low, high, current;
+                if (index - range < 0 || index + range > 400)
+                {
+                    // Find solution to error on first and last values.
+                }
                 low = double.Parse(listBox.Items[index - 1].ToString()) - valueRange;
                 high = double.Parse(listBox.Items[index - 1].ToString()) + valueRange;
                 listBox.SelectionMode = SelectionMode.MultiSimple;
@@ -141,10 +146,10 @@ namespace MSSSDataProcessing
 
         private double IntOrDouble(string TbInput)
         {
-            bool isInt = int.TryParse(TbTargetA.Text, out int result);
+            bool isInt = int.TryParse(TbInput, out int result);
             double searchValue;
             if (!isInt)
-                searchValue = double.Parse(TbTargetA.Text);
+                searchValue = double.Parse(TbInput);
             else
                 searchValue = result;
             return searchValue;
@@ -278,7 +283,7 @@ namespace MSSSDataProcessing
         }
         private void buttonSearchA_Click(object sender, EventArgs e)
         {
-            if (CheckDoubleInput(TbTargetA.Text))
+            if (CheckInput(TbTargetA.Text))
             {
                 double searchValue = IntOrDouble(TbTargetA.Text);
                 int searchNum = RadioButtonIndex("SearchA");
@@ -307,9 +312,9 @@ namespace MSSSDataProcessing
         }
         private void buttonSearchB_Click(object sender, EventArgs e)
         {
-            if (CheckDoubleInput(TbTargetB.Text))
+            if (CheckInput(TbTargetB.Text))
             {
-                double searchValue = IntOrDouble(TbTargetA.Text);
+                double searchValue = IntOrDouble(TbTargetB.Text);
                 int searchNum = RadioButtonIndex("SearchB");
                 if (searchNum == 1)
                 {
