@@ -114,9 +114,9 @@ namespace MSSSDataProcessing
             this.listBoxA.FormattingEnabled = true;
             this.listBoxA.Location = new System.Drawing.Point(6, 20);
             this.listBoxA.Name = "listBoxA";
+            this.listBoxA.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listBoxA.Size = new System.Drawing.Size(111, 316);
             this.listBoxA.TabIndex = 1;
-            this.listBoxA.SelectionMode = SelectionMode.MultiSimple;
             // 
             // SigmaNumWheel
             // 
@@ -211,8 +211,10 @@ namespace MSSSDataProcessing
             // 
             // TbSortSpdA
             // 
+            this.TbSortSpdA.Enabled = false;
             this.TbSortSpdA.Location = new System.Drawing.Point(9, 83);
             this.TbSortSpdA.Name = "TbSortSpdA";
+            this.TbSortSpdA.ReadOnly = true;
             this.TbSortSpdA.Size = new System.Drawing.Size(143, 20);
             this.TbSortSpdA.TabIndex = 9;
             // 
@@ -291,8 +293,10 @@ namespace MSSSDataProcessing
             // 
             // TbSearchSpdA
             // 
+            this.TbSearchSpdA.Enabled = false;
             this.TbSearchSpdA.Location = new System.Drawing.Point(9, 110);
             this.TbSearchSpdA.Name = "TbSearchSpdA";
+            this.TbSearchSpdA.ReadOnly = true;
             this.TbSearchSpdA.Size = new System.Drawing.Size(143, 20);
             this.TbSearchSpdA.TabIndex = 9;
             // 
@@ -365,8 +369,10 @@ namespace MSSSDataProcessing
             // 
             // TbSortSpdB
             // 
+            this.TbSortSpdB.Enabled = false;
             this.TbSortSpdB.Location = new System.Drawing.Point(9, 83);
             this.TbSortSpdB.Name = "TbSortSpdB";
+            this.TbSortSpdB.ReadOnly = true;
             this.TbSortSpdB.Size = new System.Drawing.Size(143, 20);
             this.TbSortSpdB.TabIndex = 9;
             // 
@@ -445,8 +451,10 @@ namespace MSSSDataProcessing
             // 
             // TbSearchSpdB
             // 
+            this.TbSearchSpdB.Enabled = false;
             this.TbSearchSpdB.Location = new System.Drawing.Point(9, 110);
             this.TbSearchSpdB.Name = "TbSearchSpdB";
+            this.TbSearchSpdB.ReadOnly = true;
             this.TbSearchSpdB.Size = new System.Drawing.Size(143, 20);
             this.TbSearchSpdB.TabIndex = 9;
             // 
@@ -455,9 +463,9 @@ namespace MSSSDataProcessing
             this.listBoxB.FormattingEnabled = true;
             this.listBoxB.Location = new System.Drawing.Point(6, 20);
             this.listBoxB.Name = "listBoxB";
+            this.listBoxB.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listBoxB.Size = new System.Drawing.Size(111, 316);
             this.listBoxB.TabIndex = 1;
-            this.listBoxB.SelectionMode = SelectionMode.MultiSimple;
             // 
             // LoadBtn
             // 

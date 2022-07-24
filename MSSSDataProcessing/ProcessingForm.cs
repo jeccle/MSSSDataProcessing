@@ -123,27 +123,34 @@ namespace MSSSDataProcessing
             try
             {
                 listBox.SelectedItems.Clear();
-                int rangeIndex = index - range / 2;
-                if (rangeIndex < 0)
+                // pointerIndex variable holds index of first item in the range of values to be checked.
+                // If the search index is 3, with a range of 6, the starting pointerIndex value will be 0.
+                
+                int pointerIndex = index - range / 2;
+                if (pointerIndex < 0)
                 {
-                    range += rangeIndex;
-                    rangeIndex = 0; 
+                    // Sets starting index to 0, range is reduced to compensate for non-existent values.
+                    range += pointerIndex;
+                    pointerIndex = 0; 
                 }
                 double low, high, current;
                 // Boundaries for selection of values within listBox.
                 low = double.Parse(listBox.Items[index].ToString()) - valueRange;
                 high = double.Parse(listBox.Items[index].ToString()) + valueRange;
                 Trace.TraceInformation("Selecting multiple values - Index range value: " + range + " Deviation: " + valueRange);
-                for (int i = 0; i < range && rangeIndex < 400; i++)
+                // pointerIndex value is incremented untill i >= range value. Loop checks if current value meets criteria for selection.
+                for (int i = 0; i < range && pointerIndex < 400; i++)
                 { 
-                    current = double.Parse(listBox.Items[rangeIndex].ToString());
+                    current = double.Parse(listBox.Items[pointerIndex].ToString());
                     Trace.WriteLine("Comparing " + current + " to " + low + " && " + current + " to " + high + " -- Deviation of " + valueRange);
+                    // If current value is within upper and lower bounds.
                     if (current > low && current < high)
                     {
-                        listBox.SetSelected(rangeIndex, true);
+                        // Code highlights index.
+                        listBox.SetSelected(pointerIndex, true);
                         Trace.TraceInformation(current + " SELECTED in listBox");
                     }
-                    rangeIndex++;
+                    pointerIndex++;
                 }
             }
             catch (IndexOutOfRangeException)
@@ -217,7 +224,8 @@ namespace MSSSDataProcessing
             while (min <= max - 1)
             {
                 int mid = (min + max) / 2;
-                if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid)) //+ 1 && searchValue > sensor.ElementAt(mid) - 1
+                // Find an exact value or if searchValue is an int, it can be matched with a casted int for a more general search.
+                if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid)) 
                     return mid;
                 else if (searchValue < sensor.ElementAt(mid))
                     min = mid + 1;
@@ -232,6 +240,7 @@ namespace MSSSDataProcessing
             while (min <= max - 1)
             {
                 int mid = (min + max) / 2;
+                // Find an exact value or if searchValue is an int, it can be matched with a casted int for a more general search.
                 if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid))
                     return mid;
                 else if (searchValue > sensor.ElementAt(mid))
@@ -262,6 +271,7 @@ namespace MSSSDataProcessing
             if (sortNum == 1)
             {
                 sw.Start();
+                // Bool allows search algorithms to be used once set to true.
                 sortedA = SelectionSort(sensorA);
                 sw.Stop();
                 TbSortSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();
@@ -290,6 +300,7 @@ namespace MSSSDataProcessing
             if (sortNum == 1)
             {
                 sw.Start();
+                // Bool allows search algorithms to be used once set to true.
                 sortedB = SelectionSort(sensorB);
                 sw.Stop();
                 TbSortSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
