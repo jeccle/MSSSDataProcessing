@@ -119,27 +119,24 @@ namespace MSSSDataProcessing
             try
             {
                 listBox.SelectedItems.Clear();
-                
-                
                 int pointerIndex = index - range / 2;   // pointerIndex variable holds index of first item in the range of values to be checked.
-                if (pointerIndex < 0)                   // If the search index is 3, with a range of 6, the starting pointerIndex value will be 0.
-                {
-                    // Sets starting index to 0, range is reduced to compensate for non-existent values.
-                    range += pointerIndex;
-                    pointerIndex = 0; 
+                if (pointerIndex < 0)                   // If the search index = 1, range = 6, the starting pointerIndex value will be 0.
+                {                                       // range will be reduced by (1 - 3) = -2. Range = 4. 4 values will then be iterated through & checked.
+                    range += pointerIndex;  // New range set
+                    pointerIndex = 0;       // Sets starting pointer to 0, range is reduced to compensate for non-existent indexes.
                 }
                 double low, high, current;  // Boundaries for selection of values within listBox.
                 low = double.Parse(listBox.Items[index].ToString()) - valueRange;
                 high = double.Parse(listBox.Items[index].ToString()) + valueRange;
                 Trace.TraceInformation("Selecting multiple values - Index range value: " + range + " Deviation: " + valueRange);
-                // pointerIndex value is incremented untill i >= range value. Loop checks if current value meets criteria for selection.
+                // pointerIndex value is incremented untill i >= range. Within loop, if statement checks current value selection.
                 for (int i = 0; i < range && pointerIndex < 400; i++)
                 { 
                     current = double.Parse(listBox.Items[pointerIndex].ToString());
                     Trace.WriteLine("Comparing " + current + " to " + low + " && " + current + " to " + high + " -- Deviation of " + valueRange);
                     if (current > low && current < high)    // If current value is within upper and lower bounds.
                     {
-                        listBox.SetSelected(pointerIndex, true);    // Code highlights index.
+                        listBox.SetSelected(pointerIndex, true);    // Specified index is set as selected within listBox.
                         Trace.TraceInformation(current + " SELECTED in " + listBox.Name);
                     }
                     pointerIndex++;
@@ -231,10 +228,10 @@ namespace MSSSDataProcessing
         {
             while (min <= max - 1)
             {
-                int mid = (min + max) / 2;
-                // Find an exact value or if searchValue is an int, it can be matched with a casted int for a more general search.
-                if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid))
-                    return mid;
+                int mid = (min + max) / 2;                      
+                if (searchValue == sensor.ElementAt(mid) ||     // Checks if searchValue equals double at mid index.
+                    searchValue == (int)sensor.ElementAt(mid))  // Casting sensor element to int allows for
+                    return mid;                                 // integers entered for a general search. 
                 else if (searchValue > sensor.ElementAt(mid))
                     return RecursiveBinarySearch(sensor, searchValue, min, mid - 1);
                 else
@@ -321,10 +318,10 @@ namespace MSSSDataProcessing
                 int searchNum = RadioButtonIndex("SearchA");
                 if (searchNum == 1)
                 {
-                    sw.Start();         // Beginning of stopwatch timer.
-                    int foundIndex = IterativeBinarySearch(sensorA, searchValue);
-                    sw.Stop();          // End of stopwatch timer.
-                    TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();        // Total time in ms displayed to textBox.
+                    sw.Start();                                                     // Beginning of stopwatch timer.
+                    int foundIndex = IterativeBinarySearch(sensorA, searchValue);   
+                    sw.Stop();                                                      // End of stopwatch timer.
+                    TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();    // Total time in ms displayed to textBox.
                     statusLabel.Text = "Searching for target " + searchValue + " using Iterative Binary Search"; 
                     ListBoxSetSelected(listBoxA, foundIndex, 6, 1); // First int is mid index, second int is the range of values to be checked.
                 }                                                   // Third int is the value range deviation.
