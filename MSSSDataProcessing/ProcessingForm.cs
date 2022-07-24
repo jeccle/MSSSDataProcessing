@@ -75,38 +75,34 @@ namespace MSSSDataProcessing
         }
         private int RadioButtonIndex(string radioGrpName)
         {
-
             // If you choose to have value 1 as default, consider removing current else and else if condition to
             // clean up code.
             int index = 1;
             switch (radioGrpName.ToUpper())
             {
                 case "SORTA":
-                    if (radioSelectionA.Checked) { index = 1; break; }
-                    else if (radioInsertionA.Checked) { index = 0; break; }
-                    else { index = -1; break; }
+                    if (radioSelectionA.Checked) { index = 1; break; }  // Selection Sort is selected.
+                    else { index = 0; break; }                          // Insertion Sort is selected.
 
                 case "SEARCHA":
-                    if (radioIterativeA.Checked) { index = 1; break; }
-                    else if (radioRecursiveA.Checked) { index = 0; break; }
-                    else { index = -1; break; }
+                    if (radioIterativeA.Checked) { index = 1; break; }  // Iterative Search is selected.
+                    else { index = 0; break; }                          // Recursive Search is selected.
 
                 case "SORTB":
-                    if (radioSelectionB.Checked) { index = 1; break; }
-                    else if (radioInsertionB.Checked) { index = 0; break; }
-                    else { index = -1; break; }
+                    if (radioSelectionB.Checked) { index = 1; break; }  // Selection Sort is selected.
+                    else { index = 0; break; }                          // Insertion Sort is selected.
 
                 case "SEARCHB":
-                    if (radioIterativeB.Checked) { index = 1; break; }
-                    else if (radioRecursiveB.Checked) { index = 0; break; }
-                    else { index = -1; break; }
+                    if (radioIterativeB.Checked) { index = 1; break; }  // Iterative Search is selected.
+                    else { index = 0; break; }                          // Recursive Search is selected.
+
             }
             return index;
         }
         private bool CheckInput(string TbInput, TextBox TbTarget)
         {
             if (string.IsNullOrEmpty(TbInput))
-            {
+            {   // Empty text box input.
                 TbTarget.Focus();
                 toolTip.Show("Please enter appropriate decimal value", TbTarget, 60, 15, 3000);
                 return false;
@@ -123,18 +119,16 @@ namespace MSSSDataProcessing
             try
             {
                 listBox.SelectedItems.Clear();
-                // pointerIndex variable holds index of first item in the range of values to be checked.
-                // If the search index is 3, with a range of 6, the starting pointerIndex value will be 0.
                 
-                int pointerIndex = index - range / 2;
-                if (pointerIndex < 0)
+                
+                int pointerIndex = index - range / 2;   // pointerIndex variable holds index of first item in the range of values to be checked.
+                if (pointerIndex < 0)                   // If the search index is 3, with a range of 6, the starting pointerIndex value will be 0.
                 {
                     // Sets starting index to 0, range is reduced to compensate for non-existent values.
                     range += pointerIndex;
                     pointerIndex = 0; 
                 }
-                double low, high, current;
-                // Boundaries for selection of values within listBox.
+                double low, high, current;  // Boundaries for selection of values within listBox.
                 low = double.Parse(listBox.Items[index].ToString()) - valueRange;
                 high = double.Parse(listBox.Items[index].ToString()) + valueRange;
                 Trace.TraceInformation("Selecting multiple values - Index range value: " + range + " Deviation: " + valueRange);
@@ -143,12 +137,10 @@ namespace MSSSDataProcessing
                 { 
                     current = double.Parse(listBox.Items[pointerIndex].ToString());
                     Trace.WriteLine("Comparing " + current + " to " + low + " && " + current + " to " + high + " -- Deviation of " + valueRange);
-                    // If current value is within upper and lower bounds.
-                    if (current > low && current < high)
+                    if (current > low && current < high)    // If current value is within upper and lower bounds.
                     {
-                        // Code highlights index.
-                        listBox.SetSelected(pointerIndex, true);
-                        Trace.TraceInformation(current + " SELECTED in listBox");
+                        listBox.SetSelected(pointerIndex, true);    // Code highlights index.
+                        Trace.TraceInformation(current + " SELECTED in " + listBox.Name);
                     }
                     pointerIndex++;
                 }
@@ -271,8 +263,7 @@ namespace MSSSDataProcessing
             if (sortNum == 1)
             {
                 sw.Start();
-                // Bool allows search algorithms to be used once set to true.
-                sortedA = SelectionSort(sensorA);
+                sortedA = SelectionSort(sensorA);   // Sets bool to true upon sort success. Enables search function.
                 sw.Stop();
                 TbSortSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();
                 ShowAllSensorData();
@@ -300,8 +291,7 @@ namespace MSSSDataProcessing
             if (sortNum == 1)
             {
                 sw.Start();
-                // Bool allows search algorithms to be used once set to true.
-                sortedB = SelectionSort(sensorB);
+                sortedB = SelectionSort(sensorB);   // Sets bool to true upon sort success. Enables search function.
                 sw.Stop();
                 TbSortSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
                 ShowAllSensorData();
@@ -331,20 +321,20 @@ namespace MSSSDataProcessing
                 int searchNum = RadioButtonIndex("SearchA");
                 if (searchNum == 1)
                 {
-                    sw.Start();
+                    sw.Start();         // Beginning of stopwatch timer.
                     int foundIndex = IterativeBinarySearch(sensorA, searchValue);
-                    sw.Stop();
-                    TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();
-                    // First int is mid index, second int is the range of values to be checked.
-                    // Third int is the value range difference.
-                    ListBoxSetSelected(listBoxA, foundIndex, 6, 1);
-                }
+                    sw.Stop();          // End of stopwatch timer.
+                    TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();        // Total time in ms displayed to textBox.
+                    statusLabel.Text = "Searching for target " + searchValue + " using Iterative Binary Search"; 
+                    ListBoxSetSelected(listBoxA, foundIndex, 6, 1); // First int is mid index, second int is the range of values to be checked.
+                }                                                   // Third int is the value range deviation.
                 else if (searchNum == 0)
                 {
                     sw.Start();
                     int foundIndex = RecursiveBinarySearch(sensorA, searchValue, 0, NumberOfNodes(sensorA));
                     sw.Stop();
-                    TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString(); 
+                    TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();
+                    statusLabel.Text = "Searching for target " + searchValue + " using Recursive Binary Search";
                     ListBoxSetSelected(listBoxA, foundIndex, 6, 1);
                 }
                 else
@@ -369,6 +359,7 @@ namespace MSSSDataProcessing
                     sw.Start();
                     int foundIndex = IterativeBinarySearch(sensorB, searchValue);
                     sw.Stop();
+                    statusLabel.Text = "Searching for target " + searchValue + " using Iterative Binary Search";
                     TbSearchSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
                     ListBoxSetSelected(listBoxB, foundIndex, 6, 1);
                 }
@@ -377,6 +368,7 @@ namespace MSSSDataProcessing
                     sw.Start();
                     int foundIndex = RecursiveBinarySearch(sensorB, searchValue, 0, NumberOfNodes(sensorB));
                     sw.Stop();
+                    statusLabel.Text = "Searching for target " + searchValue + " using Iterative Binary Search";
                     TbSearchSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
                     ListBoxSetSelected(listBoxB, foundIndex, 6, 1);
                 }
@@ -389,8 +381,17 @@ namespace MSSSDataProcessing
                 statusLabel.Text = "Sensor B values not sorted. Cannot search";
             }
         }
+        private void TbTargetA_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
+        }
 
+        private void TbTargetB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
+        }
         #endregion
+
 
     }
 }

@@ -92,9 +92,9 @@ namespace MSSSDataProcessing
             this.ColumnB});
             this.listViewDisplay.GridLines = true;
             this.listViewDisplay.HideSelection = false;
-            this.listViewDisplay.Location = new System.Drawing.Point(620, 81);
+            this.listViewDisplay.Location = new System.Drawing.Point(606, 80);
             this.listViewDisplay.Name = "listViewDisplay";
-            this.listViewDisplay.Size = new System.Drawing.Size(154, 284);
+            this.listViewDisplay.Size = new System.Drawing.Size(154, 278);
             this.listViewDisplay.TabIndex = 0;
             this.listViewDisplay.UseCompatibleStateImageBehavior = false;
             this.listViewDisplay.View = System.Windows.Forms.View.Details;
@@ -112,15 +112,15 @@ namespace MSSSDataProcessing
             // listBoxA
             // 
             this.listBoxA.FormattingEnabled = true;
-            this.listBoxA.Location = new System.Drawing.Point(6, 20);
+            this.listBoxA.Location = new System.Drawing.Point(15, 20);
             this.listBoxA.Name = "listBoxA";
             this.listBoxA.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxA.Size = new System.Drawing.Size(111, 316);
+            this.listBoxA.Size = new System.Drawing.Size(91, 316);
             this.listBoxA.TabIndex = 1;
             // 
             // SigmaNumWheel
             // 
-            this.SigmaNumWheel.Location = new System.Drawing.Point(667, 29);
+            this.SigmaNumWheel.Location = new System.Drawing.Point(653, 28);
             this.SigmaNumWheel.Name = "SigmaNumWheel";
             this.SigmaNumWheel.Size = new System.Drawing.Size(41, 20);
             this.SigmaNumWheel.TabIndex = 7;
@@ -132,7 +132,7 @@ namespace MSSSDataProcessing
             // 
             // MeanNumWheel
             // 
-            this.MeanNumWheel.Location = new System.Drawing.Point(667, 55);
+            this.MeanNumWheel.Location = new System.Drawing.Point(653, 54);
             this.MeanNumWheel.Name = "MeanNumWheel";
             this.MeanNumWheel.Size = new System.Drawing.Size(41, 20);
             this.MeanNumWheel.TabIndex = 8;
@@ -149,7 +149,7 @@ namespace MSSSDataProcessing
             this.groupBoxA.Controls.Add(this.listBoxA);
             this.groupBoxA.Location = new System.Drawing.Point(12, 22);
             this.groupBoxA.Name = "groupBoxA";
-            this.groupBoxA.Size = new System.Drawing.Size(290, 350);
+            this.groupBoxA.Size = new System.Drawing.Size(285, 350);
             this.groupBoxA.TabIndex = 9;
             this.groupBoxA.TabStop = false;
             this.groupBoxA.Text = "Sensor A";
@@ -161,7 +161,7 @@ namespace MSSSDataProcessing
             this.SortGrpBoxA.Controls.Add(this.label5);
             this.SortGrpBoxA.Controls.Add(this.buttonSortA);
             this.SortGrpBoxA.Controls.Add(this.TbSortSpdA);
-            this.SortGrpBoxA.Location = new System.Drawing.Point(123, 27);
+            this.SortGrpBoxA.Location = new System.Drawing.Point(115, 30);
             this.SortGrpBoxA.Name = "SortGrpBoxA";
             this.SortGrpBoxA.Size = new System.Drawing.Size(160, 118);
             this.SortGrpBoxA.TabIndex = 11;
@@ -195,9 +195,9 @@ namespace MSSSDataProcessing
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(6, 67);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(96, 13);
+            this.label5.Size = new System.Drawing.Size(115, 13);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Processing Speed:";
+            this.label5.Text = "Processing Speed (ms)";
             // 
             // buttonSortA
             // 
@@ -227,7 +227,7 @@ namespace MSSSDataProcessing
             this.SearchGrpBoxA.Controls.Add(this.searchLabelA);
             this.SearchGrpBoxA.Controls.Add(this.buttonSearchA);
             this.SearchGrpBoxA.Controls.Add(this.TbSearchSpdA);
-            this.SearchGrpBoxA.Location = new System.Drawing.Point(124, 166);
+            this.SearchGrpBoxA.Location = new System.Drawing.Point(115, 169);
             this.SearchGrpBoxA.Name = "SearchGrpBoxA";
             this.SearchGrpBoxA.Size = new System.Drawing.Size(160, 145);
             this.SearchGrpBoxA.TabIndex = 10;
@@ -249,6 +249,7 @@ namespace MSSSDataProcessing
             this.TbTargetA.Name = "TbTargetA";
             this.TbTargetA.Size = new System.Drawing.Size(98, 20);
             this.TbTargetA.TabIndex = 13;
+            this.TbTargetA.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbTargetA_KeyPress);
             // 
             // radioRecursiveA
             // 
@@ -277,9 +278,9 @@ namespace MSSSDataProcessing
             this.searchLabelA.AutoSize = true;
             this.searchLabelA.Location = new System.Drawing.Point(6, 94);
             this.searchLabelA.Name = "searchLabelA";
-            this.searchLabelA.Size = new System.Drawing.Size(96, 13);
+            this.searchLabelA.Size = new System.Drawing.Size(115, 13);
             this.searchLabelA.TabIndex = 10;
-            this.searchLabelA.Text = "Processing Speed:";
+            this.searchLabelA.Text = "Processing Speed (ms)";
             // 
             // buttonSearchA
             // 
@@ -307,7 +308,7 @@ namespace MSSSDataProcessing
             this.groupBoxB.Controls.Add(this.listBoxB);
             this.groupBoxB.Location = new System.Drawing.Point(308, 22);
             this.groupBoxB.Name = "groupBoxB";
-            this.groupBoxB.Size = new System.Drawing.Size(291, 350);
+            this.groupBoxB.Size = new System.Drawing.Size(285, 350);
             this.groupBoxB.TabIndex = 10;
             this.groupBoxB.TabStop = false;
             this.groupBoxB.Text = "Sensor B";
@@ -319,7 +320,7 @@ namespace MSSSDataProcessing
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.buttonSortB);
             this.groupBox2.Controls.Add(this.TbSortSpdB);
-            this.groupBox2.Location = new System.Drawing.Point(125, 27);
+            this.groupBox2.Location = new System.Drawing.Point(115, 30);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(160, 118);
             this.groupBox2.TabIndex = 12;
@@ -353,9 +354,9 @@ namespace MSSSDataProcessing
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 67);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(96, 13);
+            this.label4.Size = new System.Drawing.Size(115, 13);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Processing Speed:";
+            this.label4.Text = "Processing Speed (ms)";
             // 
             // buttonSortB
             // 
@@ -385,7 +386,7 @@ namespace MSSSDataProcessing
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.buttonSearchB);
             this.groupBox1.Controls.Add(this.TbSearchSpdB);
-            this.groupBox1.Location = new System.Drawing.Point(123, 166);
+            this.groupBox1.Location = new System.Drawing.Point(113, 169);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(160, 145);
             this.groupBox1.TabIndex = 11;
@@ -407,6 +408,7 @@ namespace MSSSDataProcessing
             this.TbTargetB.Name = "TbTargetB";
             this.TbTargetB.Size = new System.Drawing.Size(98, 20);
             this.TbTargetB.TabIndex = 13;
+            this.TbTargetB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbTargetB_KeyPress);
             // 
             // radioRecursiveB
             // 
@@ -435,9 +437,9 @@ namespace MSSSDataProcessing
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(6, 94);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 13);
+            this.label3.Size = new System.Drawing.Size(115, 13);
             this.label3.TabIndex = 10;
-            this.label3.Text = "Processing Speed:";
+            this.label3.Text = "Processing Speed (ms)";
             // 
             // buttonSearchB
             // 
@@ -461,15 +463,15 @@ namespace MSSSDataProcessing
             // listBoxB
             // 
             this.listBoxB.FormattingEnabled = true;
-            this.listBoxB.Location = new System.Drawing.Point(6, 20);
+            this.listBoxB.Location = new System.Drawing.Point(15, 20);
             this.listBoxB.Name = "listBoxB";
             this.listBoxB.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxB.Size = new System.Drawing.Size(111, 316);
+            this.listBoxB.Size = new System.Drawing.Size(91, 316);
             this.listBoxB.TabIndex = 1;
             // 
             // LoadBtn
             // 
-            this.LoadBtn.Location = new System.Drawing.Point(729, 26);
+            this.LoadBtn.Location = new System.Drawing.Point(715, 25);
             this.LoadBtn.Name = "LoadBtn";
             this.LoadBtn.Size = new System.Drawing.Size(45, 49);
             this.LoadBtn.TabIndex = 11;
@@ -480,7 +482,7 @@ namespace MSSSDataProcessing
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(625, 33);
+            this.label6.Location = new System.Drawing.Point(611, 32);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(39, 13);
             this.label6.TabIndex = 12;
@@ -489,7 +491,7 @@ namespace MSSSDataProcessing
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(636, 59);
+            this.label7.Location = new System.Drawing.Point(622, 58);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(25, 13);
             this.label7.TabIndex = 13;
@@ -507,7 +509,7 @@ namespace MSSSDataProcessing
             this.statusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 366);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(796, 22);
+            this.statusStrip.Size = new System.Drawing.Size(775, 22);
             this.statusStrip.TabIndex = 14;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -520,7 +522,7 @@ namespace MSSSDataProcessing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(796, 388);
+            this.ClientSize = new System.Drawing.Size(775, 388);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
