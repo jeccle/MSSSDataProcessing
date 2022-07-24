@@ -22,6 +22,7 @@ namespace MSSSDataProcessing
         LinkedList<double> sensorB = new LinkedList<double>();
 
 
+
         #region Global Methods
 
         private void LoadData()
@@ -55,6 +56,13 @@ namespace MSSSDataProcessing
 
         }
 
+        private Stopwatch SetTimer()
+        {
+            Stopwatch sw = new Stopwatch();
+            long start = sw.ElapsedMilliseconds;
+            sw.Start();
+            return sw;
+        }
         #endregion
 
         #region Utility Methods
@@ -119,7 +127,7 @@ namespace MSSSDataProcessing
         {
             try
             {
-                
+                listBox.SelectedItems.Clear();
                 int rangeIndex = index - (range / 2);
                 double low, high, current;
                 if (index - range < 0 || index + range > 400)
@@ -128,7 +136,6 @@ namespace MSSSDataProcessing
                 }
                 low = double.Parse(listBox.Items[index - 1].ToString()) - valueRange;
                 high = double.Parse(listBox.Items[index - 1].ToString()) + valueRange;
-                listBox.SelectionMode = SelectionMode.MultiSimple;
                 Trace.TraceInformation("Selecting multiple values - Index range value: " + range + " Deviation: " + valueRange);
                 for (int i = 0; i < range && rangeIndex < 400; i++)
                 {
@@ -158,6 +165,8 @@ namespace MSSSDataProcessing
                 searchValue = result;
             return searchValue;
         }
+
+        
         #endregion
 
         #region Sort & Search Methods
@@ -251,17 +260,24 @@ namespace MSSSDataProcessing
         bool sortedA = false;
         private void buttonSortA_Click(object sender, EventArgs e)
         {
+            Stopwatch sw = new Stopwatch();
             int sortNum = RadioButtonIndex("SortA");
             if (sortNum == 1)
             {
+                sw.Start();
                 sortedA = SelectionSort(sensorA);
+                sw.Stop();
+                TbSortSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();
                 ShowAllSensorData();
                 PopulateListBox(sensorA, listBoxA);
                 statusLabel.Text = "Sensor A has been sorted using Selection Sort.";
             }
             else if (sortNum == 0)
             {
+                sw.Start();
                 sortedA = InsertionSort(sensorA);
+                sw.Stop();
+                TbSortSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();
                 ShowAllSensorData();
                 PopulateListBox(sensorA, listBoxA);
                 statusLabel.Text = "Sensor A has been sorted using Insertion Sort.";
@@ -272,17 +288,24 @@ namespace MSSSDataProcessing
         bool sortedB = false;
         private void buttonSortB_Click(object sender, EventArgs e)
         {
+            Stopwatch sw = new Stopwatch();
             int sortNum = RadioButtonIndex("SortB");
             if (sortNum == 1)
             {
+                sw.Start();
                 sortedB = SelectionSort(sensorB);
+                sw.Stop();
+                TbSortSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
                 ShowAllSensorData();
                 PopulateListBox(sensorB, listBoxB);
                 statusLabel.Text = "Sensor B has been sorted using Selection Sort.";
             }
             else if (sortNum == 0)
             {
+                sw.Start();
                 sortedB = InsertionSort(sensorB);
+                sw.Stop();
+                TbSortSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
                 ShowAllSensorData();
                 PopulateListBox(sensorB, listBoxB);
                 statusLabel.Text = "Sensor B has been sorted using Insertion Sort.";
@@ -292,20 +315,28 @@ namespace MSSSDataProcessing
         }
         private void buttonSearchA_Click(object sender, EventArgs e)
         {
+            
             if (CheckInput(TbTargetA.Text, TbTargetA) && sortedA)
             {
+                Stopwatch sw = new Stopwatch();
                 double searchValue = IntOrDouble(TbTargetA.Text);
                 int searchNum = RadioButtonIndex("SearchA");
                 if (searchNum == 1)
                 {
+                    sw.Start();
                     int foundIndex = IterativeBinarySearch(sensorA, searchValue);
+                    sw.Stop();
+                    TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();
                     // First int is mid index, second int is the range of values to be checked.
                     // Third int is the value range difference.
                     ListBoxSetSelected(listBoxA, foundIndex, 5, 1);
                 }
                 else if (searchNum == 0)
                 {
+                    sw.Start();
                     int foundIndex = RecursiveBinarySearch(sensorA, searchValue, 0, NumberOfNodes(sensorA));
+                    sw.Stop();
+                    TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString(); 
                     ListBoxSetSelected(listBoxA, foundIndex, 5, 1);
                 }
                 else
@@ -320,18 +351,25 @@ namespace MSSSDataProcessing
         }
         private void buttonSearchB_Click(object sender, EventArgs e)
         {
+            Stopwatch sw = new Stopwatch();
             if (CheckInput(TbTargetB.Text, TbTargetB) && sortedB)
             {
                 double searchValue = IntOrDouble(TbTargetB.Text);
                 int searchNum = RadioButtonIndex("SearchB");
                 if (searchNum == 1)
                 {
+                    sw.Start();
                     int foundIndex = IterativeBinarySearch(sensorB, searchValue);
+                    sw.Stop();
+                    TbSearchSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
                     ListBoxSetSelected(listBoxB, foundIndex, 5, 1);
                 }
                 else if (searchNum == 0)
                 {
+                    sw.Start();
                     int foundIndex = RecursiveBinarySearch(sensorB, searchValue, 0, NumberOfNodes(sensorB));
+                    sw.Stop();
+                    TbSearchSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
                     ListBoxSetSelected(listBoxB, foundIndex, 5, 1);
                 }
                 else

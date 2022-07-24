@@ -1,4 +1,6 @@
-﻿namespace MSSSDataProcessing
+﻿using System.Windows.Forms;
+
+namespace MSSSDataProcessing
 {
     partial class ProcessingForm
     {
@@ -114,6 +116,7 @@
             this.listBoxA.Name = "listBoxA";
             this.listBoxA.Size = new System.Drawing.Size(111, 316);
             this.listBoxA.TabIndex = 1;
+            this.listBoxA.SelectionMode = SelectionMode.MultiSimple;
             // 
             // SigmaNumWheel
             // 
@@ -454,6 +457,7 @@
             this.listBoxB.Name = "listBoxB";
             this.listBoxB.Size = new System.Drawing.Size(111, 316);
             this.listBoxB.TabIndex = 1;
+            this.listBoxB.SelectionMode = SelectionMode.MultiSimple;
             // 
             // LoadBtn
             // 
