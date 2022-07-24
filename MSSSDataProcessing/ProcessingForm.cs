@@ -56,13 +56,6 @@ namespace MSSSDataProcessing
 
         }
 
-        private Stopwatch SetTimer()
-        {
-            Stopwatch sw = new Stopwatch();
-            long start = sw.ElapsedMilliseconds;
-            sw.Start();
-            return sw;
-        }
         #endregion
 
         #region Utility Methods
@@ -82,6 +75,7 @@ namespace MSSSDataProcessing
         }
         private int RadioButtonIndex(string radioGrpName)
         {
+
             // If you choose to have value 1 as default, consider removing current else and else if condition to
             // clean up code.
             int index = 1;
@@ -119,6 +113,7 @@ namespace MSSSDataProcessing
             }
             else
                 return true;
+
         }
 
         // First int is mid index, second int is the range of values to be checked.
@@ -128,19 +123,21 @@ namespace MSSSDataProcessing
             try
             {
                 listBox.SelectedItems.Clear();
-                int rangeIndex = index - (range / 2);
-                double low, high, current;
-                if (index - range < 0 || index + range > 400)
+                int rangeIndex = index - range / 2;
+                if (rangeIndex < 0)
                 {
-                    // Find solution to error on first and last values.
+                    range += rangeIndex;
+                    rangeIndex = 0; 
                 }
-                low = double.Parse(listBox.Items[index - 1].ToString()) - valueRange;
-                high = double.Parse(listBox.Items[index - 1].ToString()) + valueRange;
+                double low, high, current;
+                // Boundaries for selection of values within listBox.
+                low = double.Parse(listBox.Items[index].ToString()) - valueRange;
+                high = double.Parse(listBox.Items[index].ToString()) + valueRange;
                 Trace.TraceInformation("Selecting multiple values - Index range value: " + range + " Deviation: " + valueRange);
                 for (int i = 0; i < range && rangeIndex < 400; i++)
-                {
+                { 
                     current = double.Parse(listBox.Items[rangeIndex].ToString());
-                    Trace.WriteLine("Comparing " + current + " to " + low + " && " + current + " to " + high);
+                    Trace.WriteLine("Comparing " + current + " to " + low + " && " + current + " to " + high + " -- Deviation of " + valueRange);
                     if (current > low && current < high)
                     {
                         listBox.SetSelected(rangeIndex, true);
@@ -220,12 +217,12 @@ namespace MSSSDataProcessing
             while (min <= max - 1)
             {
                 int mid = (min + max) / 2;
-                if (searchValue == sensor.ElementAt(mid))
+                if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid)) //+ 1 && searchValue > sensor.ElementAt(mid) - 1
                     return mid;
-                else if (searchValue > sensor.ElementAt(mid))
-                    max = mid - 1;
-                else
+                else if (searchValue < sensor.ElementAt(mid))
                     min = mid + 1;
+                else
+                    max = mid - 1;
             }
             return min;
         }
@@ -235,7 +232,7 @@ namespace MSSSDataProcessing
             while (min <= max - 1)
             {
                 int mid = (min + max) / 2;
-                if (searchValue == sensor.ElementAt(mid))
+                if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid))
                     return mid;
                 else if (searchValue > sensor.ElementAt(mid))
                     return RecursiveBinarySearch(sensor, searchValue, min, mid - 1);
@@ -329,7 +326,7 @@ namespace MSSSDataProcessing
                     TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();
                     // First int is mid index, second int is the range of values to be checked.
                     // Third int is the value range difference.
-                    ListBoxSetSelected(listBoxA, foundIndex, 5, 1);
+                    ListBoxSetSelected(listBoxA, foundIndex, 6, 1);
                 }
                 else if (searchNum == 0)
                 {
@@ -337,7 +334,7 @@ namespace MSSSDataProcessing
                     int foundIndex = RecursiveBinarySearch(sensorA, searchValue, 0, NumberOfNodes(sensorA));
                     sw.Stop();
                     TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString(); 
-                    ListBoxSetSelected(listBoxA, foundIndex, 5, 1);
+                    ListBoxSetSelected(listBoxA, foundIndex, 6, 1);
                 }
                 else
                     toolTip.Show("Select a search algorithm", radioIterativeA, 65, 20, 3000);
@@ -362,7 +359,7 @@ namespace MSSSDataProcessing
                     int foundIndex = IterativeBinarySearch(sensorB, searchValue);
                     sw.Stop();
                     TbSearchSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
-                    ListBoxSetSelected(listBoxB, foundIndex, 5, 1);
+                    ListBoxSetSelected(listBoxB, foundIndex, 6, 1);
                 }
                 else if (searchNum == 0)
                 {
@@ -370,7 +367,7 @@ namespace MSSSDataProcessing
                     int foundIndex = RecursiveBinarySearch(sensorB, searchValue, 0, NumberOfNodes(sensorB));
                     sw.Stop();
                     TbSearchSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
-                    ListBoxSetSelected(listBoxB, foundIndex, 5, 1);
+                    ListBoxSetSelected(listBoxB, foundIndex, 6, 1);
                 }
                 else
                     toolTip.Show("Select a search algorithm", radioIterativeB, 65, 20, 3000);
