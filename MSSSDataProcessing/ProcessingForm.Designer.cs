@@ -146,6 +146,8 @@ namespace MSSSDataProcessing
             this.numWheelSigma.Name = "numWheelSigma";
             this.numWheelSigma.Size = new System.Drawing.Size(41, 20);
             this.numWheelSigma.TabIndex = 7;
+            this.toolTip.SetToolTip(this.numWheelSigma, "Standard Deviation\r\nSets the range in which the values will deviate from\r\nthe mea" +
+        "n.");
             this.numWheelSigma.Value = new decimal(new int[] {
             10,
             0,
@@ -168,6 +170,7 @@ namespace MSSSDataProcessing
             this.numWheelMean.Name = "numWheelMean";
             this.numWheelMean.Size = new System.Drawing.Size(41, 20);
             this.numWheelMean.TabIndex = 8;
+            this.toolTip.SetToolTip(this.numWheelMean, "Mean Value\r\nSets mean value of data set for both sensors.\r\n\r\n");
             this.numWheelMean.Value = new decimal(new int[] {
             50,
             0,
@@ -193,7 +196,7 @@ namespace MSSSDataProcessing
             this.SortGrpBoxA.Controls.Add(this.label5);
             this.SortGrpBoxA.Controls.Add(this.buttonSortA);
             this.SortGrpBoxA.Controls.Add(this.TbSortSpdA);
-            this.SortGrpBoxA.Location = new System.Drawing.Point(115, 30);
+            this.SortGrpBoxA.Location = new System.Drawing.Point(115, 20);
             this.SortGrpBoxA.Name = "SortGrpBoxA";
             this.SortGrpBoxA.Size = new System.Drawing.Size(160, 118);
             this.SortGrpBoxA.TabIndex = 11;
@@ -203,29 +206,31 @@ namespace MSSSDataProcessing
             // radioInsertionA
             // 
             this.radioInsertionA.AutoSize = true;
-            this.radioInsertionA.Location = new System.Drawing.Point(9, 38);
+            this.radioInsertionA.Location = new System.Drawing.Point(12, 38);
             this.radioInsertionA.Name = "radioInsertionA";
             this.radioInsertionA.Size = new System.Drawing.Size(65, 17);
             this.radioInsertionA.TabIndex = 12;
             this.radioInsertionA.Text = "Insertion";
+            this.toolTip.SetToolTip(this.radioInsertionA, "Use insertion sort algorithm");
             this.radioInsertionA.UseVisualStyleBackColor = true;
             // 
             // radioSelectionA
             // 
             this.radioSelectionA.AutoSize = true;
             this.radioSelectionA.Checked = true;
-            this.radioSelectionA.Location = new System.Drawing.Point(9, 18);
+            this.radioSelectionA.Location = new System.Drawing.Point(12, 18);
             this.radioSelectionA.Name = "radioSelectionA";
             this.radioSelectionA.Size = new System.Drawing.Size(69, 17);
             this.radioSelectionA.TabIndex = 11;
             this.radioSelectionA.TabStop = true;
             this.radioSelectionA.Text = "Selection";
+            this.toolTip.SetToolTip(this.radioSelectionA, "Use selection sort algorithm");
             this.radioSelectionA.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 67);
+            this.label5.Location = new System.Drawing.Point(10, 67);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(115, 13);
             this.label5.TabIndex = 10;
@@ -233,21 +238,22 @@ namespace MSSSDataProcessing
             // 
             // buttonSortA
             // 
-            this.buttonSortA.Location = new System.Drawing.Point(97, 24);
+            this.buttonSortA.Location = new System.Drawing.Point(91, 21);
             this.buttonSortA.Name = "buttonSortA";
             this.buttonSortA.Size = new System.Drawing.Size(56, 23);
             this.buttonSortA.TabIndex = 6;
             this.buttonSortA.Text = "Sort";
+            this.toolTip.SetToolTip(this.buttonSortA, "Sorts using specified sort method");
             this.buttonSortA.UseVisualStyleBackColor = true;
             this.buttonSortA.Click += new System.EventHandler(this.buttonSortA_Click);
             // 
             // TbSortSpdA
             // 
             this.TbSortSpdA.Enabled = false;
-            this.TbSortSpdA.Location = new System.Drawing.Point(9, 83);
+            this.TbSortSpdA.Location = new System.Drawing.Point(13, 83);
             this.TbSortSpdA.Name = "TbSortSpdA";
             this.TbSortSpdA.ReadOnly = true;
-            this.TbSortSpdA.Size = new System.Drawing.Size(143, 20);
+            this.TbSortSpdA.Size = new System.Drawing.Size(134, 20);
             this.TbSortSpdA.TabIndex = 9;
             // 
             // SearchGrpBoxA
@@ -263,7 +269,7 @@ namespace MSSSDataProcessing
             this.SearchGrpBoxA.Controls.Add(this.searchLabelA);
             this.SearchGrpBoxA.Controls.Add(this.buttonSearchA);
             this.SearchGrpBoxA.Controls.Add(this.TbSearchSpdA);
-            this.SearchGrpBoxA.Location = new System.Drawing.Point(115, 150);
+            this.SearchGrpBoxA.Location = new System.Drawing.Point(115, 140);
             this.SearchGrpBoxA.Name = "SearchGrpBoxA";
             this.SearchGrpBoxA.Size = new System.Drawing.Size(160, 190);
             this.SearchGrpBoxA.TabIndex = 10;
@@ -278,6 +284,7 @@ namespace MSSSDataProcessing
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 14;
             this.label1.Text = "Target:";
+            this.toolTip.SetToolTip(this.label1, "Target value to be searched");
             // 
             // TbTargetA
             // 
@@ -285,34 +292,37 @@ namespace MSSSDataProcessing
             this.TbTargetA.Name = "TbTargetA";
             this.TbTargetA.Size = new System.Drawing.Size(91, 20);
             this.TbTargetA.TabIndex = 13;
+            this.toolTip.SetToolTip(this.TbTargetA, "Target value to be searched");
             this.TbTargetA.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbTargetA_KeyPress);
             // 
             // radioRecursiveA
             // 
             this.radioRecursiveA.AutoSize = true;
-            this.radioRecursiveA.Location = new System.Drawing.Point(9, 38);
+            this.radioRecursiveA.Location = new System.Drawing.Point(12, 38);
             this.radioRecursiveA.Name = "radioRecursiveA";
             this.radioRecursiveA.Size = new System.Drawing.Size(73, 17);
             this.radioRecursiveA.TabIndex = 12;
             this.radioRecursiveA.Text = "Recursive";
+            this.toolTip.SetToolTip(this.radioRecursiveA, "Use recursive search algorithm");
             this.radioRecursiveA.UseVisualStyleBackColor = true;
             // 
             // radioIterativeA
             // 
             this.radioIterativeA.AutoSize = true;
             this.radioIterativeA.Checked = true;
-            this.radioIterativeA.Location = new System.Drawing.Point(9, 18);
+            this.radioIterativeA.Location = new System.Drawing.Point(12, 18);
             this.radioIterativeA.Name = "radioIterativeA";
             this.radioIterativeA.Size = new System.Drawing.Size(63, 17);
             this.radioIterativeA.TabIndex = 11;
             this.radioIterativeA.TabStop = true;
             this.radioIterativeA.Text = "Iterative";
+            this.toolTip.SetToolTip(this.radioIterativeA, "Use iterative search algorithm");
             this.radioIterativeA.UseVisualStyleBackColor = true;
             // 
             // searchLabelA
             // 
             this.searchLabelA.AutoSize = true;
-            this.searchLabelA.Location = new System.Drawing.Point(6, 146);
+            this.searchLabelA.Location = new System.Drawing.Point(10, 141);
             this.searchLabelA.Name = "searchLabelA";
             this.searchLabelA.Size = new System.Drawing.Size(115, 13);
             this.searchLabelA.TabIndex = 10;
@@ -325,16 +335,17 @@ namespace MSSSDataProcessing
             this.buttonSearchA.Size = new System.Drawing.Size(56, 23);
             this.buttonSearchA.TabIndex = 6;
             this.buttonSearchA.Text = "Search";
+            this.toolTip.SetToolTip(this.buttonSearchA, "Search for target using specified search method");
             this.buttonSearchA.UseVisualStyleBackColor = true;
             this.buttonSearchA.Click += new System.EventHandler(this.buttonSearchA_Click);
             // 
             // TbSearchSpdA
             // 
             this.TbSearchSpdA.Enabled = false;
-            this.TbSearchSpdA.Location = new System.Drawing.Point(9, 162);
+            this.TbSearchSpdA.Location = new System.Drawing.Point(13, 158);
             this.TbSearchSpdA.Name = "TbSearchSpdA";
             this.TbSearchSpdA.ReadOnly = true;
-            this.TbSearchSpdA.Size = new System.Drawing.Size(143, 20);
+            this.TbSearchSpdA.Size = new System.Drawing.Size(134, 20);
             this.TbSearchSpdA.TabIndex = 9;
             // 
             // groupBoxB
@@ -356,7 +367,7 @@ namespace MSSSDataProcessing
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.buttonSortB);
             this.groupBox2.Controls.Add(this.TbSortSpdB);
-            this.groupBox2.Location = new System.Drawing.Point(115, 30);
+            this.groupBox2.Location = new System.Drawing.Point(115, 20);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(160, 118);
             this.groupBox2.TabIndex = 12;
@@ -371,6 +382,7 @@ namespace MSSSDataProcessing
             this.radioInsertionB.Size = new System.Drawing.Size(65, 17);
             this.radioInsertionB.TabIndex = 12;
             this.radioInsertionB.Text = "Insertion";
+            this.toolTip.SetToolTip(this.radioInsertionB, "Use insertion sort algorithm");
             this.radioInsertionB.UseVisualStyleBackColor = true;
             // 
             // radioSelectionB
@@ -383,12 +395,13 @@ namespace MSSSDataProcessing
             this.radioSelectionB.TabIndex = 11;
             this.radioSelectionB.TabStop = true;
             this.radioSelectionB.Text = "Selection";
+            this.toolTip.SetToolTip(this.radioSelectionB, "Use selection sort algorithm");
             this.radioSelectionB.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 67);
+            this.label4.Location = new System.Drawing.Point(11, 67);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(115, 13);
             this.label4.TabIndex = 10;
@@ -396,21 +409,22 @@ namespace MSSSDataProcessing
             // 
             // buttonSortB
             // 
-            this.buttonSortB.Location = new System.Drawing.Point(97, 24);
+            this.buttonSortB.Location = new System.Drawing.Point(91, 21);
             this.buttonSortB.Name = "buttonSortB";
             this.buttonSortB.Size = new System.Drawing.Size(56, 23);
             this.buttonSortB.TabIndex = 6;
             this.buttonSortB.Text = "Sort";
+            this.toolTip.SetToolTip(this.buttonSortB, "Sorts using specified sort method");
             this.buttonSortB.UseVisualStyleBackColor = true;
             this.buttonSortB.Click += new System.EventHandler(this.buttonSortB_Click);
             // 
             // TbSortSpdB
             // 
             this.TbSortSpdB.Enabled = false;
-            this.TbSortSpdB.Location = new System.Drawing.Point(9, 83);
+            this.TbSortSpdB.Location = new System.Drawing.Point(14, 83);
             this.TbSortSpdB.Name = "TbSortSpdB";
             this.TbSortSpdB.ReadOnly = true;
-            this.TbSortSpdB.Size = new System.Drawing.Size(143, 20);
+            this.TbSortSpdB.Size = new System.Drawing.Size(134, 20);
             this.TbSortSpdB.TabIndex = 9;
             // 
             // groupBox1
@@ -426,7 +440,7 @@ namespace MSSSDataProcessing
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.buttonSearchB);
             this.groupBox1.Controls.Add(this.TbSearchSpdB);
-            this.groupBox1.Location = new System.Drawing.Point(116, 150);
+            this.groupBox1.Location = new System.Drawing.Point(116, 140);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(160, 190);
             this.groupBox1.TabIndex = 11;
@@ -453,29 +467,31 @@ namespace MSSSDataProcessing
             // radioRecursiveB
             // 
             this.radioRecursiveB.AutoSize = true;
-            this.radioRecursiveB.Location = new System.Drawing.Point(9, 38);
+            this.radioRecursiveB.Location = new System.Drawing.Point(12, 38);
             this.radioRecursiveB.Name = "radioRecursiveB";
             this.radioRecursiveB.Size = new System.Drawing.Size(73, 17);
             this.radioRecursiveB.TabIndex = 12;
             this.radioRecursiveB.Text = "Recursive";
+            this.toolTip.SetToolTip(this.radioRecursiveB, "Use recursive search algorithm");
             this.radioRecursiveB.UseVisualStyleBackColor = true;
             // 
             // radioIterativeB
             // 
             this.radioIterativeB.AutoSize = true;
             this.radioIterativeB.Checked = true;
-            this.radioIterativeB.Location = new System.Drawing.Point(9, 18);
+            this.radioIterativeB.Location = new System.Drawing.Point(12, 18);
             this.radioIterativeB.Name = "radioIterativeB";
             this.radioIterativeB.Size = new System.Drawing.Size(63, 17);
             this.radioIterativeB.TabIndex = 11;
             this.radioIterativeB.TabStop = true;
             this.radioIterativeB.Text = "Iterative";
+            this.toolTip.SetToolTip(this.radioIterativeB, "Use iterative search algorithm");
             this.radioIterativeB.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 140);
+            this.label3.Location = new System.Drawing.Point(10, 141);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(115, 13);
             this.label3.TabIndex = 10;
@@ -488,6 +504,7 @@ namespace MSSSDataProcessing
             this.buttonSearchB.Size = new System.Drawing.Size(56, 23);
             this.buttonSearchB.TabIndex = 6;
             this.buttonSearchB.Text = "Search";
+            this.toolTip.SetToolTip(this.buttonSearchB, "Search for target using specified search method");
             this.buttonSearchB.UseVisualStyleBackColor = true;
             this.buttonSearchB.Click += new System.EventHandler(this.buttonSearchB_Click);
             // 
@@ -539,7 +556,7 @@ namespace MSSSDataProcessing
             // 
             // toolTip
             // 
-            this.toolTip.AutoPopDelay = 100;
+            this.toolTip.AutoPopDelay = 5000;
             this.toolTip.InitialDelay = 500;
             this.toolTip.ReshowDelay = 500;
             // 
@@ -633,7 +650,8 @@ namespace MSSSDataProcessing
             this.label10.Size = new System.Drawing.Size(89, 13);
             this.label10.TabIndex = 17;
             this.label10.Text = "Selection Range:";
-            this.toolTip.SetToolTip(this.label10, "Sets total span of values to be included in the search.");
+            this.toolTip.SetToolTip(this.label10, "Sets total span of values to be included in the search (Stems from the target val" +
+        "ue).");
             // 
             // numWheelSelRangeA
             // 
@@ -646,7 +664,8 @@ namespace MSSSDataProcessing
             this.numWheelSelRangeA.Name = "numWheelSelRangeA";
             this.numWheelSelRangeA.Size = new System.Drawing.Size(41, 20);
             this.numWheelSelRangeA.TabIndex = 18;
-            this.toolTip.SetToolTip(this.numWheelSelRangeA, "Sets total span of values to be included in the search.");
+            this.toolTip.SetToolTip(this.numWheelSelRangeA, "Sets total span of values to be included in the search (Stems from the target val" +
+        "ue).");
             this.numWheelSelRangeA.Value = new decimal(new int[] {
             6,
             0,
@@ -664,7 +683,8 @@ namespace MSSSDataProcessing
             this.numWheelSelRangeB.Name = "numWheelSelRangeB";
             this.numWheelSelRangeB.Size = new System.Drawing.Size(41, 20);
             this.numWheelSelRangeB.TabIndex = 20;
-            this.toolTip.SetToolTip(this.numWheelSelRangeB, "Sets total span of values to be included in the search.");
+            this.toolTip.SetToolTip(this.numWheelSelRangeB, "Sets total span of values to be included in the search (Stems from the target val" +
+        "ue).");
             this.numWheelSelRangeB.Value = new decimal(new int[] {
             6,
             0,
@@ -679,7 +699,8 @@ namespace MSSSDataProcessing
             this.label11.Size = new System.Drawing.Size(89, 13);
             this.label11.TabIndex = 19;
             this.label11.Text = "Selection Range:";
-            this.toolTip.SetToolTip(this.label11, "Sets total span of values to be included in the search.");
+            this.toolTip.SetToolTip(this.label11, "Sets total span of values to be included in the search (Stems from the target val" +
+        "ue).\r\n");
             // 
             // ProcessingForm
             // 
