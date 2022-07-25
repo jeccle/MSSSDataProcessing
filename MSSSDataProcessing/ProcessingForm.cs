@@ -32,8 +32,8 @@ namespace MSSSDataProcessing
             sensorB.Clear();
             for (int i = 0; i < 400; i++)
             {
-                sensorA.AddFirst(satellite.SensorA((double)MeanNumWheel.Value, (double)SigmaNumWheel.Value));
-                sensorB.AddFirst(satellite.SensorB((double)MeanNumWheel.Value, (double)SigmaNumWheel.Value));
+                sensorA.AddFirst(satellite.SensorA((double)numWheelMean.Value, (double)numWheelSigma.Value));
+                sensorB.AddFirst(satellite.SensorB((double)numWheelMean.Value, (double)numWheelSigma.Value));
                 Trace.WriteLine("Adding " + sensorA.First.Value + " to sensorA LinkedList.");
                 Trace.WriteLine("Adding " + sensorB.First.Value.ToString() + " to sensorB LinkedList.");
             }
@@ -125,11 +125,11 @@ namespace MSSSDataProcessing
                     range += pointerIndex;  // New range set
                     pointerIndex = 0;       // Sets starting pointer to 0, range is reduced to compensate for non-existent indexes.
                 }
-                double low, high, current;  // Boundaries for selection of values within listBox.
+                double low, high, current;  // Boundaries for listBox value selection.
                 low = double.Parse(listBox.Items[index].ToString()) - valueRange;
                 high = double.Parse(listBox.Items[index].ToString()) + valueRange;
                 Trace.TraceInformation("Selecting multiple values - Index range value: " + range + " Deviation: " + valueRange);
-                // pointerIndex value is incremented untill i >= range. Within loop, if statement checks current value selection.
+                // pointerIndex value is incremented untill i >= range. Within the loop, if statement current value.
                 for (int i = 0; i < range && pointerIndex < 400; i++)
                 { 
                     current = double.Parse(listBox.Items[pointerIndex].ToString());
@@ -144,7 +144,7 @@ namespace MSSSDataProcessing
             }
             catch (IndexOutOfRangeException)
             {
-                Trace.TraceError("Index is out of array.");
+                Trace.TraceError("Index is out of bounds within the array.");
             }
         }
 
@@ -206,7 +206,7 @@ namespace MSSSDataProcessing
             return true;
         }
 
-        private int IterativeBinarySearch(LinkedList<double> sensor, double searchValue)
+        private int BinarySearchIterative(LinkedList<double> sensor, double searchValue)
         {
             int min = 0;
             int max = NumberOfNodes(sensor);
@@ -224,7 +224,7 @@ namespace MSSSDataProcessing
             return min;
         }
 
-        private int RecursiveBinarySearch(LinkedList<double> sensor, double searchValue, int min, int max)
+        private int BinarySearchRecursive(LinkedList<double> sensor, double searchValue, int min, int max)
         {
             while (min <= max - 1)
             {
@@ -233,9 +233,9 @@ namespace MSSSDataProcessing
                     searchValue == (int)sensor.ElementAt(mid))  // Casting sensor element to int allows for
                     return mid;                                 // integers entered for a general search. 
                 else if (searchValue > sensor.ElementAt(mid))
-                    return RecursiveBinarySearch(sensor, searchValue, min, mid - 1);
+                    return BinarySearchRecursive(sensor, searchValue, min, mid - 1);
                 else
-                    return RecursiveBinarySearch(sensor, searchValue, mid + 1, max);
+                    return BinarySearchRecursive(sensor, searchValue, mid + 1, max);
             }
             return min;
         }
@@ -319,25 +319,25 @@ namespace MSSSDataProcessing
                 if (searchNum == 1)
                 {
                     sw.Start();                                                     // Beginning of stopwatch timer.
-                    int foundIndex = IterativeBinarySearch(sensorA, searchValue);   
+                    int foundIndex = BinarySearchIterative(sensorA, searchValue);   
                     sw.Stop();                                                      // End of stopwatch timer.
                     TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();    // Total time in ms displayed to textBox.
                     statusLabel.Text = "Searching for target " + searchValue + " using Iterative Binary Search"; 
-                    ListBoxSetSelected(listBoxA, foundIndex, 6, 1); // First int is mid index, second int is the range of values to be checked.
+                    ListBoxSetSelected(listBoxA, foundIndex, (int)numWheelSelRangeA.Value, (double)numWheelTarRangeA.Value); // First int is mid index, second int is the range of values to be checked.
                 }                                                   // Third int is the value range deviation.
                 else if (searchNum == 0)
                 {
                     sw.Start();
-                    int foundIndex = RecursiveBinarySearch(sensorA, searchValue, 0, NumberOfNodes(sensorA));
+                    int foundIndex = BinarySearchRecursive(sensorA, searchValue, 0, NumberOfNodes(sensorA));
                     sw.Stop();
                     TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();
                     statusLabel.Text = "Searching for target " + searchValue + " using Recursive Binary Search";
-                    ListBoxSetSelected(listBoxA, foundIndex, 6, 1);
+                    ListBoxSetSelected(listBoxA, foundIndex, (int)numWheelSelRangeA.Value, (double)numWheelTarRangeA.Value);
                 }
-                else
+                else 
                     toolTip.Show("Select a search algorithm", radioIterativeA, 65, 20, 3000);
             }
-            else
+            else if(!sortedA)
             {
                 toolTip.Show("Ensure ListBox is Sorted!", buttonSortA, 45, 15, 3000);
                 statusLabel.Text = "Sensor A values not sorted. Cannot search";
@@ -354,25 +354,25 @@ namespace MSSSDataProcessing
                 if (searchNum == 1)
                 {
                     sw.Start();
-                    int foundIndex = IterativeBinarySearch(sensorB, searchValue);
+                    int foundIndex = BinarySearchIterative(sensorB, searchValue);
                     sw.Stop();
                     statusLabel.Text = "Searching for target " + searchValue + " using Iterative Binary Search";
                     TbSearchSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
-                    ListBoxSetSelected(listBoxB, foundIndex, 6, 1);
+                    ListBoxSetSelected(listBoxB, foundIndex, (int)numWheelSelRangeB.Value, (double)numWheelTarRangeB.Value);
                 }
                 else if (searchNum == 0)
                 {
                     sw.Start();
-                    int foundIndex = RecursiveBinarySearch(sensorB, searchValue, 0, NumberOfNodes(sensorB));
+                    int foundIndex = BinarySearchRecursive(sensorB, searchValue, 0, NumberOfNodes(sensorB));
                     sw.Stop();
                     statusLabel.Text = "Searching for target " + searchValue + " using Iterative Binary Search";
                     TbSearchSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
-                    ListBoxSetSelected(listBoxB, foundIndex, 6, 1);
+                    ListBoxSetSelected(listBoxB, foundIndex, (int)numWheelSelRangeB.Value, (double)numWheelTarRangeB.Value);
                 }
                 else
                     toolTip.Show("Select a search algorithm", radioIterativeB, 65, 20, 3000);
             }
-            else
+            else if (!sortedB)
             {
                 toolTip.Show("Ensure ListBox is Sorted!", buttonSortB, 45, 15, 3000);
                 statusLabel.Text = "Sensor B values not sorted. Cannot search";
