@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace MSSSDataProcessing
         public ProcessingForm()
         {
             InitializeComponent();
+            
         }
         LinkedList<double> sensorA = new LinkedList<double>();
         LinkedList<double> sensorB = new LinkedList<double>();
@@ -30,13 +32,14 @@ namespace MSSSDataProcessing
             ReadData satellite = new ReadData();
             sensorA.Clear();
             sensorB.Clear();
+            Trace.TraceInformation("Loading data to listView");
             for (int i = 0; i < 400; i++)
             {
                 sensorA.AddFirst(satellite.SensorA((double)numWheelMean.Value, (double)numWheelSigma.Value));
                 sensorB.AddFirst(satellite.SensorB((double)numWheelMean.Value, (double)numWheelSigma.Value));
-                Trace.WriteLine("Adding " + sensorA.First.Value + " to sensorA LinkedList.");
-                Trace.WriteLine("Adding " + sensorB.First.Value.ToString() + " to sensorB LinkedList.");
+                Trace.WriteLine("Adding to LinkedLists \t| sensorA: " + sensorA.First.Value + "\t| sensorB: " + sensorB.First.Value.ToString());
             }
+            Trace.TraceInformation("Data loaded to listView.\n");
         }
 
         private void ShowAllSensorData()
@@ -50,15 +53,39 @@ namespace MSSSDataProcessing
                 ListViewItem row = new ListViewItem(sensorAEnum.Current.ToString());
                 row.SubItems.Add(sensorBEnum.Current.ToString());
                 listViewDisplay.Items.Add(row);
-                Trace.WriteLine("Adding SensA " + sensorAEnum.Current.ToString() + " & SensB " + sensorBEnum.Current.ToString());
+                Trace.WriteLine("Adding to ListView SensorA: " + sensorAEnum.Current.ToString() + "\t| SensorB: " + sensorBEnum.Current.ToString());
             }
-            Trace.TraceInformation("List view populated.");
+            Trace.TraceInformation("List view populated.\n");
 
         }
 
         #endregion
 
         #region Utility Methods
+        // Checks file dir and incrememnts upwards for each existing demo file until a new file number is reached.
+        public string checkFileDir(string fileName)
+        {
+            int fileCount = 0;
+            string fileNameExt = fileName + fileCount.ToString("_00") + ".log";
+            while (true)
+            {
+                if (File.Exists(fileNameExt))
+                {
+                    fileCount++;
+                    fileName = Path.GetFileName(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), fileName
+                                + String.Format(fileCount.ToString("_00")) + ".log"));
+                    Trace.TraceInformation("File Exists - File count: " + fileCount);
+                    break;
+                }
+                else
+                {
+                    fileName = fileName + "_00.log";
+                    break;
+                }
+            }
+            Trace.TraceInformation("New file " + fileName + " created.\n");
+            return fileName;
+        }
 
         private int NumberOfNodes(LinkedList<double> sensor)
         {
@@ -67,7 +94,7 @@ namespace MSSSDataProcessing
         private void PopulateListBox(LinkedList<double> sensor, ListBox listBox)
         {
             listBox.Items.Clear();
-            LinkedList<double>.Enumerator sensorEnum = sensor.GetEnumerator();
+            var sensorEnum = sensor.GetEnumerator();
             while (sensorEnum.MoveNext())
             {
                 listBox.Items.Add(sensorEnum.Current);
@@ -115,10 +142,11 @@ namespace MSSSDataProcessing
 
         // First int is mid index, second int is the range of values to be checked.
         // Third int is the approximate value range difference.
-        private void ListBoxSetSelected(ListBox listBox, int index, int range, double valueRange)
+        private void DisplayListBoxData(ListBox listBox, int index, int range, double valueRange)
         {
             try
             {
+               
                 listBox.SelectedItems.Clear();
                 int pointerIndex = index - range / 2;   // pointerIndex variable holds index of first item in the range of values to be checked.
                 if (pointerIndex < 0)                   // If the search index = 1, range = 6, the starting pointerIndex value will be 0.
@@ -129,23 +157,24 @@ namespace MSSSDataProcessing
                 double low, high, current;  // Boundaries for listBox value selection.
                 low = double.Parse(listBox.Items[index].ToString()) - valueRange;
                 high = double.Parse(listBox.Items[index].ToString()) + valueRange;
-                Trace.TraceInformation("Selecting multiple values - Index range value: " + range + " Deviation: " + valueRange);
+                Trace.TraceInformation("Selection Display\t| Total selection range: " + range + "\t|Deviation range from target: " + valueRange);
                 // pointerIndex value is incremented untill i >= range. Within the loop, if statement current value.
                 for (int i = 0; i < range && pointerIndex < 400; i++)
                 { 
                     current = double.Parse(listBox.Items[pointerIndex].ToString());
-                    Trace.WriteLine("Comparing " + current + " to " + low + " && " + current + " to " + high + " -- Deviation of " + valueRange);
+                    Trace.WriteLine("Comparing Target: " + current + " - High: " + high + "\t| Low:" + low + " \t| Deviation range from target: " + valueRange);
                     if (current > low && current < high)    // If current value is within upper and lower bounds.
                     {
                         listBox.SetSelected(pointerIndex, true);    // Specified index is set as selected within listBox.
-                        Trace.TraceInformation(current + " SELECTED in " + listBox.Name);
+                        Trace.TraceInformation(current + " is within bounds. Now selected in " + listBox.Name);
                     }
                     pointerIndex++;
                 }
+                Trace.TraceInformation("listBox target selection complete.\n");
             }
             catch (IndexOutOfRangeException)
             {
-                Trace.TraceError("Index is out of bounds within the array.");
+                Trace.TraceError("Index is out of bounds within the array.\n");
             }
         }
 
@@ -160,29 +189,29 @@ namespace MSSSDataProcessing
             return searchValue;
         }
 
-        
+
         #endregion
 
         #region Sort & Search Methods
-
+        
         private bool SelectionSort(LinkedList<double> sensor)
         {
-            int min = 0;
+            int min;
             int max = NumberOfNodes(sensor);
             for (int i = 0; i < max; i++)
             {
                 min = i;
                 for (int j = i + 1; j < max; j++)
                 {
-                    if (sensor.ElementAt(min) < sensor.ElementAt(j))
-                        min = j;
+                    if (sensor.ElementAt(min) < sensor.ElementAt(j))    // If sensor to the left is less than sensor element on the right, raise the minimum value to the right.
+                        min = j;                                        // else continue iterating
                 }
                 LinkedListNode<double> currentMin = sensor.Find(sensor.ElementAt(min));
                 LinkedListNode<double> currentI = sensor.Find(sensor.ElementAt(i));
-                Trace.WriteLine("Current Min Value " + currentMin.Value + " | Current I Value " + currentI.Value);
-                var temp = currentMin.Value;
-                currentMin.Value = currentI.Value;
-                currentI.Value = temp;
+                Trace.WriteLine("Current Min Value " + currentMin.Value + " | Current pointer Value " + currentI.Value);
+                double temp = currentMin.Value;
+                currentMin.Value = currentI.Value;      // Swaps the found minimum with the I current pointer value as the minimum is currently the lowest value in the list.
+                currentI.Value = temp;                  // Minimum values are shuffled down using selection sort.
             }
             return true;
         }
@@ -198,7 +227,7 @@ namespace MSSSDataProcessing
                     {
                         LinkedListNode<double> current = sensor.Find(sensor.ElementAt(j));
                         LinkedListNode<double> currentLeft = sensor.Find(sensor.ElementAt(j - 1));
-                        var temp = current.Value;
+                        double temp = current.Value;
                         current.Value = currentLeft.Value;
                         currentLeft.Value = temp;
                     }
@@ -215,12 +244,29 @@ namespace MSSSDataProcessing
             {
                 int mid = (min + max) / 2;
                 // Find an exact value or if searchValue is an int, it can be matched with a casted int for a more general search.
-                if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid)) 
+                if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid)) // 
+                {
+                    Trace.TraceInformation("Index " + mid + " has been found: " + sensor.ElementAt(mid));
+                    return mid;
+                }
+                else if (searchValue < sensor.ElementAt(mid))
+                {
+                    min = mid + 1;
+                    Trace.WriteLine("Search value: " + searchValue + " < " + sensor.ElementAt(mid) + "\t|   Increasing min to mid + 1:" + min);
+                }
+                else
+                {
+                    max = mid - 1;
+                    Trace.WriteLine("Search value: " + searchValue + " > " + sensor.ElementAt(mid) + "\t|   Decreasing max to mid - 1:" + max);
+                }
+                /*
+                if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid))
                     return mid;
                 else if (searchValue < sensor.ElementAt(mid))
                     min = mid + 1;
                 else
                     max = mid - 1;
+                */
             }
             return min;
         }
@@ -229,14 +275,30 @@ namespace MSSSDataProcessing
         {
             while (min <= max - 1)
             {
-                int mid = (min + max) / 2;                      
-                if (searchValue == sensor.ElementAt(mid) ||     // Checks if searchValue equals double at mid index.
-                    searchValue == (int)sensor.ElementAt(mid))  // Casting sensor element to int allows for
-                    return mid;                                 // integers entered for a general search. 
+                int mid = (min + max) / 2;
+                if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid))
+                {
+                    Trace.TraceInformation("Index " + mid + " has been found: " + sensor.ElementAt(mid));
+                    return mid;
+                }
                 else if (searchValue > sensor.ElementAt(mid))
+                {
+                    Trace.WriteLine("Search value: " + searchValue + " > " + sensor.ElementAt(mid) + "\t|   Decreasing max - 1:" + (mid - 1));
+                    return BinarySearchRecursive(sensor, searchValue, min, mid - 1);
+                }
+                else
+                {
+                    Trace.WriteLine("Search value: " + searchValue + " < " + sensor.ElementAt(mid) + "\t|   Increasing min + 1:" + (mid + 1));
+                    return BinarySearchRecursive(sensor, searchValue, mid + 1, max);
+                }
+                /*
+                if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid))  // Checks if searchValue equals double at mid index.
+                  return mid;                                              // Casting sensor element to int allows for
+                else if (searchValue > sensor.ElementAt(mid))               // integers entered for a general search. 
                     return BinarySearchRecursive(sensor, searchValue, min, mid - 1);
                 else
                     return BinarySearchRecursive(sensor, searchValue, mid + 1, max);
+                */
             }
             return min;
         }
@@ -260,9 +322,11 @@ namespace MSSSDataProcessing
             int sortNum = RadioButtonIndex("SortA");
             if (sortNum == 1)
             {
+                Trace.TraceInformation("Starting stopwatch   | Sort: Selection");
                 sw.Start();
                 sortedA = SelectionSort(sensorA);   // Sets bool to true upon sort success. Enables search function.
                 sw.Stop();
+                Trace.TraceInformation("Stopping stopwatch   | Sort time: " + sw.Elapsed.TotalMilliseconds + "\n");
                 TbSortSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();
                 ShowAllSensorData();
                 PopulateListBox(sensorA, listBoxA);
@@ -270,9 +334,11 @@ namespace MSSSDataProcessing
             }
             else if (sortNum == 0)
             {
+                Trace.TraceInformation("Starting stopwatch   | Sort: Insertion");
                 sw.Start();
                 sortedA = InsertionSort(sensorA);
                 sw.Stop();
+                Trace.TraceInformation("Stopping stopwatch   | Sort time: " + sw.Elapsed.TotalMilliseconds + "\n");
                 TbSortSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();
                 ShowAllSensorData();
                 PopulateListBox(sensorA, listBoxA);
@@ -288,9 +354,11 @@ namespace MSSSDataProcessing
             int sortNum = RadioButtonIndex("SortB");
             if (sortNum == 1)
             {
+                Trace.TraceInformation("Starting stopwatch   | Sort: Selection");
                 sw.Start();
                 sortedB = SelectionSort(sensorB);   // Sets bool to true upon sort success. Enables search function.
                 sw.Stop();
+                Trace.TraceInformation("Stopping stopwatch   | Sort time: " + sw.Elapsed.TotalMilliseconds + "\n");
                 TbSortSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
                 ShowAllSensorData();
                 PopulateListBox(sensorB, listBoxB);
@@ -298,9 +366,11 @@ namespace MSSSDataProcessing
             }
             else if (sortNum == 0)
             {
+                Trace.TraceInformation("Starting stopwatch   | Sort: Insertion");
                 sw.Start();
                 sortedB = InsertionSort(sensorB);
                 sw.Stop();
+                Trace.TraceInformation("Stopping stopwatch   | Sort time: " + sw.Elapsed.TotalMilliseconds + "\n");
                 TbSortSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
                 ShowAllSensorData();
                 PopulateListBox(sensorB, listBoxB);
@@ -319,21 +389,25 @@ namespace MSSSDataProcessing
                 int searchNum = RadioButtonIndex("SearchA");
                 if (searchNum == 1)
                 {
+                    Trace.TraceInformation("Starting stopwatch   | Binary Search: Iterative");
                     sw.Start();                                                     // Beginning of stopwatch timer.
                     int foundIndex = BinarySearchIterative(sensorA, searchValue);   
                     sw.Stop();                                                      // End of stopwatch timer.
                     TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();    // Total time in ms displayed to textBox.
-                    statusLabel.Text = "Search value: " + searchValue + "  Found: " + sensorA.ElementAt(foundIndex) + "   | Searching using Iterative Binary Search"; 
-                    ListBoxSetSelected(listBoxA, foundIndex, (int)numWheelSelRangeA.Value, (double)numWheelTarRangeA.Value); // First int is mid index, second int is the range of values to be checked.
-                }                                                   // Third int is the value range deviation.
+                    Trace.TraceInformation("Stopping stopwatch   | Search time: " + sw.Elapsed.TotalMilliseconds.ToString() + "\n");                                               // I put the trace line underneath in this method because it looks neat.
+                    statusLabel.Text = "Search value: " + searchValue + "  Found: " + sensorA.ElementAt(foundIndex) + "\t| Searching using Iterative Binary Search"; 
+                    DisplayListBoxData(listBoxA, foundIndex, (int)numWheelSelRangeA.Value, (double)numWheelTarRangeA.Value); // Added input from controls
+                }                                   // First int is mid index, second int is the range of values to be checked.Third int is the value range deviation.
                 else if (searchNum == 0)
                 {
+                    Trace.TraceInformation("Starting stopwatch   | Binary Search: Recursive");
                     sw.Start();
                     int foundIndex = BinarySearchRecursive(sensorA, searchValue, 0, NumberOfNodes(sensorA));
                     sw.Stop();
+                    Trace.TraceInformation("Stopping stopwatch   | Search time: " + sw.Elapsed.TotalMilliseconds.ToString() + "\n");
                     TbSearchSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString();
-                    statusLabel.Text = "Search value: " + searchValue + "  Found: " + sensorA.ElementAt(foundIndex) + "   | Searching using Recursive Binary Search";
-                    ListBoxSetSelected(listBoxA, foundIndex, (int)numWheelSelRangeA.Value, (double)numWheelTarRangeA.Value);
+                    statusLabel.Text = "Search value: " + searchValue + "  Found: " + sensorA.ElementAt(foundIndex) + "\t| Searching using Recursive Binary Search";
+                    DisplayListBoxData(listBoxA, foundIndex, (int)numWheelSelRangeA.Value, (double)numWheelTarRangeA.Value);
                 }
                 else 
                     toolTip.Show("Select a search algorithm", radioIterativeA, 65, 20, 3000);
@@ -354,21 +428,25 @@ namespace MSSSDataProcessing
                 int searchNum = RadioButtonIndex("SearchB");
                 if (searchNum == 1)
                 {
+                    Trace.TraceInformation("Starting stopwatch   | Binary Search: Iterative");
                     sw.Start();
                     int foundIndex = BinarySearchIterative(sensorB, searchValue);
                     sw.Stop();
-                    statusLabel.Text = "Search value: " + searchValue + "  Found: " + sensorB.ElementAt(foundIndex) + "   | Searching using Iterative Binary Search";
+                    Trace.TraceInformation("Stopping stopwatch   | Search time: " + sw.Elapsed.TotalMilliseconds.ToString() + "\n");
+                    statusLabel.Text = "Search value: " + searchValue + "  Found: " + sensorB.ElementAt(foundIndex) + "\t| Searching using Iterative Binary Search";
                     TbSearchSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
-                    ListBoxSetSelected(listBoxB, foundIndex, (int)numWheelSelRangeB.Value, (double)numWheelTarRangeB.Value);
+                    DisplayListBoxData(listBoxB, foundIndex, (int)numWheelSelRangeB.Value, (double)numWheelTarRangeB.Value);
                 }
                 else if (searchNum == 0)
                 {
+                    Trace.TraceInformation("Starting stopwatch   | Binary Search: Recursive");
                     sw.Start();
                     int foundIndex = BinarySearchRecursive(sensorB, searchValue, 0, NumberOfNodes(sensorB));
                     sw.Stop();
-                    statusLabel.Text = "Search value: " + searchValue + "  Found: " + sensorB.ElementAt(foundIndex) + "   | Searching using Recursive Binary Search";
+                    Trace.TraceInformation("Stopping stopwatch   | Search time: " + sw.Elapsed.TotalMilliseconds.ToString() + "\n");
+                    statusLabel.Text = "Search value: " + searchValue + "  Found: " + sensorB.ElementAt(foundIndex) + "\t| Searching using Recursive Binary Search";
                     TbSearchSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString();
-                    ListBoxSetSelected(listBoxB, foundIndex, (int)numWheelSelRangeB.Value, (double)numWheelTarRangeB.Value);
+                    DisplayListBoxData(listBoxB, foundIndex, (int)numWheelSelRangeB.Value, (double)numWheelTarRangeB.Value);
                 }
                 else
                     toolTip.Show("Select a search algorithm", radioIterativeB, 65, 20, 3000);
@@ -377,6 +455,7 @@ namespace MSSSDataProcessing
             {
                 toolTip.Show("Ensure ListBox is Sorted!", buttonSortB, 45, 15, 3000);
                 statusLabel.Text = "Sensor B values not sorted. Cannot search";
+                Trace.TraceInformation("SensorB attempted to search but its not sorted!?!?");
             }
         }
         private void TbTargetA_KeyPress(object sender, KeyPressEventArgs e)
@@ -388,9 +467,19 @@ namespace MSSSDataProcessing
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
         }
+
         #endregion
 
+        private void ProcessingForm_Load(object sender, EventArgs e)
+        {
+            Trace.Listeners.Clear();
+            Trace.Listeners.Add(new TextWriterTraceListener(checkFileDir("TraceOutput"), "myListener"));
+        }
 
+        private void ProcessingForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Trace.Flush();
+        }
     }
 }
 

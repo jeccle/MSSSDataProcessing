@@ -45,6 +45,10 @@ namespace MSSSDataProcessing
             this.buttonSortA = new System.Windows.Forms.Button();
             this.TbSortSpdA = new System.Windows.Forms.TextBox();
             this.SearchGrpBoxA = new System.Windows.Forms.GroupBox();
+            this.numWheelSelRangeA = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.numWheelTarRangeA = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.TbTargetA = new System.Windows.Forms.TextBox();
             this.radioRecursiveA = new System.Windows.Forms.RadioButton();
@@ -60,6 +64,10 @@ namespace MSSSDataProcessing
             this.buttonSortB = new System.Windows.Forms.Button();
             this.TbSortSpdB = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.numWheelSelRangeB = new System.Windows.Forms.NumericUpDown();
+            this.label11 = new System.Windows.Forms.Label();
+            this.numWheelTarRangeB = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.TbTargetB = new System.Windows.Forms.TextBox();
             this.radioRecursiveB = new System.Windows.Forms.RadioButton();
@@ -74,27 +82,19 @@ namespace MSSSDataProcessing
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.numWheelTarRangeA = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.numWheelTarRangeB = new System.Windows.Forms.NumericUpDown();
-            this.label10 = new System.Windows.Forms.Label();
-            this.numWheelSelRangeA = new System.Windows.Forms.NumericUpDown();
-            this.numWheelSelRangeB = new System.Windows.Forms.NumericUpDown();
-            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelSigma)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelMean)).BeginInit();
             this.groupBoxA.SuspendLayout();
             this.SortGrpBoxA.SuspendLayout();
             this.SearchGrpBoxA.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelRangeA)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelTarRangeA)).BeginInit();
             this.groupBoxB.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.statusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numWheelTarRangeA)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numWheelTarRangeB)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelRangeA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelSelRangeB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelTarRangeB)).BeginInit();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // listViewDisplay
@@ -276,6 +276,70 @@ namespace MSSSDataProcessing
             this.SearchGrpBoxA.TabStop = false;
             this.SearchGrpBoxA.Text = "Search";
             // 
+            // numWheelSelRangeA
+            // 
+            this.numWheelSelRangeA.Location = new System.Drawing.Point(106, 117);
+            this.numWheelSelRangeA.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numWheelSelRangeA.Name = "numWheelSelRangeA";
+            this.numWheelSelRangeA.Size = new System.Drawing.Size(41, 20);
+            this.numWheelSelRangeA.TabIndex = 18;
+            this.toolTip.SetToolTip(this.numWheelSelRangeA, "Sets total span of values to be included in the search (Stems from the target val" +
+        "ue).");
+            this.numWheelSelRangeA.Value = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(9, 118);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(89, 13);
+            this.label10.TabIndex = 17;
+            this.label10.Text = "Selection Range:";
+            this.toolTip.SetToolTip(this.label10, "Sets total span of values to be included in the search (Stems from the target val" +
+        "ue).");
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(9, 93);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(76, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Target Range:";
+            this.toolTip.SetToolTip(this.label8, "Sets the range from target for which values can be selected.");
+            // 
+            // numWheelTarRangeA
+            // 
+            this.numWheelTarRangeA.DecimalPlaces = 1;
+            this.numWheelTarRangeA.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numWheelTarRangeA.Location = new System.Drawing.Point(106, 91);
+            this.numWheelTarRangeA.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numWheelTarRangeA.Name = "numWheelTarRangeA";
+            this.numWheelTarRangeA.Size = new System.Drawing.Size(41, 20);
+            this.numWheelTarRangeA.TabIndex = 15;
+            this.toolTip.SetToolTip(this.numWheelTarRangeA, "Sets the range from target for which values can be selected.");
+            this.numWheelTarRangeA.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -447,6 +511,69 @@ namespace MSSSDataProcessing
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Search";
             // 
+            // numWheelSelRangeB
+            // 
+            this.numWheelSelRangeB.Location = new System.Drawing.Point(106, 117);
+            this.numWheelSelRangeB.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numWheelSelRangeB.Name = "numWheelSelRangeB";
+            this.numWheelSelRangeB.Size = new System.Drawing.Size(41, 20);
+            this.numWheelSelRangeB.TabIndex = 20;
+            this.toolTip.SetToolTip(this.numWheelSelRangeB, "Sets total span of values to be included in the search (Stems from the target val" +
+        "ue).");
+            this.numWheelSelRangeB.Value = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(9, 118);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(89, 13);
+            this.label11.TabIndex = 19;
+            this.label11.Text = "Selection Range:";
+            this.toolTip.SetToolTip(this.label11, "Sets total span of values to be included in the search (Stems from the target val" +
+        "ue).\r\n");
+            // 
+            // numWheelTarRangeB
+            // 
+            this.numWheelTarRangeB.DecimalPlaces = 1;
+            this.numWheelTarRangeB.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numWheelTarRangeB.Location = new System.Drawing.Point(106, 91);
+            this.numWheelTarRangeB.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numWheelTarRangeB.Name = "numWheelTarRangeB";
+            this.numWheelTarRangeB.Size = new System.Drawing.Size(41, 20);
+            this.numWheelTarRangeB.TabIndex = 18;
+            this.numWheelTarRangeB.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(9, 93);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(76, 13);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Target Range:";
+            this.toolTip.SetToolTip(this.label9, "Sets the range from target for which values can be selected.");
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -575,133 +702,6 @@ namespace MSSSDataProcessing
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(0, 17);
             // 
-            // numWheelTarRangeA
-            // 
-            this.numWheelTarRangeA.DecimalPlaces = 1;
-            this.numWheelTarRangeA.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.numWheelTarRangeA.Location = new System.Drawing.Point(106, 91);
-            this.numWheelTarRangeA.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.numWheelTarRangeA.Name = "numWheelTarRangeA";
-            this.numWheelTarRangeA.Size = new System.Drawing.Size(41, 20);
-            this.numWheelTarRangeA.TabIndex = 15;
-            this.toolTip.SetToolTip(this.numWheelTarRangeA, "Sets the range from target for which values can be selected.");
-            this.numWheelTarRangeA.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(9, 93);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(76, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "Target Range:";
-            this.toolTip.SetToolTip(this.label8, "Sets the range from target for which values can be selected.");
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(9, 93);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(76, 13);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "Target Range:";
-            this.toolTip.SetToolTip(this.label9, "Sets the range from target for which values can be selected.");
-            // 
-            // numWheelTarRangeB
-            // 
-            this.numWheelTarRangeB.DecimalPlaces = 1;
-            this.numWheelTarRangeB.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.numWheelTarRangeB.Location = new System.Drawing.Point(106, 91);
-            this.numWheelTarRangeB.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.numWheelTarRangeB.Name = "numWheelTarRangeB";
-            this.numWheelTarRangeB.Size = new System.Drawing.Size(41, 20);
-            this.numWheelTarRangeB.TabIndex = 18;
-            this.numWheelTarRangeB.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(9, 118);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(89, 13);
-            this.label10.TabIndex = 17;
-            this.label10.Text = "Selection Range:";
-            this.toolTip.SetToolTip(this.label10, "Sets total span of values to be included in the search (Stems from the target val" +
-        "ue).");
-            // 
-            // numWheelSelRangeA
-            // 
-            this.numWheelSelRangeA.Location = new System.Drawing.Point(106, 117);
-            this.numWheelSelRangeA.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numWheelSelRangeA.Name = "numWheelSelRangeA";
-            this.numWheelSelRangeA.Size = new System.Drawing.Size(41, 20);
-            this.numWheelSelRangeA.TabIndex = 18;
-            this.toolTip.SetToolTip(this.numWheelSelRangeA, "Sets total span of values to be included in the search (Stems from the target val" +
-        "ue).");
-            this.numWheelSelRangeA.Value = new decimal(new int[] {
-            6,
-            0,
-            0,
-            0});
-            // 
-            // numWheelSelRangeB
-            // 
-            this.numWheelSelRangeB.Location = new System.Drawing.Point(106, 117);
-            this.numWheelSelRangeB.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numWheelSelRangeB.Name = "numWheelSelRangeB";
-            this.numWheelSelRangeB.Size = new System.Drawing.Size(41, 20);
-            this.numWheelSelRangeB.TabIndex = 20;
-            this.toolTip.SetToolTip(this.numWheelSelRangeB, "Sets total span of values to be included in the search (Stems from the target val" +
-        "ue).");
-            this.numWheelSelRangeB.Value = new decimal(new int[] {
-            6,
-            0,
-            0,
-            0});
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(9, 118);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(89, 13);
-            this.label11.TabIndex = 19;
-            this.label11.Text = "Selection Range:";
-            this.toolTip.SetToolTip(this.label11, "Sets total span of values to be included in the search (Stems from the target val" +
-        "ue).\r\n");
-            // 
             // ProcessingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -718,6 +718,8 @@ namespace MSSSDataProcessing
             this.Controls.Add(this.listViewDisplay);
             this.Name = "ProcessingForm";
             this.Text = "MSSS Data Processing";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ProcessingForm_FormClosed);
+            this.Load += new System.EventHandler(this.ProcessingForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numWheelSigma)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelMean)).EndInit();
             this.groupBoxA.ResumeLayout(false);
@@ -725,17 +727,17 @@ namespace MSSSDataProcessing
             this.SortGrpBoxA.PerformLayout();
             this.SearchGrpBoxA.ResumeLayout(false);
             this.SearchGrpBoxA.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelRangeA)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelTarRangeA)).EndInit();
             this.groupBoxB.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelRangeB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelTarRangeB)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numWheelTarRangeA)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numWheelTarRangeB)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelRangeA)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelRangeB)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
