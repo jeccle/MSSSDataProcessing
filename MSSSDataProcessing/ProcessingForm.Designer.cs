@@ -232,9 +232,9 @@ namespace MSSSDataProcessing
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(10, 67);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(115, 13);
+            this.label5.Size = new System.Drawing.Size(93, 13);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Processing Speed (ms)";
+            this.label5.Text = "Processing Speed";
             // 
             // buttonSortA
             // 
@@ -280,7 +280,7 @@ namespace MSSSDataProcessing
             // 
             this.numWheelSelRangeA.Location = new System.Drawing.Point(106, 117);
             this.numWheelSelRangeA.Maximum = new decimal(new int[] {
-            10,
+            30,
             0,
             0,
             0});
@@ -326,7 +326,7 @@ namespace MSSSDataProcessing
             65536});
             this.numWheelTarRangeA.Location = new System.Drawing.Point(106, 91);
             this.numWheelTarRangeA.Maximum = new decimal(new int[] {
-            5,
+            10,
             0,
             0,
             0});
@@ -388,9 +388,9 @@ namespace MSSSDataProcessing
             this.searchLabelA.AutoSize = true;
             this.searchLabelA.Location = new System.Drawing.Point(10, 141);
             this.searchLabelA.Name = "searchLabelA";
-            this.searchLabelA.Size = new System.Drawing.Size(115, 13);
+            this.searchLabelA.Size = new System.Drawing.Size(93, 13);
             this.searchLabelA.TabIndex = 10;
-            this.searchLabelA.Text = "Processing Speed (ms)";
+            this.searchLabelA.Text = "Processing Speed";
             // 
             // buttonSearchA
             // 
@@ -467,9 +467,9 @@ namespace MSSSDataProcessing
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(11, 67);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(115, 13);
+            this.label4.Size = new System.Drawing.Size(93, 13);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Processing Speed (ms)";
+            this.label4.Text = "Processing Speed";
             // 
             // buttonSortB
             // 
@@ -515,7 +515,7 @@ namespace MSSSDataProcessing
             // 
             this.numWheelSelRangeB.Location = new System.Drawing.Point(106, 117);
             this.numWheelSelRangeB.Maximum = new decimal(new int[] {
-            10,
+            30,
             0,
             0,
             0});
@@ -551,7 +551,7 @@ namespace MSSSDataProcessing
             65536});
             this.numWheelTarRangeB.Location = new System.Drawing.Point(106, 91);
             this.numWheelTarRangeB.Maximum = new decimal(new int[] {
-            5,
+            10,
             0,
             0,
             0});
@@ -620,9 +620,9 @@ namespace MSSSDataProcessing
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(10, 141);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(115, 13);
+            this.label3.Size = new System.Drawing.Size(93, 13);
             this.label3.TabIndex = 10;
-            this.label3.Text = "Processing Speed (ms)";
+            this.label3.Text = "Processing Speed";
             // 
             // buttonSearchB
             // 
