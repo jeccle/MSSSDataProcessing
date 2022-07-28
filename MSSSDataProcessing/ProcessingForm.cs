@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using Galileo;
 
 namespace MSSSDataProcessing
@@ -20,13 +21,13 @@ namespace MSSSDataProcessing
             InitializeComponent();
             
         }
+        // 4.1 Create two data structures using the LinkedList<T>, The data must be of type “double”,  
         LinkedList<double> sensorA = new LinkedList<double>();
         LinkedList<double> sensorB = new LinkedList<double>();
 
-
-
         #region Global Methods
 
+        // 4.2 Create a method called “LoadData” which will populate both LinkedLists.
         private void LoadData()
         {
             ReadData satellite = new ReadData();
@@ -40,13 +41,14 @@ namespace MSSSDataProcessing
                 //Trace.WriteLine("Loading to LinkedLists \t| sensorA: " + sensorA.First.Value + "\t| sensorB: " + sensorB.First.Value.ToString());
             }
             Trace.TraceInformation("Data loaded to LinkedLists.\n");
+            
         }
-
+        // 4.3	Create a custom method called “ShowAllSensorData” which will display both LinkedLists in a ListView.
         private void ShowAllSensorData()
         {
             listViewDisplay.Items.Clear();
             Trace.TraceInformation("Displaying Sensor A & B in ListView");
-            for (int i = 0; i < NumberOfNodes(sensorA); i++) 
+            for (int i = 0; i < 400; i++) 
             {
                 ListViewItem row = new ListViewItem(sensorA.ElementAt(i).ToString());
                 row.SubItems.Add(sensorB.ElementAt(i).ToString());
@@ -54,8 +56,21 @@ namespace MSSSDataProcessing
                 //Trace.WriteLine("Displaying to ListView \t|SensorA: " + sensorAEnum.Current.ToString() + "\t| SensorB: " + sensorBEnum.Current.ToString());
             }
             Trace.TraceInformation("List view populated.\n");
+        }
+
+        private void LoadAll()
+        {
+            LoadData();
+            ShowAllSensorData();
+            DisplayListBoxData(sensorA, listBoxSensorA);
+            DisplayListBoxData(sensorB, listBoxSensorB);
+            DisplayListBoxData(sensorA, listBoxSensorProcessingA);
+            DisplayListBoxData(sensorB, listBoxSensorProcessingB);
+            DisplayListBoxData(sensorA, listBoxSensorVisualA);
+            DisplayListBoxData(sensorB, listBoxSensorVisualB);
 
         }
+
 
         #endregion
 
@@ -75,40 +90,34 @@ namespace MSSSDataProcessing
                     Trace.TraceInformation("File Exists - File count: " + fileCount);
                 }
                 else
-                {                                   // If the file name doesn't exist break out of the loop. It's our new filename.
-                    break;
-                }
+                    break; // If the file name doesn't exist break out of the loop. It's our new filename.
             }
             fileName = fileNameExt;
             return fileName;
         }
-
+        // 4.5	Create a method called “NumberOfNodes” that will return an integer which is the number of nodes(elements) in a LinkedList.
         private int NumberOfNodes(LinkedList<double> sensor)
         {
             return sensor.Count;
         }
-
         private bool IsSorted(LinkedList<double> sensor)
         {
             for (int i = NumberOfNodes(sensor) - 1; i > 0; i--)
             {
                 if (sensor.ElementAt(i) < sensor.ElementAt(i - 1))
                     return false;
-                
             }
             return true;
         }
-
-        private void ShowListBoxData(LinkedList<double> sensor, ListBox listBox)
+        // 4.6	Create a method called “DisplayListboxData” that will display the content of a LinkedList inside the appropriate ListBox
+        private void DisplayListBoxData(LinkedList<double> sensor, ListBox listBox)
         {
             listBox.Items.Clear();
-            var sensorEnum = sensor.GetEnumerator();
-            while (sensorEnum.MoveNext())
+            foreach (var data in sensor)
             {
-                listBox.Items.Add(sensorEnum.Current);
+                listBox.Items.Add(data);
             }
         }
-
         private int RadioButtonIndex(string radioGrpName)
         {
             // If you choose to have value 1 as default, consider removing current else and else if condition to
@@ -135,7 +144,6 @@ namespace MSSSDataProcessing
             }
             return index;
         }
-
         private bool CheckInput(string TbInput, TextBox TbTarget, LinkedList<double> sensor)
         {
             Trace.TraceInformation("Checking input " + TbInput);
@@ -159,11 +167,7 @@ namespace MSSSDataProcessing
             }
             else
                 return true;
-
         }
-
-        // First int is mid index, second int is the range of values to be checked.
-        // Third int is the approximate value range difference.
         private void HighlightData(ListBox listBox, int index, int range, double valueRange)
         {
             try
@@ -177,7 +181,6 @@ namespace MSSSDataProcessing
                 int pointerIndex = index - (range / 2);     // Pointer index value is the first value to be checked.
                 if (pointerIndex < 0)                       // If pointing before first list value, set pointer to first list value.
                     pointerIndex = 0;
-
                 for (int i = pointerIndex; i <= index + (range / 2) && i < 400; i++)    // i is set to the floor index of range. 
                 {
                     current = double.Parse(listBox.Items[i].ToString());                // Current value to be compared.
@@ -194,10 +197,7 @@ namespace MSSSDataProcessing
             {
                 Trace.TraceError("Index is out of bounds within the array.\n");
             }
-
-
         }
-
         private double IntOrDouble(string TbInput)
         {
             bool isInt = int.TryParse(TbInput, out int result);
@@ -208,12 +208,31 @@ namespace MSSSDataProcessing
                 searchValue = result;
             return searchValue;
         }
+        private LinkedList<int> TotalOccurrences(LinkedList<double> sensor)
+        {
+            LinkedList<int> result = new LinkedList<int>();
+            if (IsSorted(sensor))
+            {
+                foreach (var data in sensor)
+                {
+                    //int occurrences = sensor.Count(x => (x + 0.5) < data && data > (x - 0.5));
+                    int occurrences = sensor.Count(x => (int)x == (int)data);
 
-
+                    result.AddLast(occurrences);
+                }
+            }
+            else
+                statusLabel.Text = "Sensor must be SORTED.";
+            return result;
+        }
+        private void ShowColumnGraph(Chart chart, LinkedList<double> sensor)
+        {
+                chart.Series["Sensor"].Points.DataBindXY(sensor, TotalOccurrences(sensor));
+        }
         #endregion
 
         #region Sort & Search Methods
-        
+        // 4.7	Create a method called “SelectionSort” which has a single input parameter of type LinkedList, while the calling code argument is the linkedlist name. 
         private bool SelectionSort(LinkedList<double> sensor)
         {
             int min;
@@ -235,7 +254,7 @@ namespace MSSSDataProcessing
             }
             return true;
         }
-
+        // 4.8	Create a method called “InsertionSort” which has a single parameter of type LinkedList, while the calling code argument is the linkedlist name. 
         private bool InsertionSort(LinkedList<double> sensor)
         {
             int max = NumberOfNodes(sensor);
@@ -256,7 +275,7 @@ namespace MSSSDataProcessing
             }
             return true;
         }
-
+        // 4.9	Create a method called “BinarySearchIterative” which has the following four parameters: LinkedList, SearchValue, Minimum and Maximum.
         private int BinarySearchIterative(LinkedList<double> sensor, double searchValue)
         {
             int min = 0;
@@ -291,7 +310,7 @@ namespace MSSSDataProcessing
             }
             return min;
         }
-
+        // 4.10	Create a method called “BinarySearchRecursive” which has the following four parameters: LinkedList, SearchValue, Minimum and Maximum. 
         private int BinarySearchRecursive(LinkedList<double> sensor, double searchValue, int min, int max)
         {
             while (min <= max - 1)
@@ -327,13 +346,28 @@ namespace MSSSDataProcessing
         #endregion
 
         #region UI Button Methods
-
+        // 4.4	Create a button and associated click method that will call the LoadData and ShowAllSensorData methods.The input parameters are empty, and the return type is void.
         private void LoadBtn_Click(object sender, EventArgs e)
         {
             LoadData();
             ShowAllSensorData();
-            ShowListBoxData(sensorA, listBoxA);
-            ShowListBoxData(sensorB, listBoxB);
+            DisplayListBoxData(sensorA, listBoxSensorA);
+            DisplayListBoxData(sensorB, listBoxSensorB);
+
+        }
+        // 4.4
+        private void buttonLoadProcessing_Click(object sender, EventArgs e)
+        {
+            LoadData();
+            DisplayListBoxData(sensorA, listBoxSensorProcessingA);
+            DisplayListBoxData(sensorB, listBoxSensorProcessingB);
+        }
+
+        private void buttonLoadVisual_Click(object sender, EventArgs e)
+        {
+            LoadData();
+            DisplayListBoxData(sensorA, listBoxSensorVisualA);
+            DisplayListBoxData(sensorB, listBoxSensorVisualB);
         }
 
         private void buttonSortA_Click(object sender, EventArgs e)
@@ -347,9 +381,9 @@ namespace MSSSDataProcessing
                 SelectionSort(sensorA);   // Sets bool to true upon sort success. Enables search function.
                 sw.Stop();
                 Trace.TraceInformation("Stopping stopwatch   | Sort time: " + sw.Elapsed.TotalMilliseconds + "\n");
-                TbSortSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString() + " ms";
+                textBoxSortSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString() + " ms";
                 ShowAllSensorData();
-                ShowListBoxData(sensorA, listBoxA);
+                DisplayListBoxData(sensorA, listBoxSensorA);
                 statusLabel.Text = "Sensor A has been sorted using Selection Sort.";
             }
             else if (sortNum == 0)
@@ -359,9 +393,9 @@ namespace MSSSDataProcessing
                 InsertionSort(sensorA);
                 sw.Stop();
                 Trace.TraceInformation("Stopping stopwatch   | Sort time: " + sw.Elapsed.TotalMilliseconds + "\n");
-                TbSortSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString() + " ms";
+                textBoxSortSpdA.Text = sw.Elapsed.TotalMilliseconds.ToString() + " ms";
                 ShowAllSensorData();
-                ShowListBoxData(sensorA, listBoxA);
+                DisplayListBoxData(sensorA, listBoxSensorA);
                 statusLabel.Text = "Sensor A has been sorted using Insertion Sort.";
             }
             else
@@ -378,9 +412,9 @@ namespace MSSSDataProcessing
                 SelectionSort(sensorB);   // Sets bool to true upon sort success. Enables search function.
                 sw.Stop();
                 Trace.TraceInformation("Selection Sort Sensor B", "Stopping stopwatch   | Sort time: " + sw.Elapsed.TotalMilliseconds + "\n");
-                TbSortSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString() + " ms";
+                textBoxSortSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString() + " ms";
                 ShowAllSensorData();
-                ShowListBoxData(sensorB, listBoxB);
+                DisplayListBoxData(sensorB, listBoxSensorB);
                 statusLabel.Text = "Sensor B has been sorted using Selection Sort.";
             }
             else if (sortNum == 0)
@@ -390,21 +424,50 @@ namespace MSSSDataProcessing
                 InsertionSort(sensorB);
                 sw.Stop();
                 Trace.TraceInformation("Insertion Sort Sensor B", "Stopping stopwatch   | Sort time: " + sw.Elapsed.TotalMilliseconds + "\n");
-                TbSortSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString() + " ms";
+                textBoxSortSpdB.Text = sw.Elapsed.TotalMilliseconds.ToString() + " ms";
                 ShowAllSensorData();
-                ShowListBoxData(sensorB, listBoxB);
+                DisplayListBoxData(sensorB, listBoxSensorB);
                 statusLabel.Text = "Sensor B has been sorted using Insertion Sort.";
             }
             else
                 MessageBox.Show("Something is wrong with the radio box!!", "What's happening???", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+        private void buttonSortProcessingA_Click(object sender, EventArgs e)
+        {
+            LinkedList<double> clone = sensorA;
+            Stopwatch sw = Stopwatch.StartNew();
+            SelectionSort(sensorA);
+            sw.Stop();
+            textBoxSelectionSortSpdA.Text = sw.ElapsedMilliseconds.ToString() + " ms";
+            sw = Stopwatch.StartNew();
+            InsertionSort(clone);
+            sw.Stop();
+            textBoxInsertionSortSpdA.Text = sw.ElapsedMilliseconds.ToString() + " ms";
+            DisplayListBoxData(sensorA, listBoxSensorProcessingA);
+            //UpdateAllListBoxes();
+        }
+        private void buttonSortProcessingB_Click(object sender, EventArgs e)
+        {
+            LinkedList<double> clone = sensorB;
+            Stopwatch sw = Stopwatch.StartNew();
+            SelectionSort(sensorB);
+            sw.Stop();
+            textBoxSelectionSortSpdB.Text = sw.ElapsedMilliseconds.ToString() + " ms";
+            sw = Stopwatch.StartNew();
+            InsertionSort(clone);
+            sw.Stop();
+            textBoxInsertionSortSpdB.Text = sw.ElapsedMilliseconds.ToString() + " ms";
+            DisplayListBoxData(sensorB, listBoxSensorProcessingB);
+            //UpdateAllListBoxes();
+        }
+        // 4.11	Create button click methods that will search the LinkedList for a value entered into a textbox on the form.
         private void buttonSearchA_Click(object sender, EventArgs e)
         {
             bool sorted = IsSorted(sensorA);
-            if (sorted && CheckInput(TbTargetA.Text, TbTargetA, sensorA))
+            if (sorted && CheckInput(textBoxTargetA.Text, textBoxTargetA, sensorA))
             {
                 Stopwatch sw = new Stopwatch();
-                double searchValue = IntOrDouble(TbTargetA.Text);
+                double searchValue = IntOrDouble(textBoxTargetA.Text);
                 int searchNum = RadioButtonIndex("SearchA");
                 if (searchNum == 1)
                 {
@@ -412,10 +475,10 @@ namespace MSSSDataProcessing
                     sw.Start();                                                     // Beginning of stopwatch timer.
                     int foundIndex = BinarySearchIterative(sensorA, searchValue);   
                     sw.Stop();                                                      // End of stopwatch timer.
-                    TbSearchSpdA.Text = sw.ElapsedTicks.ToString() + " Ticks";                 // Total time in ms displayed to textBox.
+                    textBoxSearchSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";                 // Total time in ms displayed to textBox.
                     Trace.TraceInformation("Stopping stopwatch   | Search time: " + sw.Elapsed.TotalMilliseconds.ToString() + "\n");                                               // I put the trace line underneath in this method because it looks neat.
                     statusLabel.Text = "Search value: " + searchValue + "  Found: " + sensorA.ElementAt(foundIndex) + "  | Searching using Iterative Binary Search"; 
-                    HighlightData(listBoxA, foundIndex, (int)numWheelSelRangeA.Value, (double)numWheelTarRangeA.Value); // Added input from controls
+                    HighlightData(listBoxSensorA, foundIndex, (int)numWheelSelRangeA.Value, (double)numWheelValueRangeA.Value); // Added input from controls
                 }                                   // First int is mid index, second int is the range of values to be checked.Third int is the value range deviation.
                 else if (searchNum == 0)
                 {
@@ -424,9 +487,9 @@ namespace MSSSDataProcessing
                     int foundIndex = BinarySearchRecursive(sensorA, searchValue, 0, NumberOfNodes(sensorA));
                     sw.Stop();
                     Trace.TraceInformation("Stopping stopwatch   | Search time: " + sw.Elapsed.TotalMilliseconds.ToString() + "\n");
-                    TbSearchSpdA.Text = sw.ElapsedTicks.ToString() + " Ticks";
+                    textBoxSearchSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";
                     statusLabel.Text = "Search value: " + searchValue + "  Found: " + sensorA.ElementAt(foundIndex) + "  | Searching using Recursive Binary Search";
-                    HighlightData(listBoxA, foundIndex, (int)numWheelSelRangeA.Value, (double)numWheelTarRangeA.Value);
+                    HighlightData(listBoxSensorA, foundIndex, (int)numWheelSelRangeA.Value, (double)numWheelValueRangeA.Value);
                 }
                 else 
                     toolTip.Show("Select a search algorithm", radioIterativeA, 65, 20, 3000);
@@ -439,13 +502,14 @@ namespace MSSSDataProcessing
             }
 
         }
+        // 4.11
         private void buttonSearchB_Click(object sender, EventArgs e)
         {
             Stopwatch sw = new Stopwatch();
             bool sorted = IsSorted(sensorB);
-            if (sorted && CheckInput(TbTargetB.Text, TbTargetB, sensorB))
+            if (sorted && CheckInput(textBoxTargetB.Text, textBoxTargetB, sensorB))
             {
-                double searchValue = IntOrDouble(TbTargetB.Text);
+                double searchValue = IntOrDouble(textBoxTargetB.Text);
                 int searchNum = RadioButtonIndex("SearchB");
                 if (searchNum == 1)
                 {
@@ -455,8 +519,8 @@ namespace MSSSDataProcessing
                     sw.Stop();
                     Trace.TraceInformation("Iterative Search Sensor B", "Stopping stopwatch   | Search time: " + sw.Elapsed.TotalMilliseconds.ToString() + "\n");
                     statusLabel.Text = "Search value: " + searchValue + "  Found: " + sensorB.ElementAt(foundIndex) + "  | Searching using Iterative Binary Search";
-                    TbSearchSpdB.Text = sw.ElapsedTicks.ToString() + " Ticks";
-                    HighlightData(listBoxB, foundIndex, (int)numWheelSelRangeB.Value, (double)numWheelTarRangeB.Value);
+                    textBoxSearchSpdB.Text = sw.ElapsedTicks.ToString() + " Ticks";
+                    HighlightData(listBoxSensorB, foundIndex, (int)numWheelSelRangeB.Value, (double)numWheelValueRangeB.Value);
                 }
                 else if (searchNum == 0)
                 {
@@ -466,8 +530,8 @@ namespace MSSSDataProcessing
                     sw.Stop();
                     Trace.TraceInformation("Recursive Search Sensor B", "Stopping stopwatch   | Search time: " + sw.Elapsed.TotalMilliseconds.ToString() + "\n");
                     statusLabel.Text = "Search value: " + searchValue + "  Found: " + sensorB.ElementAt(foundIndex) + "  | Searching using Recursive Binary Search";
-                    TbSearchSpdB.Text = sw.ElapsedTicks.ToString() + " Ticks";
-                    HighlightData(listBoxB, foundIndex, (int)numWheelSelRangeB.Value, (double)numWheelTarRangeB.Value);
+                    textBoxSearchSpdB.Text = sw.ElapsedTicks.ToString() + " Ticks";
+                    HighlightData(listBoxSensorB, foundIndex, (int)numWheelSelRangeB.Value, (double)numWheelValueRangeB.Value);
                 }
                 else
                     toolTip.Show("Select a search algorithm", radioIterativeB, 65, 20, 3000);
@@ -479,14 +543,83 @@ namespace MSSSDataProcessing
                 Trace.TraceWarning("SensorB attempted to search but its not sorted!?!?");
             }
         }
-        private void TbTargetA_KeyPress(object sender, KeyPressEventArgs e)
+        private void buttonSearchProcessingA_Click(object sender, EventArgs e)
         {
-            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
+            bool sorted = IsSorted(sensorA);
+            if (sorted && CheckInput(textBoxTargetProcessingA.Text, textBoxTargetProcessingA, sensorA))
+            {
+                double searchValue = IntOrDouble(textBoxTargetProcessingA.Text);
+                LinkedList<double> clone = sensorA;
+                Stopwatch sw = Stopwatch.StartNew();
+                int foundIndex = BinarySearchIterative(clone, searchValue);
+                sw.Stop();
+                textBoxIterativeSearchSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";
+                sw = Stopwatch.StartNew();
+                foundIndex = BinarySearchRecursive(sensorA, searchValue, 0, NumberOfNodes(sensorA));
+                sw.Stop();
+                textBoxRecursiveSearchSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";
+                sw = Stopwatch.StartNew();
+                HighlightData(listBoxSensorProcessingA, foundIndex, (int)numWheelSelectionRangeProcessingA.Value, (double)numWheelValueRangeProcessingA.Value);
+                sw.Stop();
+                textBoxHighlightProcessingSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";
+            }
+            else if (!sorted)
+            {
+                toolTip.Show("Ensure ListBox is Sorted!", buttonSortProcessingA, 45, 15, 3000);
+                statusLabel.Text = "Error searching! Sensor A values not sorted.";
+                Trace.TraceWarning("SensorA attempted to search but its not sorted!?!?");
+            }
+
+        }
+        private void buttonSearchProcessingB_Click(object sender, EventArgs e)
+        {
+            bool sorted = IsSorted(sensorB);
+            if (sorted && CheckInput(textBoxTargetProcessingB.Text, textBoxTargetProcessingB, sensorB))
+            {
+                double searchValue = IntOrDouble(textBoxTargetProcessingB.Text);
+                LinkedList<double> clone = sensorB;
+                Stopwatch sw = Stopwatch.StartNew();
+                int foundIndex = BinarySearchIterative(clone, searchValue);
+                sw.Stop();
+                textBoxIterativeSearchSpdB.Text = sw.ElapsedTicks.ToString() + " ticks.";
+                sw = Stopwatch.StartNew();
+                foundIndex = BinarySearchRecursive(sensorB, searchValue, 0, NumberOfNodes(sensorA));
+                sw.Stop();
+                textBoxRecursiveSearchSpdB.Text = sw.ElapsedTicks.ToString() + " ticks.";
+                sw = Stopwatch.StartNew();
+                HighlightData(listBoxSensorProcessingB, foundIndex, (int)numWheelSelectionRangeProcessingB.Value, (double)numWheelValueRangeProcessingB.Value);
+                sw.Stop();
+                textBoxHighlightProcessingSpdB.Text = sw.ElapsedTicks.ToString() + " ticks.";
+                clone.Clear();
+            }
+            else if (!sorted)
+            {
+                toolTip.Show("Ensure ListBox is Sorted!", buttonSortProcessingB, 45, 15, 3000);
+                statusLabel.Text = "Error searching! Sensor B values not sorted.";
+                Trace.TraceWarning("SensorA attempted to search but its not sorted!?!?");
+            }
         }
 
-        private void TbTargetB_KeyPress(object sender, KeyPressEventArgs e)
+        private void textBoxTargetA_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
+            toolTip.Show("Numeric Input ONLY", textBoxTargetA, 45, 15, 3000);
+
+        }
+        private void textBoxTargetB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
+            toolTip.Show("Numeric Input ONLY", textBoxTargetB, 45, 15, 3000);
+        }
+        private void textBoxTargetProcessingA_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
+            toolTip.Show("Numeric Input ONLY", textBoxTargetProcessingA, 45, 15, 3000);
+        }
+        private void textBoxTargetProcessingB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
+            toolTip.Show("Numeric Input ONLY", textBoxTargetProcessingB, 45, 15, 3000);
         }
 
         #endregion
@@ -502,6 +635,38 @@ namespace MSSSDataProcessing
         {
             Trace.Flush();
         }
+
+        private void buttonColumn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DoubleSortAndDisplay(listBoxSensorVisualA, listBoxSensorVisualB, sensorA, sensorB, textBoxSelectionSortVisual, textBoxInsertionSortVisual);
+                ShowColumnGraph(chartSensorA, sensorA);
+                ShowColumnGraph(chartSensorB, sensorB);
+            }
+            catch (InvalidOperationException ex)
+            {
+                statusLabel.Text = "Error sorting sensor data. Load new data and try again.";
+            }
+        }
+
+        private void DoubleSortAndDisplay(ListBox listBoxA, ListBox listBoxB, LinkedList<double> listA, LinkedList<double> listB, TextBox textBoxOne, TextBox textBoxTwo)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            SelectionSort(listA);
+            sw.Stop();
+            textBoxOne.Text = sw.ElapsedMilliseconds.ToString() + " ms";
+            sw = Stopwatch.StartNew();
+            InsertionSort(listB);
+            sw.Stop();
+            textBoxTwo.Text = sw.ElapsedMilliseconds.ToString() + " ms";
+            DisplayListBoxData(listA, listBoxA);
+            DisplayListBoxData(listB, listBoxB);
+        }
+
+
+
+
     }
 }
 
