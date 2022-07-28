@@ -31,12 +31,12 @@ namespace MSSSDataProcessing
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.listViewDisplay = new System.Windows.Forms.ListView();
             this.ColumnA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColumnB = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -105,11 +105,11 @@ namespace MSSSDataProcessing
             this.textBoxHighlightProcessingSpdB = new System.Windows.Forms.TextBox();
             this.textBoxRecursiveSearchSpdB = new System.Windows.Forms.TextBox();
             this.textBoxIterativeSearchSpdB = new System.Windows.Forms.TextBox();
-            this.textBoxInsertionSortSpdB = new System.Windows.Forms.TextBox();
-            this.textBoxSelectionSortSpdB = new System.Windows.Forms.TextBox();
+            this.textBoxInsertionSortProcessingB = new System.Windows.Forms.TextBox();
+            this.textBoxSelectionSortProcessingB = new System.Windows.Forms.TextBox();
             this.listBoxSensorProcessingB = new System.Windows.Forms.ListBox();
-            this.textBoxInsertionSortSpdA = new System.Windows.Forms.TextBox();
-            this.textBoxSelectionSortSpdA = new System.Windows.Forms.TextBox();
+            this.textBoxInsertionSortProcessingA = new System.Windows.Forms.TextBox();
+            this.textBoxSelectionSortProcessingA = new System.Windows.Forms.TextBox();
             this.textBoxHighlightProcessingSpdA = new System.Windows.Forms.TextBox();
             this.textBoxRecursiveSearchSpdA = new System.Windows.Forms.TextBox();
             this.textBoxIterativeSearchSpdA = new System.Windows.Forms.TextBox();
@@ -1016,25 +1016,25 @@ namespace MSSSDataProcessing
             this.textBoxIterativeSearchSpdB.TabIndex = 9;
             this.toolTip.SetToolTip(this.textBoxIterativeSearchSpdB, "Displays processing speed of Iterative Binary Search algorithm in ticks.");
             // 
-            // textBoxInsertionSortSpdB
+            // textBoxInsertionSortProcessingB
             // 
-            this.textBoxInsertionSortSpdB.Enabled = false;
-            this.textBoxInsertionSortSpdB.Location = new System.Drawing.Point(170, 39);
-            this.textBoxInsertionSortSpdB.Name = "textBoxInsertionSortSpdB";
-            this.textBoxInsertionSortSpdB.ReadOnly = true;
-            this.textBoxInsertionSortSpdB.Size = new System.Drawing.Size(90, 20);
-            this.textBoxInsertionSortSpdB.TabIndex = 12;
-            this.toolTip.SetToolTip(this.textBoxInsertionSortSpdB, "Displays processing speed of Insertion Sorting algorithm in milliseconds.");
+            this.textBoxInsertionSortProcessingB.Enabled = false;
+            this.textBoxInsertionSortProcessingB.Location = new System.Drawing.Point(170, 39);
+            this.textBoxInsertionSortProcessingB.Name = "textBoxInsertionSortProcessingB";
+            this.textBoxInsertionSortProcessingB.ReadOnly = true;
+            this.textBoxInsertionSortProcessingB.Size = new System.Drawing.Size(90, 20);
+            this.textBoxInsertionSortProcessingB.TabIndex = 12;
+            this.toolTip.SetToolTip(this.textBoxInsertionSortProcessingB, "Displays processing speed of Insertion Sorting algorithm in milliseconds.");
             // 
-            // textBoxSelectionSortSpdB
+            // textBoxSelectionSortProcessingB
             // 
-            this.textBoxSelectionSortSpdB.Enabled = false;
-            this.textBoxSelectionSortSpdB.Location = new System.Drawing.Point(170, 13);
-            this.textBoxSelectionSortSpdB.Name = "textBoxSelectionSortSpdB";
-            this.textBoxSelectionSortSpdB.ReadOnly = true;
-            this.textBoxSelectionSortSpdB.Size = new System.Drawing.Size(90, 20);
-            this.textBoxSelectionSortSpdB.TabIndex = 9;
-            this.toolTip.SetToolTip(this.textBoxSelectionSortSpdB, "Displays processing speed of Selection Sorting algorithm in milliseconds.");
+            this.textBoxSelectionSortProcessingB.Enabled = false;
+            this.textBoxSelectionSortProcessingB.Location = new System.Drawing.Point(170, 13);
+            this.textBoxSelectionSortProcessingB.Name = "textBoxSelectionSortProcessingB";
+            this.textBoxSelectionSortProcessingB.ReadOnly = true;
+            this.textBoxSelectionSortProcessingB.Size = new System.Drawing.Size(90, 20);
+            this.textBoxSelectionSortProcessingB.TabIndex = 9;
+            this.toolTip.SetToolTip(this.textBoxSelectionSortProcessingB, "Displays processing speed of Selection Sorting algorithm in milliseconds.");
             // 
             // listBoxSensorProcessingB
             // 
@@ -1046,25 +1046,25 @@ namespace MSSSDataProcessing
             this.listBoxSensorProcessingB.TabIndex = 1;
             this.toolTip.SetToolTip(this.listBoxSensorProcessingB, "Display for Sensor B Data");
             // 
-            // textBoxInsertionSortSpdA
+            // textBoxInsertionSortProcessingA
             // 
-            this.textBoxInsertionSortSpdA.Enabled = false;
-            this.textBoxInsertionSortSpdA.Location = new System.Drawing.Point(195, 39);
-            this.textBoxInsertionSortSpdA.Name = "textBoxInsertionSortSpdA";
-            this.textBoxInsertionSortSpdA.ReadOnly = true;
-            this.textBoxInsertionSortSpdA.Size = new System.Drawing.Size(65, 20);
-            this.textBoxInsertionSortSpdA.TabIndex = 12;
-            this.toolTip.SetToolTip(this.textBoxInsertionSortSpdA, "Displays processing speed of Insertion Sorting algorithm in milliseconds.");
+            this.textBoxInsertionSortProcessingA.Enabled = false;
+            this.textBoxInsertionSortProcessingA.Location = new System.Drawing.Point(195, 39);
+            this.textBoxInsertionSortProcessingA.Name = "textBoxInsertionSortProcessingA";
+            this.textBoxInsertionSortProcessingA.ReadOnly = true;
+            this.textBoxInsertionSortProcessingA.Size = new System.Drawing.Size(65, 20);
+            this.textBoxInsertionSortProcessingA.TabIndex = 12;
+            this.toolTip.SetToolTip(this.textBoxInsertionSortProcessingA, "Displays processing speed of Insertion Sorting algorithm in milliseconds.");
             // 
-            // textBoxSelectionSortSpdA
+            // textBoxSelectionSortProcessingA
             // 
-            this.textBoxSelectionSortSpdA.Enabled = false;
-            this.textBoxSelectionSortSpdA.Location = new System.Drawing.Point(195, 13);
-            this.textBoxSelectionSortSpdA.Name = "textBoxSelectionSortSpdA";
-            this.textBoxSelectionSortSpdA.ReadOnly = true;
-            this.textBoxSelectionSortSpdA.Size = new System.Drawing.Size(65, 20);
-            this.textBoxSelectionSortSpdA.TabIndex = 9;
-            this.toolTip.SetToolTip(this.textBoxSelectionSortSpdA, "Displays processing speed of Selection Sorting algorithm in milliseconds.");
+            this.textBoxSelectionSortProcessingA.Enabled = false;
+            this.textBoxSelectionSortProcessingA.Location = new System.Drawing.Point(195, 13);
+            this.textBoxSelectionSortProcessingA.Name = "textBoxSelectionSortProcessingA";
+            this.textBoxSelectionSortProcessingA.ReadOnly = true;
+            this.textBoxSelectionSortProcessingA.Size = new System.Drawing.Size(65, 20);
+            this.textBoxSelectionSortProcessingA.TabIndex = 9;
+            this.toolTip.SetToolTip(this.textBoxSelectionSortProcessingA, "Displays processing speed of Selection Sorting algorithm in milliseconds.");
             // 
             // textBoxHighlightProcessingSpdA
             // 
@@ -1276,11 +1276,11 @@ namespace MSSSDataProcessing
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.textBoxInsertionSortSpdB);
+            this.groupBox7.Controls.Add(this.textBoxInsertionSortProcessingB);
             this.groupBox7.Controls.Add(this.label17);
             this.groupBox7.Controls.Add(this.label18);
             this.groupBox7.Controls.Add(this.buttonSortProcessingB);
-            this.groupBox7.Controls.Add(this.textBoxSelectionSortSpdB);
+            this.groupBox7.Controls.Add(this.textBoxSelectionSortProcessingB);
             this.groupBox7.Location = new System.Drawing.Point(83, 36);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(273, 103);
@@ -1331,11 +1331,11 @@ namespace MSSSDataProcessing
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.textBoxInsertionSortSpdA);
+            this.groupBox4.Controls.Add(this.textBoxInsertionSortProcessingA);
             this.groupBox4.Controls.Add(this.label22);
             this.groupBox4.Controls.Add(this.label12);
             this.groupBox4.Controls.Add(this.buttonSortProcessingA);
-            this.groupBox4.Controls.Add(this.textBoxSelectionSortSpdA);
+            this.groupBox4.Controls.Add(this.textBoxSelectionSortProcessingA);
             this.groupBox4.Location = new System.Drawing.Point(83, 36);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(273, 103);
@@ -1437,20 +1437,22 @@ namespace MSSSDataProcessing
             // 
             // chartSensorB
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartSensorB.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartSensorB.Legends.Add(legend1);
-            this.chartSensorB.Location = new System.Drawing.Point(301, 177);
+            chartArea3.Name = "ChartArea1";
+            this.chartSensorB.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chartSensorB.Legends.Add(legend3);
+            this.chartSensorB.Location = new System.Drawing.Point(303, 184);
             this.chartSensorB.Name = "chartSensorB";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Sensor";
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chartSensorB.Series.Add(series1);
-            this.chartSensorB.Size = new System.Drawing.Size(365, 138);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.Name = "SensorB";
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series3.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chartSensorB.Series.Add(series3);
+            this.chartSensorB.Size = new System.Drawing.Size(365, 145);
+            this.chartSensorB.SuppressExceptions = true;
             this.chartSensorB.TabIndex = 18;
             this.chartSensorB.Text = "Sensor";
             // 
@@ -1462,7 +1464,7 @@ namespace MSSSDataProcessing
             this.groupBox10.Controls.Add(this.buttonColumn);
             this.groupBox10.Controls.Add(this.label29);
             this.groupBox10.Controls.Add(this.textBoxSelectionSortVisual);
-            this.groupBox10.Location = new System.Drawing.Point(82, 177);
+            this.groupBox10.Location = new System.Drawing.Point(84, 95);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(213, 146);
             this.groupBox10.TabIndex = 11;
@@ -1499,20 +1501,22 @@ namespace MSSSDataProcessing
             // 
             // chartSensorA
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartSensorA.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartSensorA.Legends.Add(legend2);
-            this.chartSensorA.Location = new System.Drawing.Point(301, 20);
+            chartArea4.Name = "ChartArea1";
+            this.chartSensorA.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chartSensorA.Legends.Add(legend4);
+            this.chartSensorA.Location = new System.Drawing.Point(301, 22);
             this.chartSensorA.Name = "chartSensorA";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Sensor";
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chartSensorA.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "SensorA";
+            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series4.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chartSensorA.Series.Add(series4);
             this.chartSensorA.Size = new System.Drawing.Size(365, 145);
+            this.chartSensorA.SuppressExceptions = true;
             this.chartSensorA.TabIndex = 15;
             this.chartSensorA.Text = "Sensor";
             // 
@@ -1631,11 +1635,11 @@ namespace MSSSDataProcessing
         private TabPage tabProcess;
         private GroupBox groupBox3;
         private GroupBox groupBox4;
-        private TextBox textBoxInsertionSortSpdA;
+        private TextBox textBoxInsertionSortProcessingA;
         private Label label22;
         private Label label12;
         private Button buttonSortProcessingA;
-        private TextBox textBoxSelectionSortSpdA;
+        private TextBox textBoxSelectionSortProcessingA;
         private GroupBox groupBox5;
         private NumericUpDown numWheelSelectionRangeProcessingA;
         private Label label13;
@@ -1650,11 +1654,11 @@ namespace MSSSDataProcessing
         private TabPage tabMain;
         private GroupBox groupBox6;
         private GroupBox groupBox7;
-        private TextBox textBoxInsertionSortSpdB;
+        private TextBox textBoxInsertionSortProcessingB;
         private Label label17;
         private Label label18;
         private Button buttonSortProcessingB;
-        private TextBox textBoxSelectionSortSpdB;
+        private TextBox textBoxSelectionSortProcessingB;
         private ListBox listBoxSensorProcessingB;
         private TextBox textBoxRecursiveSearchSpdA;
         private Label label24;
