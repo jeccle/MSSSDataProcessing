@@ -31,12 +31,12 @@ namespace MSSSDataProcessing
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.listViewDisplay = new System.Windows.Forms.ListView();
             this.ColumnA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColumnB = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -143,13 +143,15 @@ namespace MSSSDataProcessing
             this.label16 = new System.Windows.Forms.Label();
             this.tabVisual = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.chartSensorA = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartSensorB = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.buttonLoadVisual = new System.Windows.Forms.Button();
             this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
-            this.chartSensorA = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.numWheelDistribution = new System.Windows.Forms.NumericUpDown();
+            this.label30 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelSigma)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelMean)).BeginInit();
             this.groupBoxA.SuspendLayout();
@@ -178,10 +180,11 @@ namespace MSSSDataProcessing
             this.groupBox5.SuspendLayout();
             this.tabVisual.SuspendLayout();
             this.groupBox9.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartSensorA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartSensorB)).BeginInit();
             this.groupBox10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartSensorA)).BeginInit();
-            this.groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelDistribution)).BeginInit();
             this.SuspendLayout();
             // 
             // listViewDisplay
@@ -233,7 +236,7 @@ namespace MSSSDataProcessing
             0});
             this.numWheelSigma.Name = "numWheelSigma";
             this.numWheelSigma.Size = new System.Drawing.Size(41, 20);
-            this.numWheelSigma.TabIndex = 7;
+            this.numWheelSigma.TabIndex = 18;
             this.toolTip.SetToolTip(this.numWheelSigma, "Standard Deviation\r\nSets the range in which the values will deviate from\r\nthe mea" +
         "n.");
             this.numWheelSigma.Value = new decimal(new int[] {
@@ -257,7 +260,7 @@ namespace MSSSDataProcessing
             0});
             this.numWheelMean.Name = "numWheelMean";
             this.numWheelMean.Size = new System.Drawing.Size(41, 20);
-            this.numWheelMean.TabIndex = 8;
+            this.numWheelMean.TabIndex = 19;
             this.toolTip.SetToolTip(this.numWheelMean, "Mean Value\r\nSets mean value of data set for both sensors.\r\n\r\n");
             this.numWheelMean.Value = new decimal(new int[] {
             50,
@@ -297,7 +300,7 @@ namespace MSSSDataProcessing
             this.radioInsertionA.Location = new System.Drawing.Point(12, 38);
             this.radioInsertionA.Name = "radioInsertionA";
             this.radioInsertionA.Size = new System.Drawing.Size(65, 17);
-            this.radioInsertionA.TabIndex = 12;
+            this.radioInsertionA.TabIndex = 3;
             this.radioInsertionA.Text = "Insertion";
             this.toolTip.SetToolTip(this.radioInsertionA, "Use insertion sort algorithm");
             this.radioInsertionA.UseVisualStyleBackColor = true;
@@ -309,8 +312,7 @@ namespace MSSSDataProcessing
             this.radioSelectionA.Location = new System.Drawing.Point(12, 18);
             this.radioSelectionA.Name = "radioSelectionA";
             this.radioSelectionA.Size = new System.Drawing.Size(69, 17);
-            this.radioSelectionA.TabIndex = 11;
-            this.radioSelectionA.TabStop = true;
+            this.radioSelectionA.TabIndex = 2;
             this.radioSelectionA.Text = "Selection";
             this.toolTip.SetToolTip(this.radioSelectionA, "Use selection sort algorithm");
             this.radioSelectionA.UseVisualStyleBackColor = true;
@@ -329,7 +331,7 @@ namespace MSSSDataProcessing
             this.buttonSortA.Location = new System.Drawing.Point(91, 21);
             this.buttonSortA.Name = "buttonSortA";
             this.buttonSortA.Size = new System.Drawing.Size(56, 23);
-            this.buttonSortA.TabIndex = 6;
+            this.buttonSortA.TabIndex = 4;
             this.buttonSortA.Text = "Sort";
             this.toolTip.SetToolTip(this.buttonSortA, "Begin sort");
             this.buttonSortA.UseVisualStyleBackColor = true;
@@ -375,7 +377,7 @@ namespace MSSSDataProcessing
             0});
             this.numWheelSelRangeA.Name = "numWheelSelRangeA";
             this.numWheelSelRangeA.Size = new System.Drawing.Size(41, 20);
-            this.numWheelSelRangeA.TabIndex = 18;
+            this.numWheelSelRangeA.TabIndex = 8;
             this.toolTip.SetToolTip(this.numWheelSelRangeA, "Sets total span of values to be included in the search (Stems from the target val" +
         "ue).");
             this.numWheelSelRangeA.Value = new decimal(new int[] {
@@ -421,7 +423,7 @@ namespace MSSSDataProcessing
             0});
             this.numWheelValueRangeA.Name = "numWheelValueRangeA";
             this.numWheelValueRangeA.Size = new System.Drawing.Size(41, 20);
-            this.numWheelValueRangeA.TabIndex = 15;
+            this.numWheelValueRangeA.TabIndex = 7;
             this.toolTip.SetToolTip(this.numWheelValueRangeA, "Specify distance from target which will be selected.");
             this.numWheelValueRangeA.Value = new decimal(new int[] {
             5,
@@ -444,7 +446,7 @@ namespace MSSSDataProcessing
             this.textBoxTargetA.Location = new System.Drawing.Point(76, 64);
             this.textBoxTargetA.Name = "textBoxTargetA";
             this.textBoxTargetA.Size = new System.Drawing.Size(70, 20);
-            this.textBoxTargetA.TabIndex = 13;
+            this.textBoxTargetA.TabIndex = 6;
             this.toolTip.SetToolTip(this.textBoxTargetA, "Target value to be found");
             this.textBoxTargetA.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTargetA_KeyPress);
             // 
@@ -454,7 +456,7 @@ namespace MSSSDataProcessing
             this.radioRecursiveA.Location = new System.Drawing.Point(12, 38);
             this.radioRecursiveA.Name = "radioRecursiveA";
             this.radioRecursiveA.Size = new System.Drawing.Size(73, 17);
-            this.radioRecursiveA.TabIndex = 12;
+            this.radioRecursiveA.TabIndex = 6;
             this.radioRecursiveA.Text = "Recursive";
             this.toolTip.SetToolTip(this.radioRecursiveA, "Use recursive search algorithm");
             this.radioRecursiveA.UseVisualStyleBackColor = true;
@@ -466,8 +468,7 @@ namespace MSSSDataProcessing
             this.radioIterativeA.Location = new System.Drawing.Point(12, 18);
             this.radioIterativeA.Name = "radioIterativeA";
             this.radioIterativeA.Size = new System.Drawing.Size(63, 17);
-            this.radioIterativeA.TabIndex = 11;
-            this.radioIterativeA.TabStop = true;
+            this.radioIterativeA.TabIndex = 5;
             this.radioIterativeA.Text = "Iterative";
             this.toolTip.SetToolTip(this.radioIterativeA, "Use iterative search algorithm");
             this.radioIterativeA.UseVisualStyleBackColor = true;
@@ -486,7 +487,7 @@ namespace MSSSDataProcessing
             this.buttonSearchA.Location = new System.Drawing.Point(91, 20);
             this.buttonSearchA.Name = "buttonSearchA";
             this.buttonSearchA.Size = new System.Drawing.Size(56, 23);
-            this.buttonSearchA.TabIndex = 6;
+            this.buttonSearchA.TabIndex = 9;
             this.buttonSearchA.Text = "Search";
             this.toolTip.SetToolTip(this.buttonSearchA, "Search for Target");
             this.buttonSearchA.UseVisualStyleBackColor = true;
@@ -534,7 +535,7 @@ namespace MSSSDataProcessing
             this.radioInsertionB.Location = new System.Drawing.Point(9, 38);
             this.radioInsertionB.Name = "radioInsertionB";
             this.radioInsertionB.Size = new System.Drawing.Size(65, 17);
-            this.radioInsertionB.TabIndex = 12;
+            this.radioInsertionB.TabIndex = 11;
             this.radioInsertionB.Text = "Insertion";
             this.toolTip.SetToolTip(this.radioInsertionB, "Use insertion sort algorithm");
             this.radioInsertionB.UseVisualStyleBackColor = true;
@@ -546,8 +547,7 @@ namespace MSSSDataProcessing
             this.radioSelectionB.Location = new System.Drawing.Point(9, 18);
             this.radioSelectionB.Name = "radioSelectionB";
             this.radioSelectionB.Size = new System.Drawing.Size(69, 17);
-            this.radioSelectionB.TabIndex = 11;
-            this.radioSelectionB.TabStop = true;
+            this.radioSelectionB.TabIndex = 10;
             this.radioSelectionB.Text = "Selection";
             this.toolTip.SetToolTip(this.radioSelectionB, "Use selection sort algorithm");
             this.radioSelectionB.UseVisualStyleBackColor = true;
@@ -566,7 +566,7 @@ namespace MSSSDataProcessing
             this.buttonSortB.Location = new System.Drawing.Point(91, 21);
             this.buttonSortB.Name = "buttonSortB";
             this.buttonSortB.Size = new System.Drawing.Size(56, 23);
-            this.buttonSortB.TabIndex = 6;
+            this.buttonSortB.TabIndex = 12;
             this.buttonSortB.Text = "Sort";
             this.toolTip.SetToolTip(this.buttonSortB, "Begin sort");
             this.buttonSortB.UseVisualStyleBackColor = true;
@@ -612,7 +612,7 @@ namespace MSSSDataProcessing
             0});
             this.numWheelSelRangeB.Name = "numWheelSelRangeB";
             this.numWheelSelRangeB.Size = new System.Drawing.Size(41, 20);
-            this.numWheelSelRangeB.TabIndex = 20;
+            this.numWheelSelRangeB.TabIndex = 16;
             this.toolTip.SetToolTip(this.numWheelSelRangeB, "Sets total span of values to be included in the search (Stems from the target val" +
         "ue).");
             this.numWheelSelRangeB.Value = new decimal(new int[] {
@@ -648,7 +648,7 @@ namespace MSSSDataProcessing
             0});
             this.numWheelValueRangeB.Name = "numWheelValueRangeB";
             this.numWheelValueRangeB.Size = new System.Drawing.Size(41, 20);
-            this.numWheelValueRangeB.TabIndex = 18;
+            this.numWheelValueRangeB.TabIndex = 15;
             this.toolTip.SetToolTip(this.numWheelValueRangeB, "Specify distance from target which will be selected.");
             this.numWheelValueRangeB.Value = new decimal(new int[] {
             5,
@@ -690,7 +690,7 @@ namespace MSSSDataProcessing
             this.radioRecursiveB.Location = new System.Drawing.Point(12, 38);
             this.radioRecursiveB.Name = "radioRecursiveB";
             this.radioRecursiveB.Size = new System.Drawing.Size(73, 17);
-            this.radioRecursiveB.TabIndex = 12;
+            this.radioRecursiveB.TabIndex = 14;
             this.radioRecursiveB.Text = "Recursive";
             this.toolTip.SetToolTip(this.radioRecursiveB, "Use recursive search algorithm");
             this.radioRecursiveB.UseVisualStyleBackColor = true;
@@ -702,8 +702,7 @@ namespace MSSSDataProcessing
             this.radioIterativeB.Location = new System.Drawing.Point(12, 18);
             this.radioIterativeB.Name = "radioIterativeB";
             this.radioIterativeB.Size = new System.Drawing.Size(63, 17);
-            this.radioIterativeB.TabIndex = 11;
-            this.radioIterativeB.TabStop = true;
+            this.radioIterativeB.TabIndex = 13;
             this.radioIterativeB.Text = "Iterative";
             this.toolTip.SetToolTip(this.radioIterativeB, "Use iterative search algorithm");
             this.radioIterativeB.UseVisualStyleBackColor = true;
@@ -722,7 +721,7 @@ namespace MSSSDataProcessing
             this.buttonSearchB.Location = new System.Drawing.Point(91, 20);
             this.buttonSearchB.Name = "buttonSearchB";
             this.buttonSearchB.Size = new System.Drawing.Size(56, 23);
-            this.buttonSearchB.TabIndex = 6;
+            this.buttonSearchB.TabIndex = 17;
             this.buttonSearchB.Text = "Search";
             this.toolTip.SetToolTip(this.buttonSearchB, "Search for Target");
             this.buttonSearchB.UseVisualStyleBackColor = true;
@@ -745,7 +744,7 @@ namespace MSSSDataProcessing
             this.listBoxSensorB.Name = "listBoxSensorB";
             this.listBoxSensorB.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listBoxSensorB.Size = new System.Drawing.Size(91, 316);
-            this.listBoxSensorB.TabIndex = 1;
+            this.listBoxSensorB.TabIndex = 10;
             this.toolTip.SetToolTip(this.listBoxSensorB, "Display for Sensor B Data");
             // 
             // buttonLoad
@@ -753,7 +752,7 @@ namespace MSSSDataProcessing
             this.buttonLoad.Location = new System.Drawing.Point(688, 11);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(68, 46);
-            this.buttonLoad.TabIndex = 11;
+            this.buttonLoad.TabIndex = 20;
             this.buttonLoad.Text = "Load Data";
             this.buttonLoad.UseVisualStyleBackColor = true;
             this.buttonLoad.Click += new System.EventHandler(this.LoadBtn_Click);
@@ -787,7 +786,7 @@ namespace MSSSDataProcessing
             this.buttonSortProcessingA.Location = new System.Drawing.Point(89, 67);
             this.buttonSortProcessingA.Name = "buttonSortProcessingA";
             this.buttonSortProcessingA.Size = new System.Drawing.Size(108, 23);
-            this.buttonSortProcessingA.TabIndex = 6;
+            this.buttonSortProcessingA.TabIndex = 3;
             this.buttonSortProcessingA.Text = "Sort";
             this.toolTip.SetToolTip(this.buttonSortProcessingA, "Starts Sort Algorithms");
             this.buttonSortProcessingA.UseVisualStyleBackColor = true;
@@ -803,7 +802,7 @@ namespace MSSSDataProcessing
             0});
             this.numWheelSelectionRangeProcessingA.Name = "numWheelSelectionRangeProcessingA";
             this.numWheelSelectionRangeProcessingA.Size = new System.Drawing.Size(41, 20);
-            this.numWheelSelectionRangeProcessingA.TabIndex = 18;
+            this.numWheelSelectionRangeProcessingA.TabIndex = 5;
             this.toolTip.SetToolTip(this.numWheelSelectionRangeProcessingA, "Specifies amount of values to be checked. (Starts from found value)");
             this.numWheelSelectionRangeProcessingA.Value = new decimal(new int[] {
             6,
@@ -847,7 +846,7 @@ namespace MSSSDataProcessing
             0});
             this.numWheelValueRangeProcessingA.Name = "numWheelValueRangeProcessingA";
             this.numWheelValueRangeProcessingA.Size = new System.Drawing.Size(41, 20);
-            this.numWheelValueRangeProcessingA.TabIndex = 15;
+            this.numWheelValueRangeProcessingA.TabIndex = 4;
             this.toolTip.SetToolTip(this.numWheelValueRangeProcessingA, "Sets the range from target for which values can be selected.");
             this.numWheelValueRangeProcessingA.Value = new decimal(new int[] {
             5,
@@ -870,7 +869,7 @@ namespace MSSSDataProcessing
             this.textBoxTargetProcessingA.Location = new System.Drawing.Point(207, 124);
             this.textBoxTargetProcessingA.Name = "textBoxTargetProcessingA";
             this.textBoxTargetProcessingA.Size = new System.Drawing.Size(51, 20);
-            this.textBoxTargetProcessingA.TabIndex = 13;
+            this.textBoxTargetProcessingA.TabIndex = 6;
             this.toolTip.SetToolTip(this.textBoxTargetProcessingA, "Target value to be found");
             this.textBoxTargetProcessingA.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTargetProcessingA_KeyPress);
             // 
@@ -879,7 +878,7 @@ namespace MSSSDataProcessing
             this.buttonSearchProcessingA.Location = new System.Drawing.Point(160, 95);
             this.buttonSearchProcessingA.Name = "buttonSearchProcessingA";
             this.buttonSearchProcessingA.Size = new System.Drawing.Size(98, 23);
-            this.buttonSearchProcessingA.TabIndex = 6;
+            this.buttonSearchProcessingA.TabIndex = 7;
             this.buttonSearchProcessingA.Text = "Search";
             this.toolTip.SetToolTip(this.buttonSearchProcessingA, "Search for Target");
             this.buttonSearchProcessingA.UseVisualStyleBackColor = true;
@@ -890,7 +889,7 @@ namespace MSSSDataProcessing
             this.buttonSortProcessingB.Location = new System.Drawing.Point(89, 67);
             this.buttonSortProcessingB.Name = "buttonSortProcessingB";
             this.buttonSortProcessingB.Size = new System.Drawing.Size(108, 23);
-            this.buttonSortProcessingB.TabIndex = 6;
+            this.buttonSortProcessingB.TabIndex = 8;
             this.buttonSortProcessingB.Text = "Sort";
             this.toolTip.SetToolTip(this.buttonSortProcessingB, "Starts Sort Algorithms");
             this.buttonSortProcessingB.UseVisualStyleBackColor = true;
@@ -906,7 +905,7 @@ namespace MSSSDataProcessing
             0});
             this.numWheelSelectionRangeProcessingB.Name = "numWheelSelectionRangeProcessingB";
             this.numWheelSelectionRangeProcessingB.Size = new System.Drawing.Size(41, 20);
-            this.numWheelSelectionRangeProcessingB.TabIndex = 18;
+            this.numWheelSelectionRangeProcessingB.TabIndex = 10;
             this.toolTip.SetToolTip(this.numWheelSelectionRangeProcessingB, "Specifies amount of values to be checked. (Starts from found value)");
             this.numWheelSelectionRangeProcessingB.Value = new decimal(new int[] {
             6,
@@ -950,7 +949,7 @@ namespace MSSSDataProcessing
             0});
             this.numWheelValueRangeProcessingB.Name = "numWheelValueRangeProcessingB";
             this.numWheelValueRangeProcessingB.Size = new System.Drawing.Size(41, 20);
-            this.numWheelValueRangeProcessingB.TabIndex = 15;
+            this.numWheelValueRangeProcessingB.TabIndex = 9;
             this.toolTip.SetToolTip(this.numWheelValueRangeProcessingB, "Sets the range from target for which values can be selected.");
             this.numWheelValueRangeProcessingB.Value = new decimal(new int[] {
             5,
@@ -973,7 +972,7 @@ namespace MSSSDataProcessing
             this.textBoxTargetProcessingB.Location = new System.Drawing.Point(207, 124);
             this.textBoxTargetProcessingB.Name = "textBoxTargetProcessingB";
             this.textBoxTargetProcessingB.Size = new System.Drawing.Size(51, 20);
-            this.textBoxTargetProcessingB.TabIndex = 13;
+            this.textBoxTargetProcessingB.TabIndex = 11;
             this.toolTip.SetToolTip(this.textBoxTargetProcessingB, "Target value to be found");
             this.textBoxTargetProcessingB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTargetProcessingB_KeyPress);
             // 
@@ -982,7 +981,7 @@ namespace MSSSDataProcessing
             this.buttonSearchProcessingB.Location = new System.Drawing.Point(160, 95);
             this.buttonSearchProcessingB.Name = "buttonSearchProcessingB";
             this.buttonSearchProcessingB.Size = new System.Drawing.Size(98, 23);
-            this.buttonSearchProcessingB.TabIndex = 6;
+            this.buttonSearchProcessingB.TabIndex = 12;
             this.buttonSearchProcessingB.Text = "Search";
             this.toolTip.SetToolTip(this.buttonSearchProcessingB, "Search for Target");
             this.buttonSearchProcessingB.UseVisualStyleBackColor = true;
@@ -1065,7 +1064,7 @@ namespace MSSSDataProcessing
             this.textBoxSelectionSortProcessingA.Name = "textBoxSelectionSortProcessingA";
             this.textBoxSelectionSortProcessingA.ReadOnly = true;
             this.textBoxSelectionSortProcessingA.Size = new System.Drawing.Size(65, 20);
-            this.textBoxSelectionSortProcessingA.TabIndex = 9;
+            this.textBoxSelectionSortProcessingA.TabIndex = 3;
             this.toolTip.SetToolTip(this.textBoxSelectionSortProcessingA, "Displays processing speed of Selection Sorting algorithm in milliseconds.");
             // 
             // textBoxHighlightProcessingSpdA
@@ -1110,10 +1109,10 @@ namespace MSSSDataProcessing
             // 
             // buttonColumn
             // 
-            this.buttonColumn.Location = new System.Drawing.Point(8, 78);
+            this.buttonColumn.Location = new System.Drawing.Point(9, 170);
             this.buttonColumn.Name = "buttonColumn";
             this.buttonColumn.Size = new System.Drawing.Size(193, 23);
-            this.buttonColumn.TabIndex = 16;
+            this.buttonColumn.TabIndex = 3;
             this.buttonColumn.Text = "Sort and Display Distribution";
             this.toolTip.SetToolTip(this.buttonColumn, "Search for Target");
             this.buttonColumn.UseVisualStyleBackColor = true;
@@ -1326,7 +1325,7 @@ namespace MSSSDataProcessing
             this.buttonLoadProcessing.Location = new System.Drawing.Point(254, 13);
             this.buttonLoadProcessing.Name = "buttonLoadProcessing";
             this.buttonLoadProcessing.Size = new System.Drawing.Size(102, 24);
-            this.buttonLoadProcessing.TabIndex = 13;
+            this.buttonLoadProcessing.TabIndex = 2;
             this.buttonLoadProcessing.Text = "Load Data";
             this.buttonLoadProcessing.UseVisualStyleBackColor = true;
             this.buttonLoadProcessing.Click += new System.EventHandler(this.buttonLoadProcessing_Click);
@@ -1436,23 +1435,55 @@ namespace MSSSDataProcessing
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Line Graph Display";
             // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.chartSensorA);
+            this.groupBox11.Controls.Add(this.chartSensorB);
+            this.groupBox11.Location = new System.Drawing.Point(80, 13);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(372, 327);
+            this.groupBox11.TabIndex = 19;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Sensor Data Distribution";
+            // 
+            // chartSensorA
+            // 
+            chartArea9.Name = "ChartArea1";
+            this.chartSensorA.ChartAreas.Add(chartArea9);
+            legend9.Name = "Legend1";
+            this.chartSensorA.Legends.Add(legend9);
+            this.chartSensorA.Location = new System.Drawing.Point(4, 14);
+            this.chartSensorA.Name = "chartSensorA";
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
+            series9.Legend = "Legend1";
+            series9.Name = "SensorA";
+            series9.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series9.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series9.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chartSensorA.Series.Add(series9);
+            this.chartSensorA.Size = new System.Drawing.Size(365, 145);
+            this.chartSensorA.SuppressExceptions = true;
+            this.chartSensorA.TabIndex = 15;
+            this.chartSensorA.Text = "Sensor";
+            // 
             // chartSensorB
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartSensorB.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chartSensorB.Legends.Add(legend4);
+            chartArea10.Name = "ChartArea1";
+            this.chartSensorB.ChartAreas.Add(chartArea10);
+            legend10.Name = "Legend1";
+            this.chartSensorB.Legends.Add(legend10);
             this.chartSensorB.Location = new System.Drawing.Point(4, 175);
             this.chartSensorB.Name = "chartSensorB";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
-            series4.CustomProperties = "LabelStyle=Top, IsXAxisQuantitative=True";
-            series4.Legend = "Legend1";
-            series4.Name = "SensorB";
-            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series4.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chartSensorB.Series.Add(series4);
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
+            series10.CustomProperties = "LabelStyle=Top, IsXAxisQuantitative=True";
+            series10.Legend = "Legend1";
+            series10.Name = "SensorB";
+            series10.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series10.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series10.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chartSensorB.Series.Add(series10);
             this.chartSensorB.Size = new System.Drawing.Size(365, 145);
             this.chartSensorB.SuppressExceptions = true;
             this.chartSensorB.TabIndex = 18;
@@ -1460,25 +1491,27 @@ namespace MSSSDataProcessing
             // 
             // groupBox10
             // 
+            this.groupBox10.Controls.Add(this.label30);
+            this.groupBox10.Controls.Add(this.numWheelDistribution);
             this.groupBox10.Controls.Add(this.buttonLoadVisual);
             this.groupBox10.Controls.Add(this.textBoxInsertionSortVisual);
             this.groupBox10.Controls.Add(this.label28);
             this.groupBox10.Controls.Add(this.buttonColumn);
             this.groupBox10.Controls.Add(this.label29);
             this.groupBox10.Controls.Add(this.textBoxSelectionSortVisual);
-            this.groupBox10.Location = new System.Drawing.Point(456, 103);
+            this.groupBox10.Location = new System.Drawing.Point(456, 45);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(213, 146);
+            this.groupBox10.Size = new System.Drawing.Size(213, 204);
             this.groupBox10.TabIndex = 11;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Sort";
             // 
             // buttonLoadVisual
             // 
-            this.buttonLoadVisual.Location = new System.Drawing.Point(8, 107);
+            this.buttonLoadVisual.Location = new System.Drawing.Point(9, 143);
             this.buttonLoadVisual.Name = "buttonLoadVisual";
-            this.buttonLoadVisual.Size = new System.Drawing.Size(193, 24);
-            this.buttonLoadVisual.TabIndex = 19;
+            this.buttonLoadVisual.Size = new System.Drawing.Size(80, 24);
+            this.buttonLoadVisual.TabIndex = 1;
             this.buttonLoadVisual.Text = "Load Data";
             this.buttonLoadVisual.UseVisualStyleBackColor = true;
             this.buttonLoadVisual.Click += new System.EventHandler(this.buttonLoadVisual_Click);
@@ -1501,37 +1534,43 @@ namespace MSSSDataProcessing
             this.label29.TabIndex = 10;
             this.label29.Text = "Selection Sort (Sensor A)\r\n\r\n";
             // 
-            // chartSensorA
+            // numWheelDistribution
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chartSensorA.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartSensorA.Legends.Add(legend3);
-            this.chartSensorA.Location = new System.Drawing.Point(4, 14);
-            this.chartSensorA.Name = "chartSensorA";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
-            series3.Legend = "Legend1";
-            series3.Name = "SensorA";
-            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series3.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chartSensorA.Series.Add(series3);
-            this.chartSensorA.Size = new System.Drawing.Size(365, 145);
-            this.chartSensorA.SuppressExceptions = true;
-            this.chartSensorA.TabIndex = 15;
-            this.chartSensorA.Text = "Sensor";
+            this.numWheelDistribution.DecimalPlaces = 1;
+            this.numWheelDistribution.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numWheelDistribution.Location = new System.Drawing.Point(160, 145);
+            this.numWheelDistribution.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numWheelDistribution.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numWheelDistribution.Name = "numWheelDistribution";
+            this.numWheelDistribution.Size = new System.Drawing.Size(41, 20);
+            this.numWheelDistribution.TabIndex = 2;
+            this.toolTip.SetToolTip(this.numWheelDistribution, "Sets the range from target for which values can be selected.");
+            this.numWheelDistribution.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
             // 
-            // groupBox11
+            // label30
             // 
-            this.groupBox11.Controls.Add(this.chartSensorA);
-            this.groupBox11.Controls.Add(this.chartSensorB);
-            this.groupBox11.Location = new System.Drawing.Point(80, 13);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(372, 327);
-            this.groupBox11.TabIndex = 19;
-            this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "Sensor Data Distribution";
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(90, 149);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(68, 13);
+            this.label30.TabIndex = 21;
+            this.label30.Text = "Smoothness:";
             // 
             // ProcessingForm
             // 
@@ -1582,11 +1621,12 @@ namespace MSSSDataProcessing
             this.groupBox5.PerformLayout();
             this.tabVisual.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartSensorA)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartSensorB)).EndInit();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartSensorA)).EndInit();
-            this.groupBox11.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelDistribution)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1707,6 +1747,8 @@ namespace MSSSDataProcessing
         private ListBox listBoxSensorVisualA;
         private Button buttonLoadVisual;
         private GroupBox groupBox11;
+        private Label label30;
+        private NumericUpDown numWheelDistribution;
     }
 }
 

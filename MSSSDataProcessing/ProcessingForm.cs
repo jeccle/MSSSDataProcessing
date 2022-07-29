@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -31,10 +32,10 @@ namespace MSSSDataProcessing
         private void LoadData()
         {
             ReadData satellite = new ReadData();
-            //sensorA.Clear();
-            sensorA = new LinkedList<double>();
-            sensorB = new LinkedList<double>();
-            //sensorB.Clear();
+            sensorA.Clear();
+            //sensorA = new LinkedList<double>();
+            //sensorB = new LinkedList<double>();
+            sensorB.Clear();
             Trace.TraceInformation("Loading data to LinkedLists");
             for (int i = 0; i < 400; i++)
             {
@@ -64,6 +65,55 @@ namespace MSSSDataProcessing
         #endregion
 
         #region Utility Methods
+
+        // 4.6	Create a method called “DisplayListboxData” that will display the content of a LinkedList inside the appropriate ListBox
+        private void DisplayListBoxData(LinkedList<double> sensor, ListBox listBox)
+        {
+            Trace.TraceInformation("Displaying list  in listBox");
+            listBox.Items.Clear();
+            foreach (double data in sensor)
+            {
+                listBox.Items.Add(data);
+            }
+            Trace.TraceInformation("Display list complete.\n");
+        }
+        // 4.5	Create a method called “NumberOfNodes” that will return an integer which is the number of nodes(elements) in a LinkedList.
+        private int NumberOfNodes(LinkedList<double> sensor)
+        {
+            return sensor.Count;
+        }
+        private void HighlightData(ListBox listBox, int index, int range, double valueRange)
+        {
+            try
+            {
+                listBox.SelectedItems.Clear();
+                double low, high, current;                                          // Boundaries for value selection.
+                low = (double)listBox.Items[index] - valueRange;                    // Low value set
+                high = (double)listBox.Items[index] + valueRange;                   // High value set
+                Trace.TraceInformation("Selection configuration\nTotal selection range: " + range + "\t| Value Deviation range: " + valueRange);
+
+                int pointerIndex = index - (range / 2);     // Pointer index value is the first value to be checked.
+                if (pointerIndex < 0)                       // If pointing before first list value, set pointer to first list value.
+                    pointerIndex = 0;
+                for (int i = pointerIndex; i <= index + (range / 2) && i < 400; i++)    // i is set to the floor index of range. 
+                {
+                    current = (double)listBox.Items[i];                // Current value to be compared.
+                    //Trace.WriteLine("Target: " + current + " - High: " + high + "\t| Low:" + low + " \t| Value Deviation range: " + valueRange);
+                    if (current > low && current < high)    // If current value is within upper and lower bounds.
+                    {
+                        listBox.SetSelected(i, true);       // Specified index is set as selected within listBox.
+                        //Trace.WriteLine("## " + current + " is within bounds. \t| Now selected in " + listBox.Name + " ##\n");
+                    }
+                }
+                Trace.TraceInformation("listBox target selection complete.\n");
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Trace.TraceError("Index is out of bounds within the array.\n");
+            }
+        }
+
+        #region DataChecking
         // Checks file dir and incrememnts upwards for each existing demo file until a new file number is reached.
         public string CheckFileDir(string fileName)
         {
@@ -83,22 +133,6 @@ namespace MSSSDataProcessing
             }
             fileName = fileNameExt;
             return fileName;
-        }
-        // 4.5	Create a method called “NumberOfNodes” that will return an integer which is the number of nodes(elements) in a LinkedList.
-        private int NumberOfNodes(LinkedList<double> sensor)
-        {
-            return sensor.Count;
-        }
-        // 4.6	Create a method called “DisplayListboxData” that will display the content of a LinkedList inside the appropriate ListBox
-        private void DisplayListBoxData(LinkedList<double> sensor, ListBox listBox)
-        {
-            Trace.TraceInformation("Displaying list  in listBox");
-            listBox.Items.Clear();
-            foreach (double data in sensor)
-            {
-                listBox.Items.Add(data);
-            }
-            Trace.TraceInformation("Display list complete.\n");
         }
         private int RadioButtonIndex(string radioGrpName)
         {
@@ -128,56 +162,34 @@ namespace MSSSDataProcessing
         }
         private bool CheckInput(string TbInput, TextBox TbTarget, LinkedList<double> sensor)
         {
-            Trace.TraceInformation("Checking input " + TbInput);
-            if (string.IsNullOrEmpty(TbInput))
-            {   // Empty text box input.
-                TbTarget.Focus();
-                toolTip.Show("Check input!", TbTarget, 60, 15, 3000);
-                statusLabel.Text = "Please enter an appropriate integer or decimal value";
-                Trace.TraceWarning("Input box is empty.\n");
-                return false;
-            }
-            else if (double.Parse(TbInput) < (int)sensor.First.Value || double.Parse(TbInput) > sensor.Last.Value)   // Parsing as in to increase search to whole numbers.
-            {   // Input is out of range
-                TbTarget.Focus();
-                toolTip.Show("Input is out of bounds!", TbTarget, 60, 15, 3000);
-                statusLabel.Text = "Please enter an appropriate value between " + sensor.First.Value + " and " + sensor.Last.Value;
-                TbTarget.Clear();
-                Trace.WriteLine(sensor.First.Value + " > " + TbInput + " & " + TbInput + " < " + sensor.Last.Value);
-                Trace.TraceWarning("Value is out of bounds.\n");
-                return false;
-            }
-            else
-                return true;
-        }
-        private void HighlightData(ListBox listBox, int index, int range, double valueRange)
-        {
             try
             {
-                listBox.SelectedItems.Clear();
-                double low, high, current;                                          // Boundaries for value selection.
-                low = (double)listBox.Items[index] - valueRange;                    // Low value set
-                high = (double)listBox.Items[index] + valueRange;                   // High value set
-                Trace.TraceInformation("Selection configuration\nTotal selection range: " + range + "\t| Value Deviation range: " + valueRange);
-
-                int pointerIndex = index - (range / 2);     // Pointer index value is the first value to be checked.
-                if (pointerIndex < 0)                       // If pointing before first list value, set pointer to first list value.
-                    pointerIndex = 0;
-                for (int i = pointerIndex; i <= index + (range / 2) && i < 400; i++)    // i is set to the floor index of range. 
-                {
-                    current = double.Parse(listBox.Items[i].ToString());                // Current value to be compared.
-                    Trace.WriteLine("Target: " + current + " - High: " + high + "\t| Low:" + low + " \t| Value Deviation range: " + valueRange);
-                    if (current > low && current < high)    // If current value is within upper and lower bounds.
-                    {
-                        listBox.SetSelected(i, true);       // Specified index is set as selected within listBox.
-                        Trace.WriteLine("## " + current + " is within bounds. \t| Now selected in " + listBox.Name + " ##\n");
-                    }
+                Trace.TraceInformation("Checking input " + TbInput);
+                if (string.IsNullOrEmpty(TbInput))
+                {   // Empty text box input.
+                    TbTarget.Focus();
+                    toolTip.Show("Check input!", TbTarget, 60, 15, 3000);
+                    statusLabel.Text = "Please enter an appropriate integer or decimal value";
+                    Trace.TraceWarning("Input box is empty.\n");
+                    return false;
                 }
-                Trace.TraceInformation("listBox target selection complete.\n");
+                else if (double.Parse(TbInput) < (int)sensor.First.Value || double.Parse(TbInput) > sensor.Last.Value)   // Parsing as in to increase search to whole numbers.
+                {   // Input is out of range
+                    TbTarget.Focus();
+                    toolTip.Show("Input is out of bounds!", TbTarget, 60, 15, 3000);
+                    statusLabel.Text = "Please enter an appropriate value between " + sensor.First.Value + " and " + sensor.Last.Value;
+                    TbTarget.Clear();
+                    Trace.WriteLine(sensor.First.Value + " > " + TbInput + " & " + TbInput + " < " + sensor.Last.Value);
+                    Trace.TraceWarning("Value is out of bounds.\n");
+                    return false;
+                }
+                else
+                    return true;
             }
-            catch (IndexOutOfRangeException)
+            catch
             {
-                Trace.TraceError("Index is out of bounds within the array.\n");
+                statusLabel.Text = "Error finding value, list may be empty.";
+                return false;
             }
         }
         private double IntOrDouble(string TbInput)
@@ -198,7 +210,7 @@ namespace MSSSDataProcessing
                 foreach (var data in sensor)
                 {
                     //int occurrences = sensor.Count(x => (x + 0.5) < data && data > (x - 0.5));
-                    int occurrences = sensor.Count(x => IsWithin(x, data - 0.5, data + 0.5));
+                    int occurrences = sensor.Count(x => IsWithin(x, data - (double)numWheelDistribution.Value, data + (double)numWheelDistribution.Value));
                     result.AddLast(occurrences);
                 }
             }
@@ -206,7 +218,6 @@ namespace MSSSDataProcessing
                 statusLabel.Text = "Sensor must be SORTED.";
             return result;
         }
-
         private bool IsWithin(double value, double min, double max)
         {
             return value >= min && value <= max;
@@ -221,7 +232,7 @@ namespace MSSSDataProcessing
             }
             return true;
         }
-
+            #endregion
         #endregion
 
         #region Sort & Search Methods
@@ -258,7 +269,7 @@ namespace MSSSDataProcessing
                     if (sensor.ElementAt(j - 1) > sensor.ElementAt(j))
                     {
                         LinkedListNode<double> current = sensor.Find(sensor.ElementAt(j));
-                        LinkedListNode<double> currentLeft = sensor.Find(sensor.ElementAt(j - 1));
+                        LinkedListNode<double> currentLeft = current.Previous;
                         //Trace.WriteLine("Left Value: " + currentLeft.Value + " | Current Value: " + current.Value + "\t| " + currentLeft.Value + " > " + current.Value + " swapping.");
                         double temp = current.Value;
                         current.Value = currentLeft.Value;
@@ -344,6 +355,7 @@ namespace MSSSDataProcessing
         {
             try
             {
+                Thread.Sleep(10);
                 Trace.TraceInformation("Starting stopwatch   | Sort: Insertion");
                 Stopwatch sw = Stopwatch.StartNew();
                 InsertionSort(list);
@@ -356,12 +368,14 @@ namespace MSSSDataProcessing
             {
                 statusLabel.Text = "Error during Insertion Sort";
                 Trace.TraceError(ex.Message);
+                MessageBox.Show(ex.Message, "Insertion Sort");
             }
         }
         private void SelectionSortAndDisplay(ListBox listBox, LinkedList<double> list, TextBox textBox)
         {
             try
             {
+                Thread.Sleep(10);
                 Trace.TraceInformation("Starting stopwatch   | Sort: Selection");
                 Stopwatch sw = Stopwatch.StartNew();
                 SelectionSort(list);
@@ -374,6 +388,7 @@ namespace MSSSDataProcessing
             {
                 statusLabel.Text = "Error during Selection Sort";
                 Trace.TraceError(ex.Message);
+                MessageBox.Show(ex.Message, "Selection Sort");
             }
 
         }
@@ -535,13 +550,15 @@ namespace MSSSDataProcessing
         private void textBoxTargetA_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
-            toolTip.Show("Numeric Input ONLY", textBoxTargetA, 45, 15, 3000);
+            if (e.Handled)
+                toolTip.Show("Numeric Input ONLY", textBoxTargetA, 45, 15, 3000);
 
         }
         private void textBoxTargetB_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
-            toolTip.Show("Numeric Input ONLY", textBoxTargetB, 45, 15, 3000);
+            if (e.Handled)
+                toolTip.Show("Numeric Input ONLY", textBoxTargetB, 45, 15, 3000);
         }
 
 
@@ -651,12 +668,14 @@ namespace MSSSDataProcessing
         private void textBoxTargetProcessingA_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
-            toolTip.Show("Numeric Input ONLY", textBoxTargetProcessingA, 45, 15, 3000);
+            if (e.Handled)
+                toolTip.Show("Numeric Input ONLY", textBoxTargetProcessingA, 45, 15, 3000);
         }
         private void textBoxTargetProcessingB_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
-            toolTip.Show("Numeric Input ONLY", textBoxTargetProcessingB, 45, 15, 3000);
+            if (e.Handled)
+                toolTip.Show("Numeric Input ONLY", textBoxTargetProcessingB, 45, 15, 3000);
         }
 
     #endregion
@@ -698,7 +717,6 @@ namespace MSSSDataProcessing
             Trace.Listeners.Add(new TextWriterTraceListener(fileName, "myListener"));
             
         }
-
         private void ProcessingForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Trace.Flush();
