@@ -31,12 +31,12 @@ namespace MSSSDataProcessing
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.listViewDisplay = new System.Windows.Forms.ListView();
             this.ColumnA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColumnB = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -149,6 +149,7 @@ namespace MSSSDataProcessing
             this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.chartSensorA = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelSigma)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelMean)).BeginInit();
             this.groupBoxA.SuspendLayout();
@@ -180,6 +181,7 @@ namespace MSSSDataProcessing
             ((System.ComponentModel.ISupportInitialize)(this.chartSensorB)).BeginInit();
             this.groupBox10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartSensorA)).BeginInit();
+            this.groupBox11.SuspendLayout();
             this.SuspendLayout();
             // 
             // listViewDisplay
@@ -1423,10 +1425,9 @@ namespace MSSSDataProcessing
             // 
             // groupBox9
             // 
-            this.groupBox9.Controls.Add(this.chartSensorB);
+            this.groupBox9.Controls.Add(this.groupBox11);
             this.groupBox9.Controls.Add(this.listBoxSensorVisualB);
             this.groupBox9.Controls.Add(this.groupBox10);
-            this.groupBox9.Controls.Add(this.chartSensorA);
             this.groupBox9.Controls.Add(this.listBoxSensorVisualA);
             this.groupBox9.Location = new System.Drawing.Point(7, 6);
             this.groupBox9.Name = "groupBox9";
@@ -1437,20 +1438,21 @@ namespace MSSSDataProcessing
             // 
             // chartSensorB
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chartSensorB.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartSensorB.Legends.Add(legend3);
-            this.chartSensorB.Location = new System.Drawing.Point(303, 184);
+            chartArea4.Name = "ChartArea1";
+            this.chartSensorB.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chartSensorB.Legends.Add(legend4);
+            this.chartSensorB.Location = new System.Drawing.Point(4, 175);
             this.chartSensorB.Name = "chartSensorB";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.Name = "SensorB";
-            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series3.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chartSensorB.Series.Add(series3);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
+            series4.CustomProperties = "LabelStyle=Top, IsXAxisQuantitative=True";
+            series4.Legend = "Legend1";
+            series4.Name = "SensorB";
+            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series4.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chartSensorB.Series.Add(series4);
             this.chartSensorB.Size = new System.Drawing.Size(365, 145);
             this.chartSensorB.SuppressExceptions = true;
             this.chartSensorB.TabIndex = 18;
@@ -1464,7 +1466,7 @@ namespace MSSSDataProcessing
             this.groupBox10.Controls.Add(this.buttonColumn);
             this.groupBox10.Controls.Add(this.label29);
             this.groupBox10.Controls.Add(this.textBoxSelectionSortVisual);
-            this.groupBox10.Location = new System.Drawing.Point(84, 95);
+            this.groupBox10.Location = new System.Drawing.Point(456, 103);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(213, 146);
             this.groupBox10.TabIndex = 11;
@@ -1501,24 +1503,35 @@ namespace MSSSDataProcessing
             // 
             // chartSensorA
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartSensorA.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chartSensorA.Legends.Add(legend4);
-            this.chartSensorA.Location = new System.Drawing.Point(301, 22);
+            chartArea3.Name = "ChartArea1";
+            this.chartSensorA.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chartSensorA.Legends.Add(legend3);
+            this.chartSensorA.Location = new System.Drawing.Point(4, 14);
             this.chartSensorA.Name = "chartSensorA";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "SensorA";
-            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series4.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chartSensorA.Series.Add(series4);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
+            series3.Legend = "Legend1";
+            series3.Name = "SensorA";
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series3.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chartSensorA.Series.Add(series3);
             this.chartSensorA.Size = new System.Drawing.Size(365, 145);
             this.chartSensorA.SuppressExceptions = true;
             this.chartSensorA.TabIndex = 15;
             this.chartSensorA.Text = "Sensor";
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.chartSensorA);
+            this.groupBox11.Controls.Add(this.chartSensorB);
+            this.groupBox11.Location = new System.Drawing.Point(80, 13);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(372, 327);
+            this.groupBox11.TabIndex = 19;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Sensor Data Distribution";
             // 
             // ProcessingForm
             // 
@@ -1573,6 +1586,7 @@ namespace MSSSDataProcessing
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartSensorA)).EndInit();
+            this.groupBox11.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1692,6 +1706,7 @@ namespace MSSSDataProcessing
         private TextBox textBoxSelectionSortVisual;
         private ListBox listBoxSensorVisualA;
         private Button buttonLoadVisual;
+        private GroupBox groupBox11;
     }
 }
 

@@ -31,8 +31,10 @@ namespace MSSSDataProcessing
         private void LoadData()
         {
             ReadData satellite = new ReadData();
-            sensorA.Clear();
-            sensorB.Clear();
+            //sensorA.Clear();
+            sensorA = new LinkedList<double>();
+            sensorB = new LinkedList<double>();
+            //sensorB.Clear();
             Trace.TraceInformation("Loading data to LinkedLists");
             for (int i = 0; i < 400; i++)
             {
@@ -90,13 +92,13 @@ namespace MSSSDataProcessing
         // 4.6	Create a method called “DisplayListboxData” that will display the content of a LinkedList inside the appropriate ListBox
         private void DisplayListBoxData(LinkedList<double> sensor, ListBox listBox)
         {
-            Trace.TraceInformation("Displaying list " + sensorA.ToString() + " in " + listBox.ToString());
+            Trace.TraceInformation("Displaying list  in listBox");
             listBox.Items.Clear();
-            foreach (var data in sensor)
+            foreach (double data in sensor)
             {
                 listBox.Items.Add(data);
             }
-            Trace.TraceInformation("Displaying list " + sensorA.ToString() + " complete.\n");
+            Trace.TraceInformation("Display list complete.\n");
         }
         private int RadioButtonIndex(string radioGrpName)
         {
@@ -154,8 +156,8 @@ namespace MSSSDataProcessing
             {
                 listBox.SelectedItems.Clear();
                 double low, high, current;                                          // Boundaries for value selection.
-                low = double.Parse(listBox.Items[index].ToString()) - valueRange;   // Low value set
-                high = double.Parse(listBox.Items[index].ToString()) + valueRange;  // High value set
+                low = (double)listBox.Items[index] - valueRange;                    // Low value set
+                high = (double)listBox.Items[index] + valueRange;                   // High value set
                 Trace.TraceInformation("Selection configuration\nTotal selection range: " + range + "\t| Value Deviation range: " + valueRange);
 
                 int pointerIndex = index - (range / 2);     // Pointer index value is the first value to be checked.
@@ -196,7 +198,7 @@ namespace MSSSDataProcessing
                 foreach (var data in sensor)
                 {
                     //int occurrences = sensor.Count(x => (x + 0.5) < data && data > (x - 0.5));
-                    int occurrences = sensor.Count(x => (int)x == (int)data);
+                    int occurrences = sensor.Count(x => IsWithin(x, data - 0.5, data + 0.5));
                     result.AddLast(occurrences);
                 }
             }
@@ -204,9 +206,15 @@ namespace MSSSDataProcessing
                 statusLabel.Text = "Sensor must be SORTED.";
             return result;
         }
+
+        private bool IsWithin(double value, double min, double max)
+        {
+            return value >= min && value <= max;
+        }
         private bool IsSorted(LinkedList<double> sensor)
         {
-            for (int i = NumberOfNodes(sensor) - 1; i > 0; i--)
+            int count = NumberOfNodes(sensor) - 1;
+            for (int i = count; i > 0; i--)
             {
                 if (sensor.ElementAt(i) < sensor.ElementAt(i - 1))
                     return false;
@@ -232,7 +240,7 @@ namespace MSSSDataProcessing
                 }
                 LinkedListNode<double> currentMin = sensor.Find(sensor.ElementAt(min));
                 LinkedListNode<double> currentI = sensor.Find(sensor.ElementAt(i));
-                //Trace.WriteLine("Current Min Value " + currentMin.Value + " | Current pointer Value " + currentI.Value);
+                //Trace.WriteLine("Current Min Value " + currentMin.Value + " | Current pointer Value " + currentI.Value + "\t| " + currentMin.Value + " > " + currentI.Value + " swapping.");
                 double temp = currentMin.Value;
                 currentMin.Value = currentI.Value;      // Swaps the found minimum with the I current pointer value as the minimum is currently the lowest value in the list.
                 currentI.Value = temp;                  // Minimum values are shuffled down using selection sort.
@@ -251,14 +259,16 @@ namespace MSSSDataProcessing
                     {
                         LinkedListNode<double> current = sensor.Find(sensor.ElementAt(j));
                         LinkedListNode<double> currentLeft = sensor.Find(sensor.ElementAt(j - 1));
-                        //Trace.WriteLine("Current Low Value " + currentLeft.Value + " | Current pointer Value " + current.Value);
+                        //Trace.WriteLine("Left Value: " + currentLeft.Value + " | Current Value: " + current.Value + "\t| " + currentLeft.Value + " > " + current.Value + " swapping.");
                         double temp = current.Value;
                         current.Value = currentLeft.Value;
                         currentLeft.Value = temp;
                     }
+                    //else
+                        //Trace.WriteLine(sensor.ElementAt(j - 1) + " < " + sensor.ElementAt(j));
                 }
             }
-            return true;
+           return true;
         }
         // 4.9	Create a method called “BinarySearchIterative” which has the following four parameters: LinkedList, SearchValue, Minimum and Maximum.
         private int BinarySearchIterative(LinkedList<double> sensor, double searchValue)
@@ -271,7 +281,7 @@ namespace MSSSDataProcessing
                 // Find an exact value or if searchValue is an int, it can be matched with a casted int for a more general search.
                 if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid))
                     return mid;
-                else if (searchValue < sensor.ElementAt(mid))
+                else if (searchValue > sensor.ElementAt(mid))
                     min = mid + 1;
                 else
                     max = mid - 1;
@@ -298,12 +308,13 @@ namespace MSSSDataProcessing
         // 4.10	Create a method called “BinarySearchRecursive” which has the following four parameters: LinkedList, SearchValue, Minimum and Maximum. 
         private int BinarySearchRecursive(LinkedList<double> sensor, double searchValue, int min, int max)
         {
+            int mid;
             while (min <= max - 1)
             {
-                int mid = (min + max) / 2;
+                mid = (min + max) / 2;
                 if (searchValue == sensor.ElementAt(mid) || searchValue == (int)sensor.ElementAt(mid))  // Checks if searchValue equals double at mid index.
                     return mid;                                              // Casting sensor element to int allows for
-                else if (searchValue > sensor.ElementAt(mid))               // integers entered for a general search. 
+                else if (searchValue < sensor.ElementAt(mid))               // integers entered for a general search. 
                     return BinarySearchRecursive(sensor, searchValue, min, mid - 1);
                 else
                     return BinarySearchRecursive(sensor, searchValue, mid + 1, max);
@@ -545,6 +556,7 @@ namespace MSSSDataProcessing
         }
         private void buttonSortProcessingA_Click(object sender, EventArgs e)
         {
+
             LinkedList<double> clone = sensorA;
             /*
             Stopwatch sw = Stopwatch.StartNew();
@@ -587,11 +599,11 @@ namespace MSSSDataProcessing
                 double searchValue = IntOrDouble(textBoxTargetProcessingA.Text);
                 LinkedList<double> clone = sensorA;
                 Stopwatch sw = Stopwatch.StartNew();
-                int foundIndex = BinarySearchIterative(clone, searchValue);
+                BinarySearchIterative(clone, searchValue);
                 sw.Stop();
                 textBoxIterativeSearchSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";
                 sw = Stopwatch.StartNew();
-                foundIndex = BinarySearchRecursive(sensorA, searchValue, 0, NumberOfNodes(sensorA));
+                int foundIndex = BinarySearchRecursive(sensorA, searchValue, 0, NumberOfNodes(sensorA));
                 sw.Stop();
                 textBoxRecursiveSearchSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";
                 sw = Stopwatch.StartNew();
@@ -609,6 +621,7 @@ namespace MSSSDataProcessing
         }
         private void buttonSearchProcessingB_Click(object sender, EventArgs e)
         {
+            statusLabel.Text = "";
             bool sorted = IsSorted(sensorB);
             if (sorted && CheckInput(textBoxTargetProcessingB.Text, textBoxTargetProcessingB, sensorB))
             {
@@ -635,7 +648,6 @@ namespace MSSSDataProcessing
                 Trace.TraceWarning("SensorA attempted to search but its not sorted!?!?");
             }
         }
-
         private void textBoxTargetProcessingA_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsPunctuation(e.KeyChar);
@@ -652,6 +664,7 @@ namespace MSSSDataProcessing
     #region TAB Visualisation
         private void buttonLoadVisual_Click(object sender, EventArgs e)
         {
+            statusLabel.Text = "";
             LoadData();
             DisplayListBoxData(sensorA, listBoxSensorVisualA);
             DisplayListBoxData(sensorB, listBoxSensorVisualB);
@@ -660,6 +673,7 @@ namespace MSSSDataProcessing
         {
             try
             {
+                statusLabel.Text = "";
                 Trace.TraceInformation("Displaying Charts of Sensor Data");
                 SelectionSortAndDisplay(listBoxSensorVisualA, sensorA, textBoxSelectionSortVisual);
                 InsertionSortAndDisplay(listBoxSensorVisualB, sensorB, textBoxInsertionSortVisual);
