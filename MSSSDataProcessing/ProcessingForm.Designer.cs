@@ -53,7 +53,7 @@ namespace MSSSDataProcessing
             this.textBoxSortSpdA = new System.Windows.Forms.TextBox();
             this.SearchGrpBoxA = new System.Windows.Forms.GroupBox();
             this.textBoxDifferenceA = new System.Windows.Forms.TextBox();
-            this.numWheelSelRangeA = new System.Windows.Forms.NumericUpDown();
+            this.numWheelSelectionRangeA = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
             this.textBoxSearchSpdA = new System.Windows.Forms.TextBox();
             this.searchLabelA = new System.Windows.Forms.Label();
@@ -74,7 +74,7 @@ namespace MSSSDataProcessing
             this.textBoxSortSpdB = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBoxDifferenceB = new System.Windows.Forms.TextBox();
-            this.numWheelSelRangeB = new System.Windows.Forms.NumericUpDown();
+            this.numWheelSelectionRangeB = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
             this.numWheelValueRangeB = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
@@ -169,12 +169,12 @@ namespace MSSSDataProcessing
             this.groupBoxA.SuspendLayout();
             this.SortGrpBoxA.SuspendLayout();
             this.SearchGrpBoxA.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelRangeA)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelectionRangeA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelValueRangeA)).BeginInit();
             this.groupBoxB.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelRangeB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelectionRangeB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelValueRangeB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelSelectionRangeProcessingA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelValueRangeProcessingA)).BeginInit();
@@ -380,7 +380,7 @@ namespace MSSSDataProcessing
             // SearchGrpBoxA
             // 
             this.SearchGrpBoxA.Controls.Add(this.textBoxDifferenceA);
-            this.SearchGrpBoxA.Controls.Add(this.numWheelSelRangeA);
+            this.SearchGrpBoxA.Controls.Add(this.numWheelSelectionRangeA);
             this.SearchGrpBoxA.Controls.Add(this.label10);
             this.SearchGrpBoxA.Controls.Add(this.textBoxSearchSpdA);
             this.SearchGrpBoxA.Controls.Add(this.searchLabelA);
@@ -393,33 +393,36 @@ namespace MSSSDataProcessing
             this.SearchGrpBoxA.Controls.Add(this.buttonSearchA);
             this.SearchGrpBoxA.Location = new System.Drawing.Point(115, 138);
             this.SearchGrpBoxA.Name = "SearchGrpBoxA";
-            this.SearchGrpBoxA.Size = new System.Drawing.Size(160, 204);
+            this.SearchGrpBoxA.Size = new System.Drawing.Size(160, 198);
             this.SearchGrpBoxA.TabIndex = 10;
             this.SearchGrpBoxA.TabStop = false;
             this.SearchGrpBoxA.Text = "Search";
             // 
             // textBoxDifferenceA
             // 
-            this.textBoxDifferenceA.Location = new System.Drawing.Point(10, 140);
+            this.textBoxDifferenceA.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxDifferenceA.Location = new System.Drawing.Point(10, 142);
             this.textBoxDifferenceA.Name = "textBoxDifferenceA";
-            this.textBoxDifferenceA.Size = new System.Drawing.Size(137, 20);
+            this.textBoxDifferenceA.ReadOnly = true;
+            this.textBoxDifferenceA.Size = new System.Drawing.Size(137, 13);
             this.textBoxDifferenceA.TabIndex = 18;
+            this.textBoxDifferenceA.Text = "Min:   |  Max:";
             this.textBoxDifferenceA.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // numWheelSelRangeA
+            // numWheelSelectionRangeA
             // 
-            this.numWheelSelRangeA.Location = new System.Drawing.Point(105, 167);
-            this.numWheelSelRangeA.Maximum = new decimal(new int[] {
+            this.numWheelSelectionRangeA.Location = new System.Drawing.Point(105, 162);
+            this.numWheelSelectionRangeA.Maximum = new decimal(new int[] {
             50,
             0,
             0,
             0});
-            this.numWheelSelRangeA.Name = "numWheelSelRangeA";
-            this.numWheelSelRangeA.Size = new System.Drawing.Size(41, 20);
-            this.numWheelSelRangeA.TabIndex = 8;
-            this.toolTip.SetToolTip(this.numWheelSelRangeA, "Sets total span of values to be included in the search (Stems from the target val" +
+            this.numWheelSelectionRangeA.Name = "numWheelSelectionRangeA";
+            this.numWheelSelectionRangeA.Size = new System.Drawing.Size(41, 20);
+            this.numWheelSelectionRangeA.TabIndex = 8;
+            this.toolTip.SetToolTip(this.numWheelSelectionRangeA, "Sets total span of values to be included in the search (Stems from the target val" +
         "ue).");
-            this.numWheelSelRangeA.Value = new decimal(new int[] {
+            this.numWheelSelectionRangeA.Value = new decimal(new int[] {
             6,
             0,
             0,
@@ -428,7 +431,7 @@ namespace MSSSDataProcessing
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(14, 170);
+            this.label10.Location = new System.Drawing.Point(14, 165);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(89, 13);
             this.label10.TabIndex = 17;
@@ -459,7 +462,7 @@ namespace MSSSDataProcessing
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 118);
+            this.label8.Location = new System.Drawing.Point(6, 119);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(98, 13);
             this.label8.TabIndex = 16;
@@ -474,7 +477,7 @@ namespace MSSSDataProcessing
             0,
             0,
             65536});
-            this.numWheelValueRangeA.Location = new System.Drawing.Point(105, 115);
+            this.numWheelValueRangeA.Location = new System.Drawing.Point(105, 116);
             this.numWheelValueRangeA.Maximum = new decimal(new int[] {
             20,
             0,
@@ -648,7 +651,7 @@ namespace MSSSDataProcessing
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.textBoxDifferenceB);
-            this.groupBox1.Controls.Add(this.numWheelSelRangeB);
+            this.groupBox1.Controls.Add(this.numWheelSelectionRangeB);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.numWheelValueRangeB);
             this.groupBox1.Controls.Add(this.label9);
@@ -661,33 +664,35 @@ namespace MSSSDataProcessing
             this.groupBox1.Controls.Add(this.textBoxSearchSpdB);
             this.groupBox1.Location = new System.Drawing.Point(115, 138);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(160, 204);
+            this.groupBox1.Size = new System.Drawing.Size(160, 198);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Search";
             // 
             // textBoxDifferenceB
             // 
-            this.textBoxDifferenceB.Location = new System.Drawing.Point(10, 140);
+            this.textBoxDifferenceB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxDifferenceB.Location = new System.Drawing.Point(10, 142);
             this.textBoxDifferenceB.Name = "textBoxDifferenceB";
-            this.textBoxDifferenceB.Size = new System.Drawing.Size(137, 20);
+            this.textBoxDifferenceB.Size = new System.Drawing.Size(137, 13);
             this.textBoxDifferenceB.TabIndex = 20;
+            this.textBoxDifferenceB.Text = "Min:   |  Max:";
             this.textBoxDifferenceB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // numWheelSelRangeB
+            // numWheelSelectionRangeB
             // 
-            this.numWheelSelRangeB.Location = new System.Drawing.Point(105, 167);
-            this.numWheelSelRangeB.Maximum = new decimal(new int[] {
+            this.numWheelSelectionRangeB.Location = new System.Drawing.Point(105, 162);
+            this.numWheelSelectionRangeB.Maximum = new decimal(new int[] {
             50,
             0,
             0,
             0});
-            this.numWheelSelRangeB.Name = "numWheelSelRangeB";
-            this.numWheelSelRangeB.Size = new System.Drawing.Size(41, 20);
-            this.numWheelSelRangeB.TabIndex = 16;
-            this.toolTip.SetToolTip(this.numWheelSelRangeB, "Sets total span of values to be included in the search (Stems from the target val" +
+            this.numWheelSelectionRangeB.Name = "numWheelSelectionRangeB";
+            this.numWheelSelectionRangeB.Size = new System.Drawing.Size(41, 20);
+            this.numWheelSelectionRangeB.TabIndex = 16;
+            this.toolTip.SetToolTip(this.numWheelSelectionRangeB, "Sets total span of values to be included in the search (Stems from the target val" +
         "ue).");
-            this.numWheelSelRangeB.Value = new decimal(new int[] {
+            this.numWheelSelectionRangeB.Value = new decimal(new int[] {
             6,
             0,
             0,
@@ -696,7 +701,7 @@ namespace MSSSDataProcessing
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(14, 170);
+            this.label11.Location = new System.Drawing.Point(14, 165);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(89, 13);
             this.label11.TabIndex = 19;
@@ -712,7 +717,7 @@ namespace MSSSDataProcessing
             0,
             0,
             65536});
-            this.numWheelValueRangeB.Location = new System.Drawing.Point(105, 115);
+            this.numWheelValueRangeB.Location = new System.Drawing.Point(105, 116);
             this.numWheelValueRangeB.Maximum = new decimal(new int[] {
             20,
             0,
@@ -737,7 +742,7 @@ namespace MSSSDataProcessing
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 118);
+            this.label9.Location = new System.Drawing.Point(6, 119);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(98, 13);
             this.label9.TabIndex = 17;
@@ -760,6 +765,7 @@ namespace MSSSDataProcessing
             this.textBoxTargetB.Size = new System.Drawing.Size(59, 20);
             this.textBoxTargetB.TabIndex = 13;
             this.toolTip.SetToolTip(this.textBoxTargetB, "Target value to be found");
+            this.textBoxTargetB.TextChanged += new System.EventHandler(this.textBoxTargetB_TextChanged);
             this.textBoxTargetB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTargetB_KeyPress);
             // 
             // radioRecursiveB
@@ -816,7 +822,6 @@ namespace MSSSDataProcessing
             this.textBoxSearchSpdB.Size = new System.Drawing.Size(79, 20);
             this.textBoxSearchSpdB.TabIndex = 9;
             this.toolTip.SetToolTip(this.textBoxSearchSpdB, "Displays processing speed of binary searching algorithms in ticks.");
-            this.textBoxSearchSpdB.TextChanged += new System.EventHandler(this.textBoxSearchSpdB_TextChanged);
             // 
             // listBoxSensorB
             // 
@@ -1821,14 +1826,14 @@ namespace MSSSDataProcessing
             this.SortGrpBoxA.PerformLayout();
             this.SearchGrpBoxA.ResumeLayout(false);
             this.SearchGrpBoxA.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelRangeA)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelectionRangeA)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelValueRangeA)).EndInit();
             this.groupBoxB.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelRangeB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWheelSelectionRangeB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelValueRangeB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelSelectionRangeProcessingA)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWheelValueRangeProcessingA)).EndInit();
@@ -1915,9 +1920,9 @@ namespace MSSSDataProcessing
         private NumericUpDown numWheelValueRangeA;
         private NumericUpDown numWheelValueRangeB;
         private Label label9;
-        private NumericUpDown numWheelSelRangeA;
+        private NumericUpDown numWheelSelectionRangeA;
         private Label label10;
-        private NumericUpDown numWheelSelRangeB;
+        private NumericUpDown numWheelSelectionRangeB;
         private Label label11;
         private TabControl tabControl;
         private TabPage tabProcess;
