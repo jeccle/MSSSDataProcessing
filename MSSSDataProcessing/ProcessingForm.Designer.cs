@@ -129,8 +129,8 @@ namespace MSSSDataProcessing
             this.checkBoxSortProcessingB = new System.Windows.Forms.CheckBox();
             this.buttonLoadProcessing = new System.Windows.Forms.Button();
             this.checkBoxSortProcessingA = new System.Windows.Forms.CheckBox();
-            this.checkBoxSensorProcessingB = new System.Windows.Forms.CheckBox();
-            this.checkBoxSensorProcessingA = new System.Windows.Forms.CheckBox();
+            this.checkBoxSensorVisualB = new System.Windows.Forms.CheckBox();
+            this.checkBoxSensorVisualA = new System.Windows.Forms.CheckBox();
             this.chartSensorA = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartSensorB = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label31 = new System.Windows.Forms.Label();
@@ -1366,29 +1366,29 @@ namespace MSSSDataProcessing
             this.toolTip.SetToolTip(this.checkBoxSortProcessingA, "Displays if values are sorted.");
             this.checkBoxSortProcessingA.UseVisualStyleBackColor = true;
             // 
-            // checkBoxSensorProcessingB
+            // checkBoxSensorVisualB
             // 
-            this.checkBoxSensorProcessingB.AutoSize = true;
-            this.checkBoxSensorProcessingB.Enabled = false;
-            this.checkBoxSensorProcessingB.Location = new System.Drawing.Point(280, 202);
-            this.checkBoxSensorProcessingB.Name = "checkBoxSensorProcessingB";
-            this.checkBoxSensorProcessingB.Size = new System.Drawing.Size(57, 17);
-            this.checkBoxSensorProcessingB.TabIndex = 20;
-            this.checkBoxSensorProcessingB.Text = "Sorted";
-            this.toolTip.SetToolTip(this.checkBoxSensorProcessingB, "Displays if values are sorted.");
-            this.checkBoxSensorProcessingB.UseVisualStyleBackColor = true;
+            this.checkBoxSensorVisualB.AutoSize = true;
+            this.checkBoxSensorVisualB.Enabled = false;
+            this.checkBoxSensorVisualB.Location = new System.Drawing.Point(280, 202);
+            this.checkBoxSensorVisualB.Name = "checkBoxSensorVisualB";
+            this.checkBoxSensorVisualB.Size = new System.Drawing.Size(57, 17);
+            this.checkBoxSensorVisualB.TabIndex = 20;
+            this.checkBoxSensorVisualB.Text = "Sorted";
+            this.toolTip.SetToolTip(this.checkBoxSensorVisualB, "Displays if values are sorted.");
+            this.checkBoxSensorVisualB.UseVisualStyleBackColor = true;
             // 
-            // checkBoxSensorProcessingA
+            // checkBoxSensorVisualA
             // 
-            this.checkBoxSensorProcessingA.AutoSize = true;
-            this.checkBoxSensorProcessingA.Enabled = false;
-            this.checkBoxSensorProcessingA.Location = new System.Drawing.Point(280, 42);
-            this.checkBoxSensorProcessingA.Name = "checkBoxSensorProcessingA";
-            this.checkBoxSensorProcessingA.Size = new System.Drawing.Size(57, 17);
-            this.checkBoxSensorProcessingA.TabIndex = 20;
-            this.checkBoxSensorProcessingA.Text = "Sorted";
-            this.toolTip.SetToolTip(this.checkBoxSensorProcessingA, "Displays if values are sorted.");
-            this.checkBoxSensorProcessingA.UseVisualStyleBackColor = true;
+            this.checkBoxSensorVisualA.AutoSize = true;
+            this.checkBoxSensorVisualA.Enabled = false;
+            this.checkBoxSensorVisualA.Location = new System.Drawing.Point(280, 42);
+            this.checkBoxSensorVisualA.Name = "checkBoxSensorVisualA";
+            this.checkBoxSensorVisualA.Size = new System.Drawing.Size(57, 17);
+            this.checkBoxSensorVisualA.TabIndex = 20;
+            this.checkBoxSensorVisualA.Text = "Sorted";
+            this.toolTip.SetToolTip(this.checkBoxSensorVisualA, "Displays if values are sorted.");
+            this.checkBoxSensorVisualA.UseVisualStyleBackColor = true;
             // 
             // chartSensorA
             // 
@@ -1717,8 +1717,8 @@ namespace MSSSDataProcessing
             // 
             // groupBox11
             // 
-            this.groupBox11.Controls.Add(this.checkBoxSensorProcessingB);
-            this.groupBox11.Controls.Add(this.checkBoxSensorProcessingA);
+            this.groupBox11.Controls.Add(this.checkBoxSensorVisualB);
+            this.groupBox11.Controls.Add(this.checkBoxSensorVisualA);
             this.groupBox11.Controls.Add(this.chartSensorA);
             this.groupBox11.Controls.Add(this.chartSensorB);
             this.groupBox11.Location = new System.Drawing.Point(80, 13);
@@ -1994,8 +1994,8 @@ namespace MSSSDataProcessing
         private NumericUpDown numWheelMeanVisual;
         private CheckBox checkBoxSensorA;
         private CheckBox checkBoxSensorB;
-        private CheckBox checkBoxSensorProcessingB;
-        private CheckBox checkBoxSensorProcessingA;
+        private CheckBox checkBoxSensorVisualB;
+        private CheckBox checkBoxSensorVisualA;
         private CheckBox checkBoxSortProcessingB;
         private CheckBox checkBoxSortProcessingA;
         private TextBox textBoxDifferenceA;
