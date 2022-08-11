@@ -31,12 +31,12 @@ namespace MSSSDataProcessing
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.listViewDisplay = new System.Windows.Forms.ListView();
             this.ColumnA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColumnB = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -234,7 +234,7 @@ namespace MSSSDataProcessing
             this.listBoxSensorA.Size = new System.Drawing.Size(91, 316);
             this.listBoxSensorA.TabIndex = 1;
             this.toolTip.SetToolTip(this.listBoxSensorA, "List display for Sensor A Data");
-            this.listBoxSensorA.Enter += new System.EventHandler(this.listBoxSensorA_MouseMove);
+            this.listBoxSensorA.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBoxSensorA_MouseMove);
             // 
             // numWheelSigma
             // 
@@ -313,7 +313,6 @@ namespace MSSSDataProcessing
             // checkBoxSensorA
             // 
             this.checkBoxSensorA.AutoSize = true;
-            this.checkBoxSensorA.Enabled = false;
             this.checkBoxSensorA.Location = new System.Drawing.Point(90, 50);
             this.checkBoxSensorA.Name = "checkBoxSensorA";
             this.checkBoxSensorA.Size = new System.Drawing.Size(57, 17);
@@ -584,7 +583,6 @@ namespace MSSSDataProcessing
             // checkBoxSensorB
             // 
             this.checkBoxSensorB.AutoSize = true;
-            this.checkBoxSensorB.Enabled = false;
             this.checkBoxSensorB.Location = new System.Drawing.Point(90, 50);
             this.checkBoxSensorB.Name = "checkBoxSensorB";
             this.checkBoxSensorB.Size = new System.Drawing.Size(57, 17);
@@ -672,6 +670,7 @@ namespace MSSSDataProcessing
             // textBoxDifferenceB
             // 
             this.textBoxDifferenceB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxDifferenceB.Enabled = false;
             this.textBoxDifferenceB.Location = new System.Drawing.Point(10, 142);
             this.textBoxDifferenceB.Name = "textBoxDifferenceB";
             this.textBoxDifferenceB.Size = new System.Drawing.Size(137, 13);
@@ -832,7 +831,7 @@ namespace MSSSDataProcessing
             this.listBoxSensorB.Size = new System.Drawing.Size(91, 316);
             this.listBoxSensorB.TabIndex = 10;
             this.toolTip.SetToolTip(this.listBoxSensorB, "List display for Sensor B Data");
-            this.listBoxSensorB.Enter += new System.EventHandler(this.listBoxSensorB_MouseMove);
+            this.listBoxSensorB.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBoxSensorB_MouseMove);
             // 
             // buttonLoad
             // 
@@ -1334,7 +1333,6 @@ namespace MSSSDataProcessing
             // checkBoxSortProcessingB
             // 
             this.checkBoxSortProcessingB.AutoSize = true;
-            this.checkBoxSortProcessingB.Enabled = false;
             this.checkBoxSortProcessingB.Location = new System.Drawing.Point(11, 72);
             this.checkBoxSortProcessingB.Name = "checkBoxSortProcessingB";
             this.checkBoxSortProcessingB.Size = new System.Drawing.Size(57, 17);
@@ -1357,7 +1355,6 @@ namespace MSSSDataProcessing
             // checkBoxSortProcessingA
             // 
             this.checkBoxSortProcessingA.AutoSize = true;
-            this.checkBoxSortProcessingA.Enabled = false;
             this.checkBoxSortProcessingA.Location = new System.Drawing.Point(11, 72);
             this.checkBoxSortProcessingA.Name = "checkBoxSortProcessingA";
             this.checkBoxSortProcessingA.Size = new System.Drawing.Size(57, 17);
@@ -1369,7 +1366,6 @@ namespace MSSSDataProcessing
             // checkBoxSensorVisualB
             // 
             this.checkBoxSensorVisualB.AutoSize = true;
-            this.checkBoxSensorVisualB.Enabled = false;
             this.checkBoxSensorVisualB.Location = new System.Drawing.Point(280, 202);
             this.checkBoxSensorVisualB.Name = "checkBoxSensorVisualB";
             this.checkBoxSensorVisualB.Size = new System.Drawing.Size(57, 17);
@@ -1381,7 +1377,6 @@ namespace MSSSDataProcessing
             // checkBoxSensorVisualA
             // 
             this.checkBoxSensorVisualA.AutoSize = true;
-            this.checkBoxSensorVisualA.Enabled = false;
             this.checkBoxSensorVisualA.Location = new System.Drawing.Point(280, 42);
             this.checkBoxSensorVisualA.Name = "checkBoxSensorVisualA";
             this.checkBoxSensorVisualA.Size = new System.Drawing.Size(57, 17);
@@ -1392,21 +1387,21 @@ namespace MSSSDataProcessing
             // 
             // chartSensorA
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chartSensorA.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartSensorA.Legends.Add(legend3);
+            chartArea1.Name = "ChartArea1";
+            this.chartSensorA.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartSensorA.Legends.Add(legend1);
             this.chartSensorA.Location = new System.Drawing.Point(4, 14);
             this.chartSensorA.Name = "chartSensorA";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
-            series3.CustomProperties = "LineTension=1";
-            series3.Legend = "Legend1";
-            series3.Name = "SensorA";
-            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series3.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chartSensorA.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
+            series1.CustomProperties = "LineTension=1";
+            series1.Legend = "Legend1";
+            series1.Name = "SensorA";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series1.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chartSensorA.Series.Add(series1);
             this.chartSensorA.Size = new System.Drawing.Size(365, 145);
             this.chartSensorA.SuppressExceptions = true;
             this.chartSensorA.TabIndex = 15;
@@ -1415,21 +1410,21 @@ namespace MSSSDataProcessing
             // 
             // chartSensorB
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartSensorB.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chartSensorB.Legends.Add(legend4);
+            chartArea2.Name = "ChartArea1";
+            this.chartSensorB.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartSensorB.Legends.Add(legend2);
             this.chartSensorB.Location = new System.Drawing.Point(4, 175);
             this.chartSensorB.Name = "chartSensorB";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
-            series4.CustomProperties = "LineTension=1, IsXAxisQuantitative=True";
-            series4.Legend = "Legend1";
-            series4.Name = "SensorB";
-            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            series4.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.chartSensorB.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
+            series2.CustomProperties = "LineTension=1, IsXAxisQuantitative=True";
+            series2.Legend = "Legend1";
+            series2.Name = "SensorB";
+            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series2.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chartSensorB.Series.Add(series2);
             this.chartSensorB.Size = new System.Drawing.Size(365, 145);
             this.chartSensorB.SuppressExceptions = true;
             this.chartSensorB.TabIndex = 18;

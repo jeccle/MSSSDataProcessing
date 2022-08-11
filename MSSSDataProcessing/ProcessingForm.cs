@@ -14,7 +14,8 @@ using System.Windows.Forms.DataVisualization.Charting;
 using Galileo;
 
 
-/* Jasper Eccles
+/** 
+ * Jasper Eccles
  * 30034164
  * MSSData Processing
  * Recieves data stream from DLL Galileo satellite. Data stream populates LinkedLists and is displayed in lists.
@@ -22,7 +23,6 @@ using Galileo;
  * Data can be searched for using Iterative and Recursive searching algorithms.
  * 
  */
-
 namespace MSSSDataProcessing
 {
     public partial class ProcessingForm : Form
@@ -42,6 +42,7 @@ namespace MSSSDataProcessing
         /// </summary>
         private void LoadData()
         {
+            ClearAllListBoxes();
             checkBoxSensorA.Checked = checkBoxSensorB.Checked = false;
             ReadData satellite = new ReadData();
             sensorA.Clear();
@@ -58,7 +59,7 @@ namespace MSSSDataProcessing
         }
         // 4.3	Create a custom method called “ShowAllSensorData” which will display both LinkedLists in a ListView.
         /// <summary>
-        /// Displays data from both sensor A & B within the ListView in the main tab.
+        /// Displays data from both sensor A and B LinkedLists within the ListView in the main tab.
         /// </summary>
         private void ShowAllSensorData()
         {
@@ -74,7 +75,6 @@ namespace MSSSDataProcessing
             }
             Trace.TraceInformation("List view populated.\n");
         }
-
         #endregion
 
         #region Utility Methods
@@ -97,7 +97,7 @@ namespace MSSSDataProcessing
         }
         // 4.5	Create a method called “NumberOfNodes” that will return an integer which is the number of nodes(elements) in a LinkedList.
         /// <summary>
-        /// When called takes a LinkedList of type double, returns the amount of values within the list.
+        /// When called takes a LinkedList parameter of type double, returns the amount of values within the list.
         /// </summary>
         /// <param name="sensor">LinkedList of type double</param>
         /// <returns>Total number of values within the list.</returns>
@@ -142,6 +142,19 @@ namespace MSSSDataProcessing
             {
                 Trace.TraceError("Index is out of bounds within the array.\n");
             }
+        }
+        /// <summary>
+        /// Clears all items contained within each listBox and listView element within the program.
+        /// </summary>
+        public void ClearAllListBoxes()
+        {
+            listViewDisplay.Items.Clear();
+            listBoxSensorA.Items.Clear();
+            listBoxSensorB.Items.Clear();
+            listBoxSensorProcessingA.Items.Clear();
+            listBoxSensorProcessingB.Items.Clear();
+            listBoxSensorVisualA.Items.Clear();
+            listBoxSensorVisualB.Items.Clear();
         }
 
         #region InputChecking 
@@ -622,7 +635,7 @@ namespace MSSSDataProcessing
         #region TAB Main
         // 4.4	Create a button and associated click method that will call the LoadData and ShowAllSensorData methods.The input parameters are empty, and the return type is void.
         /// <summary>
-        /// Calls LoadData() method recieve data from galileo satellite, ShowAllSensorData() then display data from both Lists in listView
+        /// Calls LoadData() method receives data from galileo satellite, ShowAllSensorData() then display data from both Lists in listView
         /// Both listBoxes are populated using DisplayListBoxData() method.
         /// </summary>
         private void buttonLoad_Click(object sender, EventArgs e)
@@ -690,32 +703,43 @@ namespace MSSSDataProcessing
         /// </summary>
         private void buttonSearchA_Click(object sender, EventArgs e)
         {
-            // If the corresponding checkBox is ticked it indicates the sort has been run, which means it should be successfully sorted.
-            if (checkBoxSensorA.Checked && CheckInput(textBoxTargetA, sensorA))
+            try
             {
-                double searchValue = IntOrDouble(textBoxTargetA.Text);
-                int searchNum = RadioButtonIndex("SearchA");
-                if (searchNum == 1)
+                // If the corresponding checkBox is ticked it indicates the sort has been run, which means it should be successfully sorted.
+                if (checkBoxSensorA.Checked && CheckInput(textBoxTargetA, sensorA))
                 {
-                    Trace.TraceInformation("Search Main Sensor A");
-                    int foundIndex = IterativeSearchAndDisplay(listBoxSensorA, sensorA, textBoxSearchSpdA, searchValue, (int)numWheelSelectionRangeA.Value, (double)numWheelValueRangeA.Value);
-                    textBoxDifferenceA.Text = "Min: " + (sensorA.ElementAt(foundIndex) - (double)numWheelValueRangeA.Value) + " |  Max: " + (sensorA.ElementAt(foundIndex) + (double)numWheelValueRangeA.Value);
-                }
-                else //if (searchNum == 0)
-                {
-                    Trace.TraceInformation("Search Main Sensor A");
-                    int foundIndex = RecursiveSearchAndDisplay(listBoxSensorA, sensorA, textBoxSearchSpdA, searchValue, (int)numWheelSelectionRangeA.Value, (double)numWheelValueRangeA.Value);
-                    textBoxDifferenceA.Text = "Min: " + (sensorA.ElementAt(foundIndex) - (double)numWheelValueRangeA.Value) + " |  Max: " + (sensorA.ElementAt(foundIndex) + (double)numWheelValueRangeA.Value);
-                }
+                    double searchValue = IntOrDouble(textBoxTargetA.Text);
+                    int searchNum = RadioButtonIndex("SearchA");
+                    if (searchNum == 1)
+                    {
+                        Trace.TraceInformation("Search Main Sensor A");
+                        int foundIndex = IterativeSearchAndDisplay(listBoxSensorA, sensorA, textBoxSearchSpdA, searchValue, 
+                                                            (int)numWheelSelectionRangeA.Value, (double)numWheelValueRangeA.Value);
+                        textBoxDifferenceA.Text = "Min: " + (sensorA.ElementAt(foundIndex) - (double)numWheelValueRangeA.Value) 
+                                            + " |  Max: " + (sensorA.ElementAt(foundIndex) + (double)numWheelValueRangeA.Value);
+                    }
+                    else //if (searchNum == 0)
+                    {
+                        Trace.TraceInformation("Search Main Sensor A");
+                        int foundIndex = RecursiveSearchAndDisplay(listBoxSensorA, sensorA, textBoxSearchSpdA, searchValue, 
+                                                            (int)numWheelSelectionRangeA.Value, (double)numWheelValueRangeA.Value);
+                        textBoxDifferenceA.Text = "Min: " + (sensorA.ElementAt(foundIndex) - (double)numWheelValueRangeA.Value) 
+                                            + " |  Max: " + (sensorA.ElementAt(foundIndex) + (double)numWheelValueRangeA.Value);
+                    }
 
+                }
+                else if (!checkBoxSensorA.Checked)
+                {
+                    toolTip.Show("Ensure ListBox is Sorted!", buttonSortA, 45, -10, 3000);
+                    statusLabel.Text = "Sensor A values not sorted. Cannot search";
+                    Trace.TraceWarning("SensorA attempted to search but its not sorted!?!?");
+                }
             }
-            else if (!checkBoxSensorA.Checked)
+            catch (Exception ex)    // Try/Catch to make sure search is not trying to highlight an empty listBox.
             {
-                toolTip.Show("Ensure ListBox is Sorted!", buttonSortA, 45, -10, 3000);
-                statusLabel.Text = "Sensor A values not sorted. Cannot search";
-                Trace.TraceWarning("SensorA attempted to search but its not sorted!?!?");
+                statusLabel.Text = "Ensure listBox is populated to search.";
+                toolTip.Show("Ensure ListBox is Populated. Click here!", buttonSortA, 45, -10, 3000); ;
             }
-
         }
         // 4.11 Continued
         /// <summary>
@@ -723,31 +747,42 @@ namespace MSSSDataProcessing
         /// </summary>
         private void buttonSearchB_Click(object sender, EventArgs e)
         {
-            Stopwatch sw = new Stopwatch();
-            if (checkBoxSensorB.Checked && CheckInput(textBoxTargetB, sensorB))
+            try
             {
-                double searchValue = IntOrDouble(textBoxTargetB.Text);
-                int searchNum = RadioButtonIndex("SearchB");
-                if (searchNum == 1)
+                if (checkBoxSensorB.Checked && CheckInput(textBoxTargetB, sensorB))
                 {
-                    Trace.TraceInformation("Search Main Sensor B");
-                    int foundIndex = IterativeSearchAndDisplay(listBoxSensorB, sensorB, textBoxSearchSpdB, searchValue, (int)numWheelSelectionRangeB.Value, (double)numWheelValueRangeB.Value);
-                    textBoxDifferenceB.Text = "Min: " + (sensorB.ElementAt(foundIndex) - (double)numWheelValueRangeB.Value) + " |  Max: " + (sensorB.ElementAt(foundIndex) + (double)numWheelValueRangeB.Value);
+                    double searchValue = IntOrDouble(textBoxTargetB.Text);
+                    int searchNum = RadioButtonIndex("SearchB");
+                    if (searchNum == 1)
+                    {
+                        Trace.TraceInformation("Search Main Sensor B");
+                        int foundIndex = IterativeSearchAndDisplay(listBoxSensorB, sensorB, textBoxSearchSpdB, searchValue, 
+                                                            (int)numWheelSelectionRangeB.Value, (double)numWheelValueRangeB.Value);
+                        textBoxDifferenceB.Text = "Min: " + (sensorB.ElementAt(foundIndex) - (double)numWheelValueRangeB.Value) 
+                                            + " |  Max: " + (sensorB.ElementAt(foundIndex) + (double)numWheelValueRangeB.Value);
+                    }
+                    else if (searchNum == 0)
+                    {
+                        Trace.TraceInformation("Search Main Sensor B");
+                        int foundIndex = RecursiveSearchAndDisplay(listBoxSensorB, sensorB, textBoxSearchSpdB, searchValue, 
+                                                            (int)numWheelSelectionRangeB.Value, (double)numWheelValueRangeB.Value);
+                        textBoxDifferenceB.Text = "Min: " + (sensorB.ElementAt(foundIndex) - (double)numWheelValueRangeB.Value) 
+                                            + " |  Max: " + (sensorB.ElementAt(foundIndex) + (double)numWheelValueRangeB.Value);
+                    }
+                    else
+                        toolTip.Show("Select a search algorithm", radioIterativeB, 65, 20, 3000);
                 }
-                else if (searchNum == 0)
+                else if (!checkBoxSensorB.Checked)
                 {
-                    Trace.TraceInformation("Search Main Sensor B");
-                    int foundIndex = RecursiveSearchAndDisplay(listBoxSensorB, sensorB, textBoxSearchSpdB, searchValue, (int)numWheelSelectionRangeB.Value, (double)numWheelValueRangeB.Value);
-                    textBoxDifferenceB.Text = "Min: " + (sensorB.ElementAt(foundIndex) - (double)numWheelValueRangeB.Value) + " |  Max: " + (sensorB.ElementAt(foundIndex) + (double)numWheelValueRangeB.Value);
+                    toolTip.Show("Ensure ListBox is Sorted!", buttonSortB, 45, -10, 3000);
+                    statusLabel.Text = "Sensor B values not sorted. Cannot search";
+                    Trace.TraceWarning("SensorB attempted to search but its not sorted!?!?");
                 }
-                else
-                    toolTip.Show("Select a search algorithm", radioIterativeB, 65, 20, 3000);
             }
-            else if (!checkBoxSensorB.Checked)
+            catch (Exception ex)    // Try/Catch to make sure search is not trying to highlight an empty listBox.
             {
-                toolTip.Show("Ensure ListBox is Sorted!", buttonSortB, 45, -10, 3000);
-                statusLabel.Text = "Sensor B values not sorted. Cannot search";
-                Trace.TraceWarning("SensorB attempted to search but its not sorted!?!?");
+                statusLabel.Text = "Ensure listBox is populated to search.";
+                toolTip.Show("Ensure ListBox is Populated. Click here!", buttonSortB, 45, -10, 3000); ;
             }
         }
         // 4.14 Add two text boxes for the search value.
@@ -823,12 +858,13 @@ namespace MSSSDataProcessing
         // Region for PROCESSING tab, contains related control events.
         #region TAB Processing
         /// <summary>
-        /// Calls LoadData() method recieve data from galileo satellite, ShowAllSensorData() then display data from both Lists in listView
+        /// Calls LoadData() method receive data from galileo satellite, ShowAllSensorData() then display data from both Lists in listView
         /// Both listBoxes are populated using DisplayListBoxData() method.
         /// Load data into LinkedLists, loads all information into sensor processing listBox.
         /// </summary>
         private void buttonLoadProcessing_Click(object sender, EventArgs e)
         {
+            statusLabel.Text = "";
             LoadData();
             DisplayListBoxData(sensorA, listBoxSensorProcessingA);
             DisplayListBoxData(sensorB, listBoxSensorProcessingB);
@@ -858,31 +894,38 @@ namespace MSSSDataProcessing
         /// </summary>
         private void buttonSearchProcessingA_Click(object sender, EventArgs e)
         {
-
-            if (checkBoxSensorA.Checked && CheckInput(textBoxTargetProcessingA, sensorA))
+            try
             {
-                double searchValue = IntOrDouble(textBoxTargetProcessingA.Text);
-                LinkedList<double> clone = sensorA;
-                Trace.TraceInformation("Search Processing Sensor A");
-                Trace.TraceInformation("Starting stopwatch   | Binary Search: Iterative");
-                Stopwatch sw = Stopwatch.StartNew();
-                BinarySearchIterative(clone, searchValue);
-                sw.Stop();
-                textBoxIterativeSearchSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";
-                sw.Restart();
-                int foundIndex = BinarySearchRecursive(sensorA, searchValue, 0, NumberOfNodes(sensorA));
-                sw.Stop();
-                textBoxRecursiveSearchSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";
-                sw.Restart();
-                HighlightData(listBoxSensorProcessingA, foundIndex, (int)numWheelSelectionRangeProcessingA.Value, (double)numWheelValueRangeProcessingA.Value);
-                sw.Stop();
-                textBoxHighlightProcessingSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";
+                if (checkBoxSensorA.Checked && CheckInput(textBoxTargetProcessingA, sensorA))
+                {
+                    double searchValue = IntOrDouble(textBoxTargetProcessingA.Text);
+                    LinkedList<double> clone = sensorA;
+                    Trace.TraceInformation("Search Processing Sensor A");
+                    Trace.TraceInformation("Starting stopwatch   | Binary Search: Iterative");
+                    Stopwatch sw = Stopwatch.StartNew();
+                    BinarySearchIterative(clone, searchValue);
+                    sw.Stop();
+                    textBoxIterativeSearchSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";
+                    sw.Restart();
+                    int foundIndex = BinarySearchRecursive(sensorA, searchValue, 0, NumberOfNodes(sensorA));
+                    sw.Stop();
+                    textBoxRecursiveSearchSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";
+                    sw.Restart();
+                    HighlightData(listBoxSensorProcessingA, foundIndex, (int)numWheelSelectionRangeProcessingA.Value, (double)numWheelValueRangeProcessingA.Value);
+                    sw.Stop();
+                    textBoxHighlightProcessingSpdA.Text = sw.ElapsedTicks.ToString() + " ticks.";
+                }
+                else if (!checkBoxSensorA.Checked)
+                {
+                    toolTip.Show("Ensure ListBox is Sorted!", buttonSortProcessingA, 90, -10, 3000);
+                    statusLabel.Text = "Error searching! Sensor A values not sorted.";
+                    Trace.TraceWarning("SensorA attempted to search but its not sorted!?!?");
+                }
             }
-            else if (!checkBoxSensorA.Checked)
+            catch (Exception ex)    // Try/Catch to make sure search is not trying to highlight an empty listBox.
             {
-                toolTip.Show("Ensure ListBox is Sorted!", buttonSortProcessingA, 90, -10, 3000);
-                statusLabel.Text = "Error searching! Sensor A values not sorted.";
-                Trace.TraceWarning("SensorA attempted to search but its not sorted!?!?");
+                statusLabel.Text = "Ensure listBox is populated to search.";
+                toolTip.Show("Ensure ListBox is populated. Click Here!", buttonSortProcessingA, 90, -10, 3000);
             }
 
         }
@@ -893,31 +936,38 @@ namespace MSSSDataProcessing
         /// </summary>
         private void buttonSearchProcessingB_Click(object sender, EventArgs e)
         {
-            if (checkBoxSensorB.Checked && CheckInput(textBoxTargetProcessingB, sensorB))
+            try
             {
-                double searchValue = IntOrDouble(textBoxTargetProcessingB.Text);
-                LinkedList<double> clone = sensorB;
-                Trace.TraceInformation("Search Processing Sensor B");
-                Trace.TraceInformation("Starting stopwatch   | Binary Search: Iterative");
-                Stopwatch sw = Stopwatch.StartNew();
-                int foundIndex = BinarySearchIterative(clone, searchValue);
-                sw.Stop();
-                textBoxIterativeSearchSpdB.Text = sw.ElapsedTicks.ToString() + " ticks.";
-                sw.Restart();
-                foundIndex = BinarySearchRecursive(sensorB, searchValue, 0, NumberOfNodes(sensorA));
-                sw.Stop();
-                textBoxRecursiveSearchSpdB.Text = sw.ElapsedTicks.ToString() + " ticks.";
-                sw.Restart();
-                HighlightData(listBoxSensorProcessingB, foundIndex, (int)numWheelSelectionRangeProcessingB.Value, (double)numWheelValueRangeProcessingB.Value);
-                sw.Stop();
-                textBoxHighlightProcessingSpdB.Text = sw.ElapsedTicks.ToString() + " ticks.";
-                // clone.Clear();
+                if (checkBoxSensorB.Checked && CheckInput(textBoxTargetProcessingB, sensorB))
+                {
+                    double searchValue = IntOrDouble(textBoxTargetProcessingB.Text);
+                    LinkedList<double> clone = sensorB;
+                    Trace.TraceInformation("Search Processing Sensor B");
+                    Trace.TraceInformation("Starting stopwatch   | Binary Search: Iterative");
+                    Stopwatch sw = Stopwatch.StartNew();
+                    int foundIndex = BinarySearchIterative(clone, searchValue);
+                    sw.Stop();
+                    textBoxIterativeSearchSpdB.Text = sw.ElapsedTicks.ToString() + " ticks.";
+                    sw.Restart();
+                    foundIndex = BinarySearchRecursive(sensorB, searchValue, 0, NumberOfNodes(sensorA));
+                    sw.Stop();
+                    textBoxRecursiveSearchSpdB.Text = sw.ElapsedTicks.ToString() + " ticks.";
+                    sw.Restart();
+                    HighlightData(listBoxSensorProcessingB, foundIndex, (int)numWheelSelectionRangeProcessingB.Value, (double)numWheelValueRangeProcessingB.Value);
+                    sw.Stop();
+                    textBoxHighlightProcessingSpdB.Text = sw.ElapsedTicks.ToString() + " ticks.";
+                }
+                else if (!checkBoxSensorB.Checked)  // Try/Catch to make sure search is not trying to highlight an empty listBox.
+                {
+                    toolTip.Show("Ensure ListBox is Sorted!", buttonSortProcessingB, 90, -10, 3000);
+                    statusLabel.Text = "Error searching! Sensor B values not sorted.";
+                    Trace.TraceWarning("SensorA attempted to search but its not sorted!?!?");
+                }
             }
-            else if (!checkBoxSensorB.Checked)
+            catch (Exception ex)
             {
-                toolTip.Show("Ensure ListBox is Sorted!", buttonSortProcessingB, 90, -10, 3000);
-                statusLabel.Text = "Error searching! Sensor B values not sorted.";
-                Trace.TraceWarning("SensorA attempted to search but its not sorted!?!?");
+                statusLabel.Text = "Ensure listBox is populated to search.";
+                toolTip.Show("Ensure ListBox is populated. Click Here!", buttonSortProcessingB, 90, -10, 3000);
             }
         }
         /// <summary>
@@ -969,7 +1019,9 @@ namespace MSSSDataProcessing
                 checkBoxSensorA.Checked = SelectionSortAndDisplay(listBoxSensorVisualA, sensorA, textBoxSelectionSortVisual);
                 checkBoxSensorB.Checked = InsertionSortAndDisplay(listBoxSensorVisualB, sensorB, textBoxInsertionSortVisual);
                 chartSensorA.Series["SensorA"].Points.DataBindXY(sensorA, TotalOccurrences(sensorA, checkBoxSensorA));
-                chartSensorB.Series["SensorB"].Points.DataBindXY(sensorB, TotalOccurrences(sensorB, checkBoxSensorB));      // Charts are populated.
+                chartSensorB.Series["SensorB"].Points.DataBindXY(sensorB, TotalOccurrences(sensorB, checkBoxSensorB));          // Charts are populated.
+                checkBoxSensorVisualA.Checked = checkBoxSortProcessingA.Checked = checkBoxSensorA.Checked = IsSorted(sensorA);  // Both lists are checked if sorted, place after chart display
+                checkBoxSensorVisualB.Checked = checkBoxSortProcessingB.Checked = checkBoxSensorB.Checked = IsSorted(sensorB);  // to allow for visual identification of failed sorts.
             }
             catch (InvalidOperationException ex)
             {
@@ -996,7 +1048,7 @@ namespace MSSSDataProcessing
 
         #region FormEvents
         /// <summary>
-        /// Makes new file name, adds new TraceListener
+        /// Makes new file name, adds new TraceListener for writing trace information to.
         /// </summary>
         private void ProcessingForm_Load(object sender, EventArgs e)
         {
@@ -1005,7 +1057,7 @@ namespace MSSSDataProcessing
             Trace.Listeners.Add(new TextWriterTraceListener(fileName, "myListener"));
         }
         /// <summary>
-        /// Trace is flushed. Information written to file.
+        /// Trace output buffer is flushed. Buffered information is written to file.
         /// </summary>
         private void ProcessingForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -1039,7 +1091,7 @@ namespace MSSSDataProcessing
         /// <summary>
         /// Checks if the LinkedLists are sorted. Assigns resulting bool to checkBoxes
         /// </summary>
-        private void listBoxSensorA_MouseMove(object sender, EventArgs e)
+        private void listBoxSensorA_MouseMove(object sender, MouseEventArgs e)
         {
             checkBoxSensorVisualA.Checked = checkBoxSortProcessingA.Checked = checkBoxSensorA.Checked = IsSorted(sensorA);
         }
@@ -1079,13 +1131,9 @@ namespace MSSSDataProcessing
             checkBoxSensorVisualB.Checked = checkBoxSortProcessingB.Checked = checkBoxSensorB.Checked = IsSorted(sensorB);
         }
 
-
-
         #endregion
 
         #endregion
-
-
 
 
     }
