@@ -516,7 +516,7 @@ namespace MSSSDataProcessing
             this.textBoxTargetA.TabIndex = 6;
             this.toolTip.SetToolTip(this.textBoxTargetA, "Target value to be found");
             this.textBoxTargetA.TextChanged += new System.EventHandler(this.textBoxTargetA_TextChanged);
-            this.textBoxTargetA.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTargetA_KeyPress);
+            this.textBoxTargetA.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
             // radioRecursiveA
             // 
@@ -765,7 +765,7 @@ namespace MSSSDataProcessing
             this.textBoxTargetB.TabIndex = 13;
             this.toolTip.SetToolTip(this.textBoxTargetB, "Target value to be found");
             this.textBoxTargetB.TextChanged += new System.EventHandler(this.textBoxTargetB_TextChanged);
-            this.textBoxTargetB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTargetB_KeyPress);
+            this.textBoxTargetB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
             // radioRecursiveB
             // 
@@ -961,7 +961,7 @@ namespace MSSSDataProcessing
             this.textBoxTargetProcessingA.Size = new System.Drawing.Size(51, 20);
             this.textBoxTargetProcessingA.TabIndex = 6;
             this.toolTip.SetToolTip(this.textBoxTargetProcessingA, "Target value to be found");
-            this.textBoxTargetProcessingA.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTargetProcessingA_KeyPress);
+            this.textBoxTargetProcessingA.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
             // buttonSearchProcessingA
             // 
@@ -1064,7 +1064,7 @@ namespace MSSSDataProcessing
             this.textBoxTargetProcessingB.Size = new System.Drawing.Size(51, 20);
             this.textBoxTargetProcessingB.TabIndex = 11;
             this.toolTip.SetToolTip(this.textBoxTargetProcessingB, "Target value to be found");
-            this.textBoxTargetProcessingB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTargetProcessingB_KeyPress);
+            this.textBoxTargetProcessingB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
             // buttonSearchProcessingB
             // 

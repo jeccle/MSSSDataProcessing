@@ -1064,6 +1064,17 @@ namespace MSSSDataProcessing
             Trace.Flush();
         }
 
+        private void textBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Only allows one doouble values to be entered. Restrict values to one decimal point.
+            e.Handled = !char.IsDigit(e.KeyChar) && e.KeyChar != '.' && !char.IsControl(e.KeyChar)
+                || (char.IsControl(e.KeyChar) && (e.KeyChar != '.') || (e.KeyChar == '.' && (sender as TextBox).Text.IndexOf('.') > -1));
+
+            // Enable backspace
+            if (e.KeyChar == (char)Keys.Back)
+                e.Handled = false;
+        }
+
         #region CheckBoxSortStatus 
         // IsSorted method is called within each of these event methods, the check to make sure the list is appropriately sorted updating the checkboxes.
         /// <summary>
